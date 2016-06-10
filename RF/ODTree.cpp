@@ -1,3 +1,13 @@
+//
+// ODTree.cpp
+//
+// Created by Guotai Wang on 01/12/2015.
+//
+// Copyright (c) 2014-2016 University College London, United Kingdom. All rights reserved.
+// http://cmictig.cs.ucl.ac.uk
+//
+// Distributed under the BSD-3 licence. Please see the file licence.txt
+//
 #include "ODTree.h"
 #include "Node.h"
 
