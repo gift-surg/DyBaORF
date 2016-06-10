@@ -32,8 +32,8 @@ System requirements
 
     The current version of DyBa ORF requries:
 
-    -A C++ compiler installed and configured to work with cmake.
-    -cmake required to generate the project from source code.
+    A C++ compiler installed and configured to work with cmake.
+    Cmake to generate the project from source code.
 
 How to use
 
@@ -42,7 +42,7 @@ How to use
     Open Cmake, set the source code directory as $DyBaORF, and set the build directory as $DyBaORF/build.
     Click Configure, select the c++ compile you use. (VS in Windows, Clang++ in Mac, gcc in Linux)
     Click Generate to generate the project, which can be found at $DyBaORF/build.
-    Go to $DyBaORF/build to open the generated project, comile it and you can run it.
+    Go to $DyBaORF/build to open the generated project, compile it and then you can run it.
 
 
 Funding
