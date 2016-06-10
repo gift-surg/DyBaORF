@@ -4,9 +4,7 @@ DyBa ORF
     
     1). Online learning. It can accept gradually arrived training data and update the model on-the-fly.
     2). Data imbalance. It deals with imbalanced data of different classes, avoiding low correct rate of classification for minor class.
-    3). Changing imbalance ratio. The ratio (degree) of imbalance may dynamically change when new training data arrive sequentially. 
-    
-    Compared with traditionaly Online Random Forest (Saffari, A. 2009, Barinova, O. 2012) which assumes the imblance ratio do not change,
+    3). Changing imbalance ratio. The ratio (degree) of imbalance may dynamically change when new training data arrive sequentially. Compared with traditionaly Online Random Forest (Saffari, A. 2009, Barinova, O. 2012) which assumes the imblance ratio do not change,
     DyBa ORF updates the model dynamically with the ability to be adapted to new imbalance ratio.
 
 Author Info
@@ -14,12 +12,13 @@ Author Info
     DyBa ORF was developed as part of the GIFT-Surg project. The algorithm and software were developed by Guotai Wang at the Translational Imaging Group in the Centre for Medical Image Computing at University College London (UCL).
 
     If you use this software, please cite this paper:
-    Guotai Wang, Maria A. Zuluaga, Rosalind Pratt\, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin
+    Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin
     Dynamically Balanced Online Random Forests for Interactive Segmentation, MICCAI 2016. (accepted)
 
 Software links
 
-    Slic-Seg home page.
+    Slic-Seg home page: http://www.gift-surg.ac.uk/
+    Translational Imaging Group: http://cmictig.cs.ucl.ac.uk/
     GitHub mirror.
 
 License
@@ -33,8 +32,8 @@ System requirements
 
     The current version of DyBa ORF requries:
 
-    A C++ compiler installed and configured to work with cmake.
-    cmake required to generate the project from source code.
+    -A C++ compiler installed and configured to work with cmake.
+    -cmake required to generate the project from source code.
 
 How to use
 
