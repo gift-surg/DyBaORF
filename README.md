@@ -15,6 +15,7 @@ If you use this software, please cite this paper:
 
 
 Software links
+
     Slic-Seg home page.
     GitHub mirror.
 
@@ -34,62 +35,18 @@ The current version of DyBa ORF requries:
 
 How to use
 
-    Before attempting to use Slic-Seg, please ensure you have C++ and CUDA compilers installed and correctly configured to work with Matlab
-        What you need to build mex files
-        CUDA Installation guides
-        Why can't MEX find a supported compiler in MATLAB R2015b after I upgraded to Xcode 7.0?
+    Suppose the source code directory is $DyBaORF.
+    Switch to the $DyBaORF directory.
+    Open Cmake, set the source code directory as $DyBaORF, and set the build directory as $DyBaORF/build.
+    Click Configure, select the c++ compile you use. (VS in Windows, Clang++ in Mac, gcc in Linux)
+    Click Generate to generate the project, which can be found at $DyBaORF/build.
+    Go to $DyBaORF/build to open the generated project, comile it and you can run it.
 
-    GPU computing may lead to system instability and data loss. Please back up any valuable data before using the software.
-
-    Switch to the matlab directory.
-
-    To launch the user interface, run slicseg on the command window
-
-    Alternatively, run the test script to illustrate use of the algorithm without the user interface. To do this:
-        Run 'SlicSegAddPaths` to set up the paths for this session
-        Type test in the command window
-
-How to use the user interface
-
-    Run slicseg to launch the user interface.
-    The mex and cuda files will automatically compile if they have not already been compiled. This will fail if you have not installed and correctly set up your mex and cuda compilers to work with Matlab.
-    Click Load to load Dicom or a series of png image from a directory you specify
-    Choose your starting slice (usually a slice in the middle of the object)
-    Draw scribbles (lines) over parts of the object you wish to segment. The left button selects the foreground (object) and the right button selects the background.
-        The Background button makes the left button select background, while the Foreground button makes the left button select foreground
-    Click Segment to segment the object on this slice, based on the scribbes you have entered
-    Select the range (start and end slices) over which the segmentation will propagate
-    Click Propagate to continue the segmentation over these slices
-    Click Save to save the segmentation
-
-Issues
-
-    The most likely issues will be due to not having correctly set up your mex and cuda compilers.
-    If you get compilation errors, please fix your mex and cuda compiler setup, then run CompileSlicSeg recompile on the command window to force re-compilation.
-    OSX users, please check the supported versions of XCode. Note that NVIDIA CUDA may not support the latest versions of XCode.
-
-    If you are using OSX and receive a No supported compiler or SDK was found error, and you have already installed XCode, please follows these instructions
-
-    On linux, linking problems may occur due to Matlab adding an internal linking path before mex is called. If you get version problems when linking C++ files you can force Matlab to find specific library versions using LD_PRELOAD, for example: LD_PRELOAD=/path-to-desired-library/libstdc++.so.6 /path-to-matlab/bin/matlab
 
 Funding
 
-This work was supported through an Innovative Engineering for Health award by the Wellcome Trust [WT101957], the Engineering and Physical Sciences Research Council (EPSRC) [NS/A000027/1] and a National Institute for Health Research Biomedical Research Centre UCLH/UCL High Impact Initiative.
+This work was supported through an Innovative Engineering for Health award by the Wellcome Trust [WT101957], the Engineering and Physical Sciences Research Council (EPSRC) [NS/A000027/1] and a National Institute for Health Research Biomedical Research Centre UCLH/UCL High Impact Initiative, A UCL Overseas Research Scholarship and a UCL Graduate Research Scholarship.
+
 Supported Platforms
 
-Slic-Seg is a cross-platform Matlab/C++ library. We have tested Slic-Seg on the following platforms:
-
-    Linux
-        Ubuntu Desktop 14.04.3 LTS 64-bit
-        NVIDIA 12GB GTX TITAN X
-        CUDA 7.5
-        Matlab R2015b
-
-    MacOS X
-        OS X Yosemite 10.10.5
-        NVIDIA GeForce GT 750M 1024 MB
-        XCode 7.2.1
-        CUDA 7.5
-
-    Windows
-        Not yet tested
+DyBa ORF is a cross-platform C++ library. It supports Windows, Mac and Linux.
