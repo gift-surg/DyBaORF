@@ -1,25 +1,25 @@
 //
-//  TestExample1.h
-//  ORF_test
+//  RFTestExample.h
+//  DyBaORF_test
 //
 //  Created by Guotai Wang on 07/12/2015.
 //
 //
 
-#ifndef __ORF_test__TestExample1__
-#define __ORF_test__TestExample1__
+#ifndef __ORF_test__RFTestExample__
+#define __ORF_test__RFTestExample__
 
 #define USE_PROPOSED_ORF 1
 #define COMPARE_WITH_MPB_ORF 1
 #define COMPARE_WITH_SPB_ORF 1
 #define COMPARE_WITH_OFFLINE 1
-#include "TestExample.h"
+#include "AbstractTestExample.h"
 
-class TestExample1:public TestExample
+class RFTestExample:public AbstractTestExample
 {
 public:
-    TestExample1();
-    ~TestExample1();
+    RFTestExample();
+    ~RFTestExample();
     virtual void Run(int MaxIter);
     virtual void PrintPerformance();
 
@@ -39,4 +39,4 @@ public:
 #endif
     
 };
-#endif /* defined(__ORF_test__TestExample1__) */
+#endif /* defined(__ORF_test__RFTestExample__) */

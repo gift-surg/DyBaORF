@@ -17,6 +17,7 @@
 #include "ODTree.h"
 using namespace std;
 
+namespace RandomForest {
 
 template<typename T>
 class ODTree;
@@ -73,4 +74,5 @@ private:
     ODTree<T> * tree;
 };
 
+}
 #endif /* defined(__WeightedRF__Node__) */

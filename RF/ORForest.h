@@ -2,6 +2,8 @@
 #define ORFOREST_H_
 #include "ODTree.h"
 
+namespace RandomForest {
+
 template<typename T>
 class ORForest
 {
@@ -15,19 +17,25 @@ public:
     shared_ptr<vector<shared_ptr<vector<T> > > > testData; // for training
 
     double testDataRatio;// how many percents of given data are used as test data (10% or 20%)
-    bool useBalancedBagging;
+    BalanceType balanceType;
+    SamplingType samplingType;
     bool onlineUpdate;
 public:
     ORForest();
 	~ ORForest();
 	void Init(int Ntree,int treeDepth, int leastNsampleForSplit);
     void Clear(); // delte trees and training data
-    void UseBalancedBagging(bool b);
+    void SetBalanceType(BalanceType type){balanceType=type;};
+    BalanceType GetBalanceType(){return balanceType;};
+    
+    void SetSamplingType(SamplingType type){samplingType=type;};
+    SamplingType GetSamplingType(){return samplingType;};
     void DisableOnlineUpdate(){onlineUpdate=false;};
     
     void Train(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData);
+    void Train(const T *i_trainData, int i_Ns, int i_Nfp1);
     void Predict(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData, vector<float> ** o_predict);
-    void PredictGPU(const T *i_testData, int i_Ns, int i_Nf, float *o_predict);
+    
     
     int GetActureMaxTreeDepth();
     int GetActureMaxTreeNode();
@@ -40,6 +48,6 @@ public:
 protected:
     void GetTrainAndTestData(shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData);
 };
-
+}
 
 #endif

@@ -8,6 +8,11 @@
 
 using namespace std;
 
+namespace RandomForest {
+
+    
+enum BalanceType{SingleParameterBoostrap, MultipleParameterBoostrap, DynamicImbalanceAdaptableBootstrap};
+enum SamplingType{DownSamplingMajority, UpSamplingMinority};
 
 template<typename T>
 class Node;
@@ -47,15 +52,22 @@ public:
     int GetSampleNumberThreshold(){return sampleNumberThreshold;};
     void SetSampleNumberThreshold(int n){sampleNumberThreshold=n;};
     
-    void UseBalancedBagging(bool b){useBalancedBagging=b;};
-    bool UseBalancedBagging(){return useBalancedBagging;};
+    void SetBalanceType(BalanceType type){balanceType=type;};
+    BalanceType GetBalanceType(){return balanceType;};
+    
+    void SetSamplingType(SamplingType type){samplingType=type;};
+    SamplingType GetSamplingType(){return samplingType;};
     
     void UpdateGiniImportance();
     
 private:
-    void BalancedBagging(shared_ptr<vector<int> > o_indexList);
-    void GetUpdateSampleList(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList);
-    
+    void UpdateTrainDataList(int oldNs);
+    void GetPosNewAddedSampledList(int oldPosN,  double lambdaPos, shared_ptr<vector<int> > *o_list);
+    void GetNegNewAddedSampledList(int oldNegN,  double lambdaNeg, shared_ptr<vector<int> > *o_list);
+    void SingleParameterBoostrapSampling(int oldNs, shared_ptr<vector<int> > *o_list);
+    void MultipleParameterBoostrapSampling(int oldN, shared_ptr<vector<int> > *o_list);
+    void DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList);
+
     Node<T> *root;
     shared_ptr<vector<shared_ptr<vector<T> > > > trainData;
     
@@ -66,14 +78,20 @@ private:
     double varThreshold;
     int sampleNumberThreshold;
     
-    bool useBalancedBagging;
+    //0, no balanced bagging, just use a boostrap with same lambda for two classes
+    //1, boostrap sampling with different lambda for two classes
+    //2, sampling with remove list
+    BalanceType balanceType;
+    SamplingType samplingType;
     double subDataSetRatio;
+    double oldPosLambda;
+    double oldNegLambda;
     shared_ptr<vector<int> > posTrainDataList; // index list for all the postive training data
     shared_ptr<vector<int> > negTrainDataList; // index list for all the negtive training data
     shared_ptr<vector<int> > posSampledList;   // index list for all the sampled postive training data
     shared_ptr<vector<int> > negSampledList;   // index list for all the sampled negtive training data
     shared_ptr<vector<double> > giniImportance;
 };
-
+}
 
 #endif

@@ -1,23 +1,23 @@
 //
-//  TestExample1.cpp
-//  ORF_test
+//  RFTestExample.cpp
+//  DyBaORF_test
 //
 //  Created by Guotai Wang on 07/12/2015.
 //
 //
 
-#include "TestExample1.h"
-TestExample1::TestExample1()
+#include "RFTestExample.h"
+RFTestExample::RFTestExample()
 {
     
 }
 
-TestExample1::~TestExample1()
+RFTestExample::~RFTestExample()
 {
     
 }
 
-void TestExample1::Run(int MaxIter)
+void RFTestExample::Run(int MaxIter)
 {
 #if USE_PROPOSED_ORF
     Sensitivity.clear();
@@ -231,7 +231,6 @@ void TestExample1::Run(int MaxIter)
             int NegN=0;
             for(int i=0;i<testN;i++)
             {
-                
                 double realLabel=testData->at(i)->back();
 #if USE_PROPOSED_ORF
                 double predictLabel_on =predict_on->at(i);
@@ -397,7 +396,7 @@ void TestExample1::Run(int MaxIter)
     }
 }
 
-void TestExample1::PrintPerformance()
+void RFTestExample::PrintPerformance()
 {
     vector<double> imbalanceRatioMean;
     vector<double> imbalanceRatioStd;
