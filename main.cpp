@@ -24,5 +24,5 @@ int main(int argc, char ** argv)
         testExample.Run(100);
         testExample.PrintPerformance();
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
