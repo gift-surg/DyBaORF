@@ -11,8 +11,36 @@
 #include "ODTree.h"
 #include "Node.h"
 
-// Get a random number that belongs to the distribution of Pois(lambda)
-int GetPossionNumber(double lambda)
+template<typename T>
+RandomForest::ODTree<T>::ODTree()
+{
+    root=nullptr;
+    trainData=nullptr;
+    depthUpperBound=10;
+    varThreshold=0.02;
+    sampleNumberThreshold=10;
+    actureTreeDepth=0;
+    actureTreeNode=0;
+    balanceType=SingleParameterBoostrap;
+    samplingType=DownSamplingMajority;
+    subDataSetRatio=1.0;
+    srand(time(0));
+    Reset();
+}
+
+template<typename T>
+RandomForest::ODTree<T>::~ODTree()
+{
+    if(root) delete root;
+    if(posTrainDataList) posTrainDataList.reset();
+    if(negSampledList) negTrainDataList.reset();
+    if(posSampledList) posSampledList.reset();
+    if(negSampledList) negSampledList.reset();
+    if(giniImportance) giniImportance.reset();
+}
+
+template<typename T>
+int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
 {
     double L=exp(-lambda);
     int k=0;
@@ -27,8 +55,8 @@ int GetPossionNumber(double lambda)
     return k;
 }
 
-// Bootsttrap sampling Ns samples. each sample is sampled k times, where k belongs to Pois(possonLambda).
-void BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int> *o_list)
+template<typename T>
+void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int> *o_list)
 {
     o_list->reserve(Ns*bagFactor);
     for(int i=0;i<Ns;i++)
@@ -41,34 +69,6 @@ void BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int
             o_list->push_back(i);
         }
     }
-}
-
-template<typename T>
-RandomForest::ODTree<T>::ODTree()
-{
-	root=nullptr;
-	trainData=nullptr;
-	depthUpperBound=10;
-	varThreshold=0.02;
-	sampleNumberThreshold=10;
-    actureTreeDepth=0;
-    actureTreeNode=0;
-    balanceType=SingleParameterBoostrap;
-    samplingType=DownSamplingMajority;
-    subDataSetRatio=1.0;
-	srand(time(0));
-    Reset();
-}
-
-template<typename T>
-RandomForest::ODTree<T>::~ODTree()
-{
-    if(root) delete root;
-    if(posTrainDataList) posTrainDataList.reset();
-    if(negSampledList) negTrainDataList.reset();
-    if(posSampledList) posSampledList.reset();
-    if(negSampledList) negSampledList.reset();
-    if(giniImportance) giniImportance.reset();
 }
 
 template<typename T>
@@ -128,6 +128,7 @@ void RandomForest::ODTree<T>::GetPosNewAddedSampledList(int oldPosN, double lamb
     }
     *o_list=tempPosSampledList;
 }
+
 template<typename T>
 void RandomForest::ODTree<T>::GetNegNewAddedSampledList(int oldNegN, double lambdaNeg, shared_ptr<vector<int> > *o_list)
 {
@@ -145,6 +146,7 @@ void RandomForest::ODTree<T>::GetNegNewAddedSampledList(int oldNegN, double lamb
     }
     *o_list=tempNegSampledList;
 }
+
 template<typename T>
 void RandomForest::ODTree<T>::SingleParameterBoostrapSampling(int oldNs, shared_ptr<vector<int> > *o_list)
 {
@@ -210,7 +212,6 @@ void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, share
     }
     *o_list=outputSampledList;
 }
-
 
 template<typename T>
 void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList)
@@ -433,7 +434,6 @@ double RandomForest::ODTree<T>::GetOOBE(const shared_ptr<vector<shared_ptr<vecto
     oobe=incorrectPrediction/i_testData->size();
     return oobe;
 }
-
 
 template<typename T>
 double RandomForest::ODTree<T>::GetBalancedOOBE(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData)

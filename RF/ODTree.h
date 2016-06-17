@@ -1,13 +1,16 @@
-//
-// ODTree.h
-//
-// Created by Guotai Wang on 01/12/2015.
-//
-// Copyright (c) 2014-2016 University College London, United Kingdom. All rights reserved.
-// http://cmictig.cs.ucl.ac.uk
-//
-// Distributed under the BSD-3 licence. Please see the file licence.txt
-//
+/* ODTree.h
+ *
+ * Created by Guotai Wang on 01/12/2015.
+ * Copyright (c) 2014-2016 University College London, United Kingdom. All rights reserved.
+ * http://cmictig.cs.ucl.ac.uk
+ *
+ * Distributed under the BSD-3 licence. Please see the file licence.txt
+ *
+ * @file ODTree.h
+ * @author Guotai Wang
+ * @date  01/12/2015
+ * @brief
+ */
 
 #ifndef ODTREE_H_
 #define ODTREE_H_
@@ -29,6 +32,11 @@ template<typename T>
 class Node;
 
 template<typename T>
+    
+/**
+ * \brief ODTree
+ *
+ */
 class ODTree
 {
 public:
@@ -79,6 +87,12 @@ private:
     void MultipleParameterBoostrapSampling(int oldN, shared_ptr<vector<int> > *o_list);
     void DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList);
 
+    /// Get a random number that belongs to the distribution of Pois(lambda)
+    int GetPossionNumber(double lambda);
+    
+    /// Bootsttrap sampling Ns samples. each sample is sampled k times, where k belongs to Pois(possonLambda).
+    void BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int> *o_list);
+    
     Node<T> *root;
     shared_ptr<vector<shared_ptr<vector<T> > > > trainData;
     
