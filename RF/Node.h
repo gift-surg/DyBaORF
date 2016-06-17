@@ -10,8 +10,8 @@
 // Distributed under the BSD-3 licence. Please see the file licence.txt
 //
 
-#ifndef __RF__Node__
-#define __RF__Node__
+#ifndef RF__Node__
+#define RF__Node__
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -79,4 +79,4 @@ private:
 };
 
 }
-#endif /* defined(__WeightedRF__Node__) */
+#endif /* defined(RF__Node__) */
