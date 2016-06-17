@@ -15,8 +15,6 @@
 #include <iostream>
 #include <ctime>
 
-using namespace std;
-
 template<typename T>
 RandomForest::ORForest<T>::ORForest()
 {
@@ -69,7 +67,7 @@ void RandomForest::ORForest<T>::Clear()
 
 
 template<typename T>
-void RandomForest::ORForest<T>::GetTrainAndTestData(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData)
+void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
 {
     int i_addNs=i_trainData->size();
     int posNadd=0, negNadd=0;
@@ -95,7 +93,7 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const shared_ptr<vector<shar
     int addNTrain=i_addNs-addNTest;
     
     // select train and test data randomly
-    vector<bool> TestDataMask;
+    std::vector<bool> TestDataMask;
     for(int i=0;i<i_addNs;i++) TestDataMask.push_back(false);
 
     int add_nTest=0;
@@ -110,8 +108,8 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const shared_ptr<vector<shar
         }
     }
 
-    shared_ptr<vector<shared_ptr<vector<T> > > > addTrainData(new vector<shared_ptr<vector<T> > >);
-    shared_ptr<vector<shared_ptr<vector<T> > > > addTestData(new vector<shared_ptr<vector<T> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > addTrainData(new std::vector<std::shared_ptr<std::vector<T> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > addTestData(new std::vector<std::shared_ptr<std::vector<T> > >);
     addTrainData->reserve(addNTrain);
     addTestData->reserve(addNTest);
     for(int i=0;i<i_addNs;i++)
@@ -125,8 +123,8 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const shared_ptr<vector<shar
         }
     }
     
-    shared_ptr<vector<shared_ptr<vector<T> > > > newTrainData(new vector<shared_ptr<vector<T> > >);
-    shared_ptr<vector<shared_ptr<vector<T> > > > newTestData(new vector<shared_ptr<vector<T> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > newTrainData(new std::vector<std::shared_ptr<std::vector<T> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > newTestData(new std::vector<std::shared_ptr<std::vector<T> > >);
     if(trainData==nullptr)
     {
         newTrainData=addTrainData;
@@ -146,11 +144,11 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const shared_ptr<vector<shar
 template<typename T>
 void RandomForest::ORForest<T>::Train(const T *i_trainData, int i_Ns, int i_Nfp1)
 {
-    shared_ptr<vector<shared_ptr<vector<T> > > > tempTrainData(new vector<shared_ptr<vector<T> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > tempTrainData(new std::vector<std::shared_ptr<std::vector<T> > >);
     tempTrainData->resize(i_Ns);
     for(int i=0;i<i_Ns;i++)
     {
-        shared_ptr<vector<T> > tempSample(new vector<T>);
+        std::shared_ptr<std::vector<T> > tempSample(new std::vector<T>);
         tempSample->resize(i_Nfp1);
         for(int j=0;j<i_Nfp1;j++)
         {
@@ -161,7 +159,7 @@ void RandomForest::ORForest<T>::Train(const T *i_trainData, int i_Ns, int i_Nfp1
     Train(tempTrainData);
 }
 template<typename T>
-void RandomForest::ORForest<T>::Train(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData)
+void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
 {
 	if(trees==nullptr || onlineUpdate==false)
 	{
@@ -209,14 +207,14 @@ void RandomForest::ORForest<T>::Train(const shared_ptr<vector<shared_ptr<vector<
 }
 
 template<typename T>
-void RandomForest::ORForest<T>::Predict(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData, vector<float>  ** o_predict)
+void RandomForest::ORForest<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float>  ** o_predict)
 {
-    vector<float> *sumPredict=new vector<float>;
+    std::vector<float> *sumPredict=new std::vector<float>;
     sumPredict->resize(i_testData->size());
     for(int i=0;i<i_testData->size();i++) sumPredict->at(i)=0;
     for(int i=0;i<treeNumber;i++)
     {
-        vector<float> * tempPredict;
+        std::vector<float> * tempPredict;
         trees[i].Predict(i_testData, &tempPredict);
         for(int j=0;j<sumPredict->size();j++)
         {
@@ -280,10 +278,10 @@ int RandomForest::ORForest<T>::GetActureMaxTreeNode()
 }
 
 template<typename T>
-void RandomForest::ORForest<T>::GetRankedGiniImportance( shared_ptr<vector<int> > * o_featureIndexList,  shared_ptr<vector<double> > * o_giniImportanceList)
+void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::vector<int> > * o_featureIndexList,  std::shared_ptr<std::vector<double> > * o_giniImportanceList)
 {
-    shared_ptr<vector<int> > featureIndexList=* o_featureIndexList;
-    shared_ptr<vector<double> > giniImportanceList=* o_giniImportanceList;
+    std::shared_ptr<std::vector<int> > featureIndexList=* o_featureIndexList;
+    std::shared_ptr<std::vector<double> > giniImportanceList=* o_giniImportanceList;
     featureIndexList->resize(trainData->at(0)->size()-1);
     giniImportanceList->resize(trainData->at(0)->size()-1);
     for(int i=0;i<featureIndexList->size();i++)

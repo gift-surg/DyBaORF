@@ -56,7 +56,7 @@ int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int> *o_list)
+void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list)
 {
     o_list->reserve(Ns*bagFactor);
     for(int i=0;i<Ns;i++)
@@ -80,11 +80,11 @@ void RandomForest::ODTree<T>::Reset()
         root=nullptr;
     }
     trainData=nullptr;
-    posTrainDataList=make_shared<vector<int> >();
-    negTrainDataList=make_shared<vector<int> >();
-    posSampledList=make_shared<vector<int> >();
-    negSampledList=make_shared<vector<int> >();
-    giniImportance=make_shared<vector<double> >();
+    posTrainDataList=std::make_shared<std::vector<int> >();
+    negTrainDataList=std::make_shared<std::vector<int> >();
+    posSampledList=std::make_shared<std::vector<int> >();
+    negSampledList=std::make_shared<std::vector<int> >();
+    giniImportance=std::make_shared<std::vector<double> >();
     oldPosLambda=1.0;
     oldNegLambda=1.0;
 }
@@ -92,8 +92,8 @@ void RandomForest::ODTree<T>::Reset()
 template<typename T>
 void RandomForest::ODTree<T>::UpdateTrainDataList(int oldNs)
 {
-    shared_ptr<vector<int> > addPosTrainDataList(new vector<int>);
-    shared_ptr<vector<int> > addNegTrainDataList(new vector<int>);
+    std::shared_ptr<std::vector<int> > addPosTrainDataList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > addNegTrainDataList(new std::vector<int>);
     addPosTrainDataList->reserve(trainData->size()-oldNs);
     addNegTrainDataList->reserve(trainData->size()-oldNs);
     for(int i=oldNs;i<trainData->size();i++)
@@ -112,13 +112,13 @@ void RandomForest::ODTree<T>::UpdateTrainDataList(int oldNs)
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::GetPosNewAddedSampledList(int oldPosN, double lambdaPos,shared_ptr<vector<int> > *o_list)
+void RandomForest::ODTree<T>::GetPosNewAddedSampledList(int oldPosN, double lambdaPos,std::shared_ptr<std::vector<int> > *o_list)
 {
-    shared_ptr<vector<int> > tempPosSampledList(new vector<int>);
+    std::shared_ptr<std::vector<int> > tempPosSampledList(new std::vector<int>);
     int newPosN=posTrainDataList->size();
     if(newPosN>oldPosN)
     {
-        vector<int> posBootstrapList;
+        std::vector<int> posBootstrapList;
         BoostrapSampling(lambdaPos, newPosN-oldPosN, 1.0, &posBootstrapList);
         tempPosSampledList->resize(posBootstrapList.size());
         for(int i=0;i<posBootstrapList.size();i++)
@@ -130,13 +130,13 @@ void RandomForest::ODTree<T>::GetPosNewAddedSampledList(int oldPosN, double lamb
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::GetNegNewAddedSampledList(int oldNegN, double lambdaNeg, shared_ptr<vector<int> > *o_list)
+void RandomForest::ODTree<T>::GetNegNewAddedSampledList(int oldNegN, double lambdaNeg, std::shared_ptr<std::vector<int> > *o_list)
 {
-    shared_ptr<vector<int> > tempNegSampledList(new vector<int>);
+    std::shared_ptr<std::vector<int> > tempNegSampledList(new std::vector<int>);
     int newNegN=negTrainDataList->size();
     if(newNegN>oldNegN)
     {
-        vector<int> negBootstrapList;
+        std::vector<int> negBootstrapList;
         BoostrapSampling(lambdaNeg, newNegN-oldNegN, 1.0, &negBootstrapList);
         tempNegSampledList->resize(negBootstrapList.size());
         for(int i=0;i<negBootstrapList.size();i++)
@@ -148,7 +148,7 @@ void RandomForest::ODTree<T>::GetNegNewAddedSampledList(int oldNegN, double lamb
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::SingleParameterBoostrapSampling(int oldNs, shared_ptr<vector<int> > *o_list)
+void RandomForest::ODTree<T>::SingleParameterBoostrapSampling(int oldNs, std::shared_ptr<std::vector<int> > *o_list)
 {
     int oldPosN=posTrainDataList->size();
     int oldNegN=negTrainDataList->size();
@@ -156,17 +156,17 @@ void RandomForest::ODTree<T>::SingleParameterBoostrapSampling(int oldNs, shared_
     int newPosN=posTrainDataList->size();
     int newNegN=negTrainDataList->size();
     
-    shared_ptr<vector<int> > outputSampledList(new vector<int>);
+    std::shared_ptr<std::vector<int> > outputSampledList(new std::vector<int>);
     if(newPosN>oldPosN)
     {
-        shared_ptr<vector<int> > tempPosSampledList;
+        std::shared_ptr<std::vector<int> > tempPosSampledList;
         GetPosNewAddedSampledList(oldPosN, 1.0, &tempPosSampledList);
         posSampledList->insert(posSampledList->end(), tempPosSampledList->begin(), tempPosSampledList->end());
         outputSampledList->insert(outputSampledList->end(), tempPosSampledList->begin(), tempPosSampledList->end());
     }
     if(newNegN>oldNegN)
     {
-        shared_ptr<vector<int> > tempNegSampledList;
+        std::shared_ptr<std::vector<int> > tempNegSampledList;
         GetNegNewAddedSampledList(oldNegN, 1.0, &tempNegSampledList);
         negSampledList->insert(negSampledList->end(), tempNegSampledList->begin(), tempNegSampledList->end());
         outputSampledList->insert(outputSampledList->end(), tempNegSampledList->begin(), tempNegSampledList->end());
@@ -175,7 +175,7 @@ void RandomForest::ODTree<T>::SingleParameterBoostrapSampling(int oldNs, shared_
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, shared_ptr<vector<int> > *o_list)
+void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, std::shared_ptr<std::vector<int> > *o_list)
 {
     int oldPosN=posTrainDataList->size();
     int oldNegN=negTrainDataList->size();
@@ -195,17 +195,17 @@ void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, share
         negLambda=imbalanceRatio>=1.0 ? 1.0:1.0/imbalanceRatio;
     }
     
-    shared_ptr<vector<int> > outputSampledList(new vector<int>);
+    std::shared_ptr<std::vector<int> > outputSampledList(new std::vector<int>);
     if(newPosN>oldPosN)
     {
-        shared_ptr<vector<int> > tempPosSampledList;
+        std::shared_ptr<std::vector<int> > tempPosSampledList;
         GetPosNewAddedSampledList(oldPosN, posLambda, &tempPosSampledList);
         posSampledList->insert(posSampledList->end(), tempPosSampledList->begin(), tempPosSampledList->end());
         outputSampledList->insert(outputSampledList->end(), tempPosSampledList->begin(), tempPosSampledList->end());
     }
     if(newNegN>oldNegN)
     {
-        shared_ptr<vector<int> > tempNegSampledList;
+        std::shared_ptr<std::vector<int> > tempNegSampledList;
         GetNegNewAddedSampledList(oldNegN, negLambda, &tempNegSampledList);
         negSampledList->insert(negSampledList->end(), tempNegSampledList->begin(), tempNegSampledList->end());
         outputSampledList->insert(outputSampledList->end(), tempNegSampledList->begin(), tempNegSampledList->end());
@@ -214,7 +214,7 @@ void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, share
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList)
+void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, std::shared_ptr<std::vector<int> > * o_removeSampleList, std::shared_ptr<std::vector<int> > * o_addSampleList)
 {
     int oldPosN=posTrainDataList->size();
     int oldNegN=negTrainDataList->size();
@@ -235,23 +235,23 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         newNegLambda=newImbalanceRatio>=1.0 ? 1.0:1.0/newImbalanceRatio;
     }
     
-    shared_ptr<vector<int> > addSampledList(new vector<int>);
-    shared_ptr<vector<int> > addSampledPosList(new vector<int>);
-    shared_ptr<vector<int> > addSampledNegList(new vector<int>);
-    shared_ptr<vector<int> > rmvSampledList(new vector<int>);
-    shared_ptr<vector<int> > rmvSampledPosList(new vector<int>);
-    shared_ptr<vector<int> > rmvSampledNegList(new vector<int>);
+    std::shared_ptr<std::vector<int> > addSampledList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > addSampledPosList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > addSampledNegList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > rmvSampledList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > rmvSampledPosList(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > rmvSampledNegList(new std::vector<int>);
     
     // sample new arrived data with newPosLambda and newNegLambda
     if(newPosN>oldPosN)
     {
-        shared_ptr<vector<int> > tempPosSampledList;
+        std::shared_ptr<std::vector<int> > tempPosSampledList;
         GetPosNewAddedSampledList(oldPosN, newPosLambda, &tempPosSampledList);
         addSampledPosList->insert(addSampledPosList->end(), tempPosSampledList->begin(), tempPosSampledList->end());
     }
     if(newNegN>oldNegN)
     {
-        shared_ptr<vector<int> > tempNegSampledList;
+        std::shared_ptr<std::vector<int> > tempNegSampledList;
         GetNegNewAddedSampledList(oldNegN, newNegLambda, &tempNegSampledList);
         addSampledNegList->insert(addSampledNegList->end(), tempNegSampledList->begin(), tempNegSampledList->end());
     }
@@ -259,8 +259,8 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     // posLambda increased, shoud add samples from previous postive training data set.
     if(oldPosN>0 &&  newPosLambda>oldPosLambda)
     {
-        shared_ptr<vector<int> > tempPosSampledList(new vector<int>);
-        vector<int> posBootstrapList;
+        std::shared_ptr<std::vector<int> > tempPosSampledList(new std::vector<int>);
+        std::vector<int> posBootstrapList;
         BoostrapSampling(newPosLambda-oldPosLambda, oldPosN, 1.0, &posBootstrapList);
         tempPosSampledList->resize(posBootstrapList.size());
         for(int i=0;i<posBootstrapList.size();i++)
@@ -276,7 +276,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         double deltaLambdaN=(oldPosLambda-newPosLambda)*oldPosN;
         int deltaN=GetPossionNumber(deltaLambdaN);
         
-        vector<int> posSampledListCopy;
+        std::vector<int> posSampledListCopy;
         posSampledListCopy.insert(posSampledListCopy.end(), posSampledList->begin(),posSampledList->end());
         
         if(deltaN<posSampledListCopy.size())
@@ -297,8 +297,8 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     // negLambda increased, shoud add samples from previous negative training data set.
     if(oldNegN>0 &&  newNegLambda>oldNegLambda)
     {
-        shared_ptr<vector<int> > tempNegSampledList(new vector<int>);
-        vector<int> negBootstrapList;
+        std::shared_ptr<std::vector<int> > tempNegSampledList(new std::vector<int>);
+        std::vector<int> negBootstrapList;
         BoostrapSampling(newNegLambda-oldNegLambda, oldNegN, 1.0, &negBootstrapList);
         tempNegSampledList->resize(negBootstrapList.size());
         for(int i=0;i<negBootstrapList.size();i++)
@@ -313,7 +313,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         double deltaLambdaN=(oldNegLambda-newNegLambda)*oldNegN;
         int deltaN=GetPossionNumber(deltaLambdaN);
         
-        vector<int> negSampledListCopy;
+        std::vector<int> negSampledListCopy;
         negSampledListCopy.insert(negSampledListCopy.end(), negSampledList->begin(),negSampledList->end());
         
         if(deltaN<negSampledListCopy.size())
@@ -345,7 +345,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::Train(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData)
+void RandomForest::ODTree<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
 {
     int oldNs=0;
     if(trainData)
@@ -353,8 +353,8 @@ void RandomForest::ODTree<T>::Train(const shared_ptr<vector<shared_ptr<vector<T>
         oldNs=trainData->size();
     }
     trainData=i_trainData;
-    shared_ptr<vector<int> > addSampleIndexList;
-    shared_ptr<vector<int> > rmvSampleIndexList;
+    std::shared_ptr<std::vector<int> > addSampleIndexList;
+    std::shared_ptr<std::vector<int> > rmvSampleIndexList;
     
 	if(root==nullptr)//create tree
 	{
@@ -387,8 +387,8 @@ void RandomForest::ODTree<T>::Train(const shared_ptr<vector<shared_ptr<vector<T>
         {
             DynamicImbalanceAdaptiveBoostrapSampling(oldNs,&rmvSampleIndexList, &addSampleIndexList);
             root->UpdateTree(rmvSampleIndexList, addSampleIndexList);
-            shared_ptr<vector<int> > newPosSampleList(new vector<int>);
-            shared_ptr<vector<int> > newNegSampleList(new vector<int>);
+            std::shared_ptr<std::vector<int> > newPosSampleList(new std::vector<int>);
+            std::shared_ptr<std::vector<int> > newNegSampleList(new std::vector<int>);
             root->GetSampleList(newPosSampleList, newNegSampleList);
             posSampledList=newPosSampleList;
             negSampledList=newNegSampleList;
@@ -397,9 +397,9 @@ void RandomForest::ODTree<T>::Train(const shared_ptr<vector<shared_ptr<vector<T>
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::Predict(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData, vector<float> ** o_forecast)
+void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_forecast)
 {
-    vector<float> *tempPredict=new vector<float>;
+    std::vector<float> *tempPredict=new std::vector<float>;
     tempPredict->resize(i_testData->size());
     for(int i=0;i<i_testData->size();i++)
     {
@@ -417,7 +417,7 @@ void RandomForest::ODTree<T>::UpdateGiniImportance()
 }
 
 template<typename T>
-double RandomForest::ODTree<T>::GetOOBE(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData)
+double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
 {
     double incorrectPrediction=0;
     for(int i=0;i<i_testData->size();i++)
@@ -436,7 +436,7 @@ double RandomForest::ODTree<T>::GetOOBE(const shared_ptr<vector<shared_ptr<vecto
 }
 
 template<typename T>
-double RandomForest::ODTree<T>::GetBalancedOOBE(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData)
+double RandomForest::ODTree<T>::GetBalancedOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
 {
     double incorPredPos=0;
     double incorPredNeg=0;

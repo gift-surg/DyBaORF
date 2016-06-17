@@ -19,7 +19,6 @@
 #include <vector>
 #include <iostream>
 #include "ODTree.h"
-using namespace std;
 
 namespace RandomForest {
 
@@ -32,19 +31,19 @@ class Node
 public:
     Node();
     ~Node();
-    void binSplitDataSet(const shared_ptr<vector<int> > i_indexList, int feature,  T featureValue,
-                         shared_ptr<vector<int> > o_indexList0, shared_ptr<vector<int> > o_indexList1);
+    void binSplitDataSet(const std::shared_ptr<std::vector<int> > i_indexList, int feature,  T featureValue,
+                         std::shared_ptr<std::vector<int> > o_indexList0, std::shared_ptr<std::vector<int> > o_indexList1);
     double meanLeaf();
-    double impurityLeaf(const shared_ptr<vector<int> > i_sampleIndexList);
-    double impurityLeafWithWeight(const shared_ptr<vector<int> > i_sampleIndexList, double * w1, double * w0);
-    double impurityLeafWithWeight(const shared_ptr<vector<int> > i_sampleIndexList, double w1, double w0);
+    double impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList);
+    double impurityLeafWithWeight(const std::shared_ptr<std::vector<int> > i_sampleIndexList, double * w1, double * w0);
+    double impurityLeafWithWeight(const std::shared_ptr<std::vector<int> > i_sampleIndexList, double w1, double w0);
 
     void GetFeatureRange(int fIndex,T * min,T * max);
     void chooseBestSplit(int * o_bestFeatureIndex, T * o_bestFeatureValue, double * o_decreadedImpurity);
     void CreateTree();
-    void UpdateTree(const shared_ptr<vector<int> > i_addSampleList);
-    int UpdateTree(const shared_ptr<vector<int> > i_rmvSampleList, const shared_ptr<vector<int> > i_addSampleList);
-    void GetSampleList(shared_ptr<vector<int> > o_posSampleList, shared_ptr<vector<int> > o_negSampleList);
+    void UpdateTree(const std::shared_ptr<std::vector<int> > i_addSampleList);
+    int UpdateTree(const std::shared_ptr<std::vector<int> > i_rmvSampleList, const std::shared_ptr<std::vector<int> > i_addSampleList);
+    void GetSampleList(std::shared_ptr<std::vector<int> > o_posSampleList, std::shared_ptr<std::vector<int> > o_negSampleList);
         
     void SetLeft(Node<T> * l){left=l;};
     void SetRight(Node<T> *r ) {right=r;};
@@ -52,7 +51,7 @@ public:
     void SetSplitValue(double v){splitValue=v;};
     void SetDepth(int d){depth=d;};
     void SetTree(ODTree<T> * tr){tree=tr;};
-    void SetSampleIndexList(shared_ptr<vector<int> > list){sampleIndexList=list;};
+    void SetSampleIndexList(std::shared_ptr<std::vector<int> > list){sampleIndexList=list;};
     
     Node<T> * GetLeft(){return left;};
     Node<T> * GetRight(){return right;};
@@ -60,10 +59,10 @@ public:
     double GetSplitValue(){return splitValue;};
     int GetDepth(){return depth;};
     ODTree<T> * GetTree(){return tree;};
-    shared_ptr<vector<int> > GetSampleIndexList(){return sampleIndexList;};
+    std::shared_ptr<std::vector<int> > GetSampleIndexList(){return sampleIndexList;};
     
     void UpdateGiniImportance();
-    double PredictOneSample(const shared_ptr<vector<T> > i_inData);
+    double PredictOneSample(const std::shared_ptr<std::vector<T> > i_inData);
     void ConvertTreeToList(int * io_left, int * io_right,
                            int *io_splitFeature, double *io_splitValue,
                            int currentListIndex, int * io_globalListIndex);
@@ -74,7 +73,7 @@ private:
     double splitValue;
     double decreasedImpurity;
     int depth;
-    shared_ptr<vector<int> > sampleIndexList;
+    std::shared_ptr<std::vector<int> > sampleIndexList;
     ODTree<T> * tree;
 };
 

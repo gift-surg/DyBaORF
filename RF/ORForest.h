@@ -25,8 +25,8 @@ public:
 	int leastNsample;
     ODTree<T> * trees;
 
-    shared_ptr<vector<shared_ptr<vector<T> > > > trainData;
-    shared_ptr<vector<shared_ptr<vector<T> > > > testData; // for training
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > trainData;
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > testData; // for training
 
     double testDataRatio;// how many percents of given data are used as test data (10% or 20%)
     BalanceType balanceType;
@@ -44,21 +44,21 @@ public:
     SamplingType GetSamplingType(){return samplingType;};
     void DisableOnlineUpdate(){onlineUpdate=false;};
     
-    void Train(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData);
+    void Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData);
     void Train(const T *i_trainData, int i_Ns, int i_Nfp1);
-    void Predict(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData, vector<float> ** o_predict);
+    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_predict);
     
     
     int GetActureMaxTreeDepth();
     int GetActureMaxTreeNode();
     double GetAverageOOBE();
     double GetAverageBalancedOOBE();
-    void GetRankedGiniImportance( shared_ptr<vector<int> > * featureIndexList,  shared_ptr<vector<double> > * giniImportanceList);
+    void GetRankedGiniImportance( std::shared_ptr<std::vector<int> > * featureIndexList,  std::shared_ptr<std::vector<double> > * giniImportanceList);
     void ConvertTreeToList(int * io_left, int * io_right, 
         int *io_splitFeature,double *io_splitValue,
         int maxNodeNumber);
 protected:
-    void GetTrainAndTestData(shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData);
+    void GetTrainAndTestData(std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData);
 };
 }
 

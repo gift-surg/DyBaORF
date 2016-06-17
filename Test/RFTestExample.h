@@ -29,17 +29,17 @@ public:
 
     
 #ifdef COMPARE_WITH_SPB_ORF
-    vector<vector<double> > compareSensitivity2;
-    vector<vector<double> > compareSpecificity2;
-    vector<vector<double> > compareGmean2;
-    vector<vector<double> > compareTime2;
+    std::vector<std::vector<double> > compareSensitivity2;
+    std::vector<std::vector<double> > compareSpecificity2;
+    std::vector<std::vector<double> > compareGmean2;
+    std::vector<std::vector<double> > compareTime2;
 #endif
     
 #ifdef COMPARE_WITH_OFFLINE
-    vector<vector<double> > compareSensitivity3;
-    vector<vector<double> > compareSpecificity3;
-    vector<vector<double> > compareGmean3;
-    vector<vector<double> > compareTime3;
+    std::vector<std::vector<double> > compareSensitivity3;
+    std::vector<std::vector<double> > compareSpecificity3;
+    std::vector<std::vector<double> > compareGmean3;
+    std::vector<std::vector<double> > compareTime3;
 #endif
     
 };

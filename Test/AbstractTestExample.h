@@ -15,7 +15,7 @@
 #include "ORForest.h"
 #include <iomanip>
 
-void GetMeanAndStd(vector<vector<double> > i_array, vector<double> * o_mean, vector<double> * o_std);
+void GetMeanAndStd(std::vector<std::vector<double> > i_array, std::vector<double> * o_mean, std::vector<double> * o_std);
 
 enum DataSetName{BIODEG, MUSK, CTG, WINE};
 enum FeatureTypeName{GAUSSIAN, BENOULLI, MULTINOMIAL};
@@ -32,7 +32,7 @@ public:
     virtual void Run(int MaxIter);
     virtual void PrintPerformance();
     void PrintDataInformation();
-    vector<double> GetImbalanceRatio();
+    std::vector<double> GetImbalanceRatio();
     int GetTrainN(){return trainN;};
 protected:
 
@@ -51,26 +51,26 @@ protected:
     int negNtrain;
     int posNtest;
     int negNtest;
-    shared_ptr<vector<shared_ptr<vector<double> > > > originData;
-    shared_ptr<vector<shared_ptr<vector<double> > > > trainData;
-    shared_ptr<vector<shared_ptr<vector<double> > > > testData;
-    vector<int> trainIndexEachUpdate;
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > originData;
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > trainData;
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > testData;
+    std::vector<int> trainIndexEachUpdate;
     
-    vector<vector<double> > imbalanceRatio;
+    std::vector<std::vector<double> > imbalanceRatio;
     
-    vector<vector<double> > Sensitivity;
-    vector<vector<double> > Specificity;
-    vector<vector<double> > Gmean;
-    vector<vector<double> > Time;
+    std::vector<std::vector<double> > Sensitivity;
+    std::vector<std::vector<double> > Specificity;
+    std::vector<std::vector<double> > Gmean;
+    std::vector<std::vector<double> > Time;
     
-    vector<vector<double> > compareSensitivity;
-    vector<vector<double> > compareSpecificity;
-    vector<vector<double> > compareGmean;
-    vector<vector<double> > compareTime;
+    std::vector<std::vector<double> > compareSensitivity;
+    std::vector<std::vector<double> > compareSpecificity;
+    std::vector<std::vector<double> > compareGmean;
+    std::vector<std::vector<double> > compareTime;
     
 
 
-    vector<FeatureTypeName> featureTypeList;
+    std::vector<FeatureTypeName> featureTypeList;
 };
 
 #endif /* defined(__ORF_test__AbstractTestExample__) */

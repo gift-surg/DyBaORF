@@ -20,8 +20,6 @@
 #include <vector>
 #include <iostream>
 
-using namespace std;
-
 namespace RandomForest {
 
     
@@ -43,18 +41,18 @@ public:
 	ODTree();
 	~ODTree();
 	
-    void Train(const shared_ptr<vector<shared_ptr<vector<T> > > > i_trainData);
-    void Predict(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData, vector<float> ** o_forecast);
-    double GetOOBE(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData);
-    double GetBalancedOOBE(const shared_ptr<vector<shared_ptr<vector<T> > > > i_testData);
+    void Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData);
+    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_forecast);
+    double GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData);
+    double GetBalancedOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData);
 
     void ConvertTreeToList(int * io_left, int * io_right, 
         int *io_splitFeature, double *io_splitValue);
     
     Node<T> * Root(){return root;};
     void Reset();
-    shared_ptr<vector<shared_ptr<vector<T> > > > TrainData(){return trainData;};
-    shared_ptr<vector<double> > GiniImportance(){return giniImportance;};
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > TrainData(){return trainData;};
+    std::shared_ptr<std::vector<double> > GiniImportance(){return giniImportance;};
     
     int GetActureTreeDepth(){return actureTreeDepth;};
     void SetActureTreeDepth(int d){actureTreeDepth=d;};
@@ -81,20 +79,20 @@ public:
     
 private:
     void UpdateTrainDataList(int oldNs);
-    void GetPosNewAddedSampledList(int oldPosN,  double lambdaPos, shared_ptr<vector<int> > *o_list);
-    void GetNegNewAddedSampledList(int oldNegN,  double lambdaNeg, shared_ptr<vector<int> > *o_list);
-    void SingleParameterBoostrapSampling(int oldNs, shared_ptr<vector<int> > *o_list);
-    void MultipleParameterBoostrapSampling(int oldN, shared_ptr<vector<int> > *o_list);
-    void DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, shared_ptr<vector<int> > * o_removeSampleList, shared_ptr<vector<int> > * o_addSampleList);
+    void GetPosNewAddedSampledList(int oldPosN,  double lambdaPos, std::shared_ptr<std::vector<int> > *o_list);
+    void GetNegNewAddedSampledList(int oldNegN,  double lambdaNeg, std::shared_ptr<std::vector<int> > *o_list);
+    void SingleParameterBoostrapSampling(int oldNs, std::shared_ptr<std::vector<int> > *o_list);
+    void MultipleParameterBoostrapSampling(int oldN, std::shared_ptr<std::vector<int> > *o_list);
+    void DynamicImbalanceAdaptiveBoostrapSampling(int oldNs, std::shared_ptr<std::vector<int> > * o_removeSampleList, std::shared_ptr<std::vector<int> > * o_addSampleList);
 
     /// Get a random number that belongs to the distribution of Pois(lambda)
     int GetPossionNumber(double lambda);
     
     /// Bootsttrap sampling Ns samples. each sample is sampled k times, where k belongs to Pois(possonLambda).
-    void BoostrapSampling(double possionLambda, int Ns, double bagFactor, vector<int> *o_list);
+    void BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list);
     
     Node<T> *root;
-    shared_ptr<vector<shared_ptr<vector<T> > > > trainData;
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > trainData;
     
     int actureTreeDepth;
     int actureTreeNode;
@@ -111,11 +109,11 @@ private:
     double subDataSetRatio;
     double oldPosLambda;
     double oldNegLambda;
-    shared_ptr<vector<int> > posTrainDataList; // index list for all the postive training data
-    shared_ptr<vector<int> > negTrainDataList; // index list for all the negtive training data
-    shared_ptr<vector<int> > posSampledList;   // index list for all the sampled postive training data
-    shared_ptr<vector<int> > negSampledList;   // index list for all the sampled negtive training data
-    shared_ptr<vector<double> > giniImportance;
+    std::shared_ptr<std::vector<int> > posTrainDataList; // index list for all the postive training data
+    std::shared_ptr<std::vector<int> > negTrainDataList; // index list for all the negtive training data
+    std::shared_ptr<std::vector<int> > posSampledList;   // index list for all the sampled postive training data
+    std::shared_ptr<std::vector<int> > negSampledList;   // index list for all the sampled negtive training data
+    std::shared_ptr<std::vector<double> > giniImportance;
 };
 }
 

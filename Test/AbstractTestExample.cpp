@@ -14,7 +14,7 @@
 #include <fstream>
 #include <iostream>
 
-double String2Double(string str)
+double String2Double(std::string str)
 {
     double sum=0;
     for (int i=0;i<str.length();i++)
@@ -24,14 +24,14 @@ double String2Double(string str)
     return sum;
 }
 
-void GetMeanAndStd(vector<vector<double> > i_array, vector<double> * o_mean, vector<double> * o_std)
+void GetMeanAndStd(std::vector<std::vector<double> > i_array, std::vector<double> * o_mean, std::vector<double> * o_std)
 {
     int rows=i_array.size();
     int column=i_array.at(0).size();
-    vector<double> sum(column);
-    vector<double> sumSq(column);
-    vector<double> mean(column);
-    vector<double> std(column);
+    std::vector<double> sum(column);
+    std::vector<double> sumSq(column);
+    std::vector<double> mean(column);
+    std::vector<double> std(column);
     for(int i=0;i<column;i++)
     {
         sum[i]=0;
@@ -94,11 +94,11 @@ bool AbstractTestExample::LoadData(DataSetName data)
 
 bool AbstractTestExample::LoadCTGDataSet()
 {
-    string fileName="../../data/CTG.txt";
-    ifstream fileLoader(fileName.c_str());
+    std::string fileName="../../data/CTG.txt";
+    std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
-        cout<<"open file failed"<<endl;
+        std::cout<<"open file failed"<<std::endl;
         return false;
     }
     featureN=21;
@@ -114,11 +114,11 @@ bool AbstractTestExample::LoadCTGDataSet()
     
     double label;
     double posLabel=8;//4,7
-    shared_ptr<vector<shared_ptr<vector<double> > > > readData(new vector<shared_ptr<vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
     readData->reserve(instanceN);
     for(int i=0;i<instanceN;i++)
     {
-        shared_ptr<vector<double> > tempSample(new vector<double>);
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
         tempSample->reserve(featureN+1);
         for(int j=0;j<featureN;j++)
         {
@@ -140,8 +140,8 @@ bool AbstractTestExample::LoadCTGDataSet()
         readData->push_back(tempSample);
     }
     originData=readData;
-    cout<<"DataSet    Feature Value"<<endl;
-    cout<<"CTG        "<<posLabel<<endl;
+    std::cout<<"DataSet    Feature Value"<<std::endl;
+    std::cout<<"CTG        "<<posLabel<<std::endl;
     UpdateDataInfo();
     //GenerateTrainAndTestData();
 
@@ -151,11 +151,11 @@ bool AbstractTestExample::LoadCTGDataSet()
 
 bool AbstractTestExample::LoadWineDataSet()
 {
-    string fileName="../../data/winequality.data";
-    ifstream fileLoader(fileName.c_str());
+    std::string fileName="../../data/winequality.data";
+    std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
-        cout<<"open file failed"<<endl;
+        std::cout<<"open file failed"<<std::endl;
         return false;
     }
     featureN=11;
@@ -171,11 +171,11 @@ bool AbstractTestExample::LoadWineDataSet()
     
     int label;
     int posLabel=8;//5,8
-    shared_ptr<vector<shared_ptr<vector<double> > > > readData(new vector<shared_ptr<vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
     readData->reserve(instanceN);
     for(int i=0;i<instanceN;i++)
     {
-        shared_ptr<vector<double> > tempSample(new vector<double>);
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
         tempSample->reserve(featureN+1);
         
         for(int j=0;j<featureN;j++)
@@ -200,8 +200,8 @@ bool AbstractTestExample::LoadWineDataSet()
         readData->push_back(tempSample);
     }
     originData=readData;
-    cout<<"DataSet    Feature Value"<<endl;
-    cout<<"Wine       "<<posLabel<<endl;
+    std::cout<<"DataSet    Feature Value"<<std::endl;
+    std::cout<<"Wine       "<<posLabel<<std::endl;
     UpdateDataInfo();
     
     
@@ -213,11 +213,11 @@ bool AbstractTestExample::LoadWineDataSet()
 
 bool AbstractTestExample::LoadMuskDataSet()
 {
-    string fileName="../../data/musk1.data";
-    ifstream fileLoader(fileName.c_str());
+    std::string fileName="../../data/musk1.data";
+    std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
-        cout<<"open file failed"<<endl;
+        std::cout<<"open file failed"<<std::endl;
         return false;
     }
     featureN=166;
@@ -231,17 +231,17 @@ bool AbstractTestExample::LoadMuskDataSet()
         featureTypeList[i]= GAUSSIAN;
     }
     
-    shared_ptr<vector<shared_ptr<vector<double> > > > readData(new vector<shared_ptr<vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
     readData->reserve(instanceN*2);
     
     int label;
     int posLabel=1;
     for(int i=0;i<instanceN;i++)
     {
-        shared_ptr<vector<double> > tempSample(new vector<double>);
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
         tempSample->reserve(featureN+1);
         
-        string str1,str2;
+        std::string str1,str2;
         fileLoader>>str1>>str2;
         for(int j=0;j<featureN;j++)
         {
@@ -263,8 +263,8 @@ bool AbstractTestExample::LoadMuskDataSet()
         readData->push_back(tempSample);
     }
     originData=readData;
-    cout<<"DataSet   Feature Value"<<endl;
-    cout<<"Musk  "<<posLabel<<endl;
+    std::cout<<"DataSet   Feature Value"<<std::endl;
+    std::cout<<"Musk  "<<posLabel<<std::endl;
     UpdateDataInfo();
     //GenerateTrainAndTestData();
     return true;
@@ -272,11 +272,11 @@ bool AbstractTestExample::LoadMuskDataSet()
 
 bool AbstractTestExample::LoadBiodegDataSet()
 {
-    string fileName="../../data/biodeg.csv";
-    ifstream fileLoader(fileName.c_str());
+    std::string fileName="../../data/biodeg.csv";
+    std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
-        cout<<"open file failed"<<endl;
+        std::cout<<"open file failed"<<std::endl;
         return false;
     }
     featureN=41;
@@ -290,14 +290,14 @@ bool AbstractTestExample::LoadBiodegDataSet()
         featureTypeList[i]= GAUSSIAN;
     }
     
-    shared_ptr<vector<shared_ptr<vector<double> > > > readData(new vector<shared_ptr<vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
     readData->reserve(instanceN*2);
     
-    string label;
-    string posLabel="RB";
+    std::string label;
+    std::string posLabel="RB";
     for(int i=0;i<instanceN;i++)
     {
-        shared_ptr<vector<double> > tempSample(new vector<double>);
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
         tempSample->reserve(featureN+1);
         
         for(int j=0;j<featureN;j++)
@@ -322,8 +322,8 @@ bool AbstractTestExample::LoadBiodegDataSet()
         readData->push_back(tempSample);
     }
     originData=readData;
-    cout<<"DataSet   Feature Value"<<endl;
-    cout<<"Biodeg  "<<posLabel<<endl;
+    std::cout<<"DataSet   Feature Value"<<std::endl;
+    std::cout<<"Biodeg  "<<posLabel<<std::endl;
     UpdateDataInfo();
     //GenerateTrainAndTestData();
     return true;
@@ -332,15 +332,15 @@ bool AbstractTestExample::LoadBiodegDataSet()
 
 void AbstractTestExample::GenerateTrainAndTestData()
 {
-    shared_ptr<vector<int> > posIndex(new vector<int>);
-    shared_ptr<vector<int> > negIndex(new vector<int>);
+    std::shared_ptr<std::vector<int> > posIndex(new std::vector<int>);
+    std::shared_ptr<std::vector<int> > negIndex(new std::vector<int>);
     
-    shared_ptr<vector<shared_ptr<vector<double> > > > tempTrainData(new vector<shared_ptr<vector<double> > >);
-    shared_ptr<vector<shared_ptr<vector<double> > > > tempTestData(new vector<shared_ptr<vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempTrainData(new std::vector<std::shared_ptr<std::vector<double> > >);
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempTestData(new std::vector<std::shared_ptr<std::vector<double> > >);
     tempTrainData->reserve(trainN);
     tempTestData->reserve(testN);
     
-    shared_ptr<vector<bool> > testMask(new vector<bool>);
+    std::shared_ptr<std::vector<bool> > testMask(new std::vector<bool>);
     testMask->resize(instanceN);
     for(int i=0;i<instanceN;i++) testMask->at(i)=false;
     
@@ -399,9 +399,9 @@ void AbstractTestExample::SetTrainDataChunk(double startPercent, double endPerce
 
 void AbstractTestExample::UpdateDataInfo()
 {
-    cout<<"postive   "<<positiveN<<endl;
-    cout<<"negative  "<<negtiveN<<endl;
-    cout<<"imbalance "<<std::setprecision(4)<<(double)negtiveN/positiveN<<endl;
+    std::cout<<"postive   "<<positiveN<<std::endl;
+    std::cout<<"negative  "<<negtiveN<<std::endl;
+    std::cout<<"imbalance "<<std::setprecision(4)<<(double)negtiveN/positiveN<<std::endl;
     
     double testRate=0.2;
     testN=instanceN*testRate;
@@ -433,22 +433,22 @@ void AbstractTestExample::PrintDataInformation()
             sumsq+=imbalanceRatio*imbalanceRatio;
             steps++;
             double percent=(double)i/trainN;
-            cout<<std::setw(4)<< std::fixed<< std::setprecision(2)<<percent<<"   "
-                <<std::setw(4)<< std::fixed<< std::setprecision(2)<<imbalanceRatio<<endl;
+            std::cout<<std::setw(4)<< std::fixed<< std::setprecision(2)<<percent<<"   "
+                <<std::setw(4)<< std::fixed<< std::setprecision(2)<<imbalanceRatio<<std::endl;
         }
     }
     
     double meanImbalance=sum/(steps-1);
     double std=sqrt(sumsq/(steps-1)-meanImbalance*meanImbalance);
     double normalizedStd=std/meanImbalance;
-    cout<<"meanImbalance "<<meanImbalance<<endl;
-    cout<<"std "<<std<<endl;
-    cout<<"normalizedStd "<<normalizedStd<<endl;
+    std::cout<<"meanImbalance "<<meanImbalance<< std::endl;
+    std::cout<<"std "<<std<< std::endl;
+    std::cout<<"normalizedStd "<<normalizedStd<< std::endl;
 }
 
-vector<double> AbstractTestExample::GetImbalanceRatio()
+std::vector<double> AbstractTestExample::GetImbalanceRatio()
 {
-    vector<double> imbalanceRatioList;
+    std::vector<double> imbalanceRatioList;
     int posN=0;
     int negN=0;
     double imbalanceRatio=0;
@@ -500,7 +500,7 @@ void AbstractTestExample::Run(int MaxIter)
             while(idx2==instanceN) idx2=(double)instanceN*rand()/RAND_MAX;
             if(idx1!=idx2)
             {
-                shared_ptr<vector<double> > tempSample=originData->at(idx1);
+                std::shared_ptr<std::vector<double> > tempSample=originData->at(idx1);
                 originData->at(idx1)=originData->at(idx2);
                 originData->at(idx2)=tempSample;
             }
@@ -563,7 +563,7 @@ void AbstractTestExample::Run(int MaxIter)
 //                    int idx2=(double)trainN*rand()/RAND_MAX;
 //                    if(idx1!=idx2)
 //                    {
-//                        shared_ptr<vector<double> > tempSample=trainData->at(idx1);
+//                        std::shared_ptr<std::vector<double> > tempSample=trainData->at(idx1);
 //                        trainData->at(idx1)=trainData->at(idx2);
 //                        trainData->at(idx2)=tempSample;
 //                    }
@@ -571,21 +571,21 @@ void AbstractTestExample::Run(int MaxIter)
 //            }
 //        }
         
-        cout<<"iteration "<<idx<<", data prepared"<<endl;
+        std::cout<<"iteration "<<idx<<", data prepared"<< std::endl;
         RandomForest::ORForest<double> rf;
         rf.Init(20, 20,10);// tree number, depth, sample number in node
         rf.SetSamplingType(RandomForest::DownSamplingMajority);
         rf.SetBalanceType(RandomForest::DynamicImbalanceAdaptableBootstrap);
     
-        vector<double>  Sensitivity0;
-        vector<double>  Specificity0;
-        vector<double>  Gmean0;
-        vector<double>  Time0;
+        std::vector<double>  Sensitivity0;
+        std::vector<double>  Specificity0;
+        std::vector<double>  Gmean0;
+        std::vector<double>  Time0;
         
-        vector<double>  compareSensitivity0;
-        vector<double>  compareSpecificity0;
-        vector<double>  compareGmean0;
-        vector<double>  compareTime0;
+        std::vector<double>  compareSensitivity0;
+        std::vector<double>  compareSpecificity0;
+        std::vector<double>  compareGmean0;
+        std::vector<double>  compareTime0;
         
         for(int it=0;it<trainIndexEachUpdate.size()-1;it++)
         {
@@ -595,11 +595,11 @@ void AbstractTestExample::Run(int MaxIter)
             int addtrainEnd=trainIndexEachUpdate[it+1];
             int addTrainN=trainIndexEachUpdate[it+1]-trainIndexEachUpdate[it];
             
-            vector<float> * predict_on;
-            vector<float> * predict_off;
+            std::vector<float> * predict_on;
+            std::vector<float> * predict_off;
             
             ///get online training data
-            shared_ptr<vector<shared_ptr<vector<double> > > > tempOnlineTrainData(new vector<shared_ptr<vector<double> > >);
+            std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempOnlineTrainData(new std::vector<std::shared_ptr<std::vector<double> > >);
             tempOnlineTrainData->reserve(addTrainN);
             for(int i=addTrainStart;i<addtrainEnd;i++)
             {
@@ -614,7 +614,7 @@ void AbstractTestExample::Run(int MaxIter)
             rf.Predict(testData,&predict_on);
             
             /// get offline training data
-            shared_ptr<vector<shared_ptr<vector<double> > > > tempOfflineTrainData(new vector<shared_ptr<vector<double> > >);
+            std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempOfflineTrainData(new std::vector<std::shared_ptr<std::vector<double> > >);
             tempOfflineTrainData->reserve(addtrainEnd);
             for(int i=0;i<addtrainEnd;i++)
             {
@@ -716,25 +716,25 @@ void AbstractTestExample::Run(int MaxIter)
 
 void AbstractTestExample::PrintPerformance()
 {
-    cout<<"comparison between online bagging and offline bagging"<<endl;
-    cout<<"sampleNumber ";
-    cout<<"SensitivityMean std SpecificityMean std GmeanMean std ";
-    cout<<"compareSensitivityMean std compareSpecificityMean std  compareGmeanMean std"<<endl;
+    std::cout<<"comparison between online bagging and offline bagging"<< std::endl;
+    std::cout<<"sampleNumber ";
+    std::cout<<"SensitivityMean std SpecificityMean std GmeanMean std ";
+    std::cout<<"compareSensitivityMean std compareSpecificityMean std  compareGmeanMean std"<< std::endl;
 
-    vector<double> SensitivityMean;
-    vector<double> SensitivityStd;
-    vector<double> SpecificityMean;
-    vector<double> SpecificityStd;
-    vector<double> GmeanMean;
-    vector<double> GmeanStd;
+    std::vector<double> SensitivityMean;
+    std::vector<double> SensitivityStd;
+    std::vector<double> SpecificityMean;
+    std::vector<double> SpecificityStd;
+    std::vector<double> GmeanMean;
+    std::vector<double> GmeanStd;
     
     
-    vector<double> compareSensitivityMean;
-    vector<double> compareSensitivityStd;
-    vector<double> compareSpecificityMean;
-    vector<double> compareSpecificityStd;
-    vector<double> compareGmeanMean;
-    vector<double> compareGmeanStd;
+    std::vector<double> compareSensitivityMean;
+    std::vector<double> compareSensitivityStd;
+    std::vector<double> compareSpecificityMean;
+    std::vector<double> compareSpecificityStd;
+    std::vector<double> compareGmeanMean;
+    std::vector<double> compareGmeanStd;
     
     GetMeanAndStd(Sensitivity, &SensitivityMean, &SensitivityStd);
     GetMeanAndStd(Specificity, &SpecificityMean, &SpecificityStd);
@@ -746,19 +746,19 @@ void AbstractTestExample::PrintPerformance()
 
     for(int i=0;i<SensitivityMean.size();i++)
     {
-        cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanStd[i]<<"     ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanStd[i]<<"     ";
         
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanStd[i]<<" "<<endl;
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanStd[i]<<" "<< std::endl;
     }
 }
