@@ -194,9 +194,7 @@ void RandomForest::ORForest<T>::Train(const shared_ptr<vector<shared_ptr<vector<
 	else
 	{
         // combine old training data and newly arrived training data
-        int oldNs=trainData->size();
         GetTrainAndTestData(i_trainData);
-        int newNs=trainData->size();
 		for(int i=0;i<treeNumber;i++)
 		{
 			trees[i].Train(trainData);

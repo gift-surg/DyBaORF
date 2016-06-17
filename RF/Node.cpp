@@ -222,7 +222,7 @@ void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_best
         *o_bestFeatureValue=meanLeaf();
         return;
     }
-    double w1,w0,S,bestS;
+    double S,bestS;
     S=impurityLeaf(sampleIndexList);
     bestS=S;
     

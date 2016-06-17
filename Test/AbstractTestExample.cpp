@@ -511,7 +511,6 @@ void AbstractTestExample::Run(int MaxIter)
         int posItrain=0;
         int negItrain=0;
         int testI=0;
-        int trainI=0;
         for(int i=0;i<instanceN;i++)
         {
             double tempL=originData->at(i)->back();
@@ -572,7 +571,6 @@ void AbstractTestExample::Run(int MaxIter)
 //            }
 //        }
         
-        bool useBalance=true;
         cout<<"iteration "<<idx<<", data prepared"<<endl;
         RandomForest::ORForest<double> rf;
         rf.Init(20, 20,10);// tree number, depth, sample number in node
@@ -613,8 +611,6 @@ void AbstractTestExample::Run(int MaxIter)
             double during0=(double)(clock()-start0)/CLOCKS_PER_SEC;
             Time0.push_back(during0);
             
-            double oobe=rf.GetAverageOOBE();
-            double balancedoobe=rf.GetAverageBalancedOOBE();
             rf.Predict(testData,&predict_on);
             
             /// get offline training data

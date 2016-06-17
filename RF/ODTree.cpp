@@ -352,7 +352,6 @@ void RandomForest::ODTree<T>::Train(const shared_ptr<vector<shared_ptr<vector<T>
         oldNs=trainData->size();
     }
     trainData=i_trainData;
-    int Ns=trainData->size();
     shared_ptr<vector<int> > addSampleIndexList;
     shared_ptr<vector<int> > rmvSampleIndexList;
     

@@ -144,9 +144,7 @@ void RFTestExample::Run(int MaxIter)
             //int node1=rf.GetActureMaxTreeNode();
             
             vector<float> *predict_on;
-            time_t startTest=clock();
             rf.Predict(testData,&predict_on);
-            double duringTest=(double)(clock()-startTest)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on=0;
             int correctNegPredict_on=0;
@@ -167,7 +165,6 @@ void RFTestExample::Run(int MaxIter)
             vector<float> *predict_on1;
             time_t startTest1=clock();
             rf1.Predict(testData, &predict_on1);
-            double duringTest1=(double)(clock()-startTest1)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on1=0;
             int correctNegPredict_on1=0;
@@ -185,9 +182,7 @@ void RFTestExample::Run(int MaxIter)
             //int node2=rf1.GetActureMaxTreeNode();
             
             vector<float> *predict_on2;
-            time_t startTest2=clock();
             rf2.Predict(testData, &predict_on2);
-            double duringTest2=(double)(clock()-startTest2)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on2=0;
             int correctNegPredict_on2=0;
