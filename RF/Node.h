@@ -53,12 +53,12 @@ public:
     void SetTree(ODTree<T> * tr){tree=tr;};
     void SetSampleIndexList(std::shared_ptr<std::vector<int> > list){sampleIndexList=list;};
     
-    Node<T> * GetLeft(){return left;};
-    Node<T> * GetRight(){return right;};
-    int GetFeatureIndex(){return featureIndex;};
-    double GetSplitValue(){return splitValue;};
-    int GetDepth(){return depth;};
-    ODTree<T> * GetTree(){return tree;};
+    Node<T> * GetLeft() const;
+    Node<T> * GetRight() const;
+    int GetFeatureIndex() const {return featureIndex;};
+    double GetSplitValue() const {return splitValue;};
+    int GetDepth() const {return depth;};
+    ODTree<T> * GetTree() const {return tree;};
     std::shared_ptr<std::vector<int> > GetSampleIndexList(){return sampleIndexList;};
     
     void UpdateGiniImportance();

@@ -421,6 +421,15 @@ void RandomForest::Node<T>::GetSampleList(std::shared_ptr<std::vector<int> > o_p
     if(right)right->GetSampleList(o_posSampleList,o_negSampleList);
 }
 
+template<typename T>
+RandomForest::Node<T> * RandomForest::Node<T>::GetLeft() const {
+    return left;
+}
+
+template<typename T>
+RandomForest::Node<T> * RandomForest::Node<T>::GetRight() const {
+    return right;
+}
 
 template<typename T>
 double RandomForest::Node<T>::PredictOneSample(const std::shared_ptr<std::vector<T> > i_inData)
