@@ -14,47 +14,6 @@
 #include <fstream>
 #include <iostream>
 
-double String2Double(std::string str)
-{
-    double sum=0;
-    for (int i=0;i<str.length();i++)
-    {
-        sum+=str.at(i);
-    }
-    return sum;
-}
-
-void GetMeanAndStd(std::vector<std::vector<double> > i_array, std::vector<double> * o_mean, std::vector<double> * o_std)
-{
-    int rows=i_array.size();
-    int column=i_array.at(0).size();
-    std::vector<double> sum(column);
-    std::vector<double> sumSq(column);
-    std::vector<double> mean(column);
-    std::vector<double> std(column);
-    for(int i=0;i<column;i++)
-    {
-        sum[i]=0;
-        sumSq[i]=0;
-    }
-    for(int i=0;i<rows;i++)
-    {
-        for(int j=0;j<column;j++)
-        {
-            double tempV=i_array.at(i).at(j);
-            sum[j]+=tempV;
-            sumSq[j]+=tempV*tempV;
-        }
-    }
-    
-    for(int i=0;i<column;i++)
-    {
-        mean[i]=sum[i]/rows;
-        std[i]=sqrt(sumSq[i]/rows-mean[i]*mean[i]);
-        o_mean->push_back(mean[i]);
-        o_std->push_back(std[i]);
-    }
-}
 
 AbstractTestExample::AbstractTestExample()
 {
@@ -91,244 +50,6 @@ bool AbstractTestExample::LoadData(DataSetName data)
             break;
     }
 }
-
-bool AbstractTestExample::LoadCTGDataSet()
-{
-    std::string fileName="../../data/CTG.txt";
-    std::ifstream fileLoader(fileName.c_str());
-    if(!fileLoader.is_open())
-    {
-        std::cout<<"open file failed"<<std::endl;
-        return false;
-    }
-    featureN=21;
-    instanceN=2126;
-    positiveN=0;
-    negtiveN=0;
-    
-    featureTypeList.resize(featureN);
-    for(int i=0;i<featureN;i++)
-    {
-        featureTypeList[i]= (i==featureN-1) ? MULTINOMIAL : GAUSSIAN;
-    }
-    
-    double label;
-    double posLabel=8;//4,7
-    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
-    readData->reserve(instanceN);
-    for(int i=0;i<instanceN;i++)
-    {
-        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
-        tempSample->reserve(featureN+1);
-        for(int j=0;j<featureN;j++)
-        {
-            double tempV;
-            fileLoader>>tempV;
-            tempSample->push_back(tempV);
-        }
-        
-        fileLoader>>label;
-        if(label==posLabel)
-        {
-            tempSample->push_back(1);
-            positiveN++;
-        }
-        else{
-            tempSample->push_back(0);
-            negtiveN++;
-        }
-        readData->push_back(tempSample);
-    }
-    originData=readData;
-    std::cout<<"DataSet    Feature Value"<<std::endl;
-    std::cout<<"CTG        "<<posLabel<<std::endl;
-    UpdateDataInfo();
-    //GenerateTrainAndTestData();
-
-    return true;
-}
-
-
-bool AbstractTestExample::LoadWineDataSet()
-{
-    std::string fileName="../../data/winequality.data";
-    std::ifstream fileLoader(fileName.c_str());
-    if(!fileLoader.is_open())
-    {
-        std::cout<<"open file failed"<<std::endl;
-        return false;
-    }
-    featureN=11;
-    instanceN=6497;
-    positiveN=0;
-    negtiveN=0;
-    
-    featureTypeList.resize(featureN);
-    for(int i=0;i<featureN;i++)
-    {
-        featureTypeList[i]= GAUSSIAN;
-    }
-    
-    int label;
-    int posLabel=8;//5,8
-    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
-    readData->reserve(instanceN);
-    for(int i=0;i<instanceN;i++)
-    {
-        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
-        tempSample->reserve(featureN+1);
-        
-        for(int j=0;j<featureN;j++)
-        {
-            double tempV;
-            fileLoader>>tempV;
-            tempSample->push_back(tempV);
-            char comma;
-            fileLoader>>comma;
-        }
-        
-        fileLoader>>label;
-        if(label==posLabel)
-        {
-            tempSample->push_back(1);
-            positiveN++;
-        }
-        else{
-            tempSample->push_back(0);
-            negtiveN++;
-        }
-        readData->push_back(tempSample);
-    }
-    originData=readData;
-    std::cout<<"DataSet    Feature Value"<<std::endl;
-    std::cout<<"Wine       "<<posLabel<<std::endl;
-    UpdateDataInfo();
-    
-    
-    //GenerateTrainAndTestData();
-
-    return true;
-}
-
-
-bool AbstractTestExample::LoadMuskDataSet()
-{
-    std::string fileName="../../data/musk1.data";
-    std::ifstream fileLoader(fileName.c_str());
-    if(!fileLoader.is_open())
-    {
-        std::cout<<"open file failed"<<std::endl;
-        return false;
-    }
-    featureN=166;
-    instanceN=476;//6598;//476
-    positiveN=0;
-    negtiveN=0;
-    
-    featureTypeList.resize(featureN);
-    for(int i=0;i<featureN;i++)
-    {
-        featureTypeList[i]= GAUSSIAN;
-    }
-    
-    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
-    readData->reserve(instanceN*2);
-    
-    int label;
-    int posLabel=1;
-    for(int i=0;i<instanceN;i++)
-    {
-        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
-        tempSample->reserve(featureN+1);
-        
-        std::string str1,str2;
-        fileLoader>>str1>>str2;
-        for(int j=0;j<featureN;j++)
-        {
-            double tempV;
-            fileLoader>>tempV;
-            tempSample->push_back(tempV);
-        }
-        
-        fileLoader>>label;
-        if(label==posLabel)
-        {
-            tempSample->push_back(1);
-            positiveN++;
-        }
-        else{
-            tempSample->push_back(0);
-            negtiveN++;
-        }
-        readData->push_back(tempSample);
-    }
-    originData=readData;
-    std::cout<<"DataSet   Feature Value"<<std::endl;
-    std::cout<<"Musk  "<<posLabel<<std::endl;
-    UpdateDataInfo();
-    //GenerateTrainAndTestData();
-    return true;
-}
-
-bool AbstractTestExample::LoadBiodegDataSet()
-{
-    std::string fileName="../../data/biodeg.csv";
-    std::ifstream fileLoader(fileName.c_str());
-    if(!fileLoader.is_open())
-    {
-        std::cout<<"open file failed"<<std::endl;
-        return false;
-    }
-    featureN=41;
-    instanceN=1055;
-    positiveN=0;
-    negtiveN=0;
-    
-    featureTypeList.resize(featureN);
-    for(int i=0;i<featureN;i++)
-    {
-        featureTypeList[i]= GAUSSIAN;
-    }
-    
-    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
-    readData->reserve(instanceN*2);
-    
-    std::string label;
-    std::string posLabel="RB";
-    for(int i=0;i<instanceN;i++)
-    {
-        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
-        tempSample->reserve(featureN+1);
-        
-        for(int j=0;j<featureN;j++)
-        {
-            double tempV;
-            fileLoader>>tempV;
-            tempSample->push_back(tempV);
-            char comma;
-            fileLoader>>comma;
-        }
-        
-        fileLoader>>label;
-        if(label==posLabel)
-        {
-            tempSample->push_back(1);
-            positiveN++;
-        }
-        else{
-            tempSample->push_back(0);
-            negtiveN++;
-        }
-        readData->push_back(tempSample);
-    }
-    originData=readData;
-    std::cout<<"DataSet   Feature Value"<<std::endl;
-    std::cout<<"Biodeg  "<<posLabel<<std::endl;
-    UpdateDataInfo();
-    //GenerateTrainAndTestData();
-    return true;
-}
-
 
 void AbstractTestExample::GenerateTrainAndTestData()
 {
@@ -384,6 +105,8 @@ void AbstractTestExample::GenerateTrainAndTestData()
     testData=tempTestData;
 }
 
+
+
 void AbstractTestExample::SetTrainDataChunk(double startPercent, double endPercent, double increasePercent)
 {
     int startIndex=startPercent*trainN;
@@ -397,77 +120,6 @@ void AbstractTestExample::SetTrainDataChunk(double startPercent, double endPerce
     }
 }
 
-void AbstractTestExample::UpdateDataInfo()
-{
-    std::cout<<"postive   "<<positiveN<<std::endl;
-    std::cout<<"negative  "<<negtiveN<<std::endl;
-    std::cout<<"imbalance "<<std::setprecision(4)<<(double)negtiveN/positiveN<<std::endl;
-    
-    double testRate=0.2;
-    testN=instanceN*testRate;
-    trainN=instanceN-testN;
-    posNtest=positiveN*testRate;
-    negNtest=testN-posNtest;
-    posNtrain=positiveN-posNtest;
-    negNtrain=negtiveN-negNtest;
-}
-void AbstractTestExample::PrintDataInformation()
-{
-    // print imbalance ratio after one data chunk arrives
-    int posN=0;
-    int negN=0;
-    double imbalanceRatio=0;
-    double sum=0;
-    double sumsq=0;
-    int steps=1;
-    for(int i=0; i<trainN;i++)
-    {
-        double tempL=trainData->at(i)->back();
-        if(tempL==1.0)posN++;
-        else negN++;
-        
-        if(i==trainIndexEachUpdate[steps]-1)
-        {
-            imbalanceRatio=(double)negN/posN;
-            sum+=imbalanceRatio;
-            sumsq+=imbalanceRatio*imbalanceRatio;
-            steps++;
-            double percent=(double)i/trainN;
-            std::cout<<std::setw(4)<< std::fixed<< std::setprecision(2)<<percent<<"   "
-                <<std::setw(4)<< std::fixed<< std::setprecision(2)<<imbalanceRatio<<std::endl;
-        }
-    }
-    
-    double meanImbalance=sum/(steps-1);
-    double std=sqrt(sumsq/(steps-1)-meanImbalance*meanImbalance);
-    double normalizedStd=std/meanImbalance;
-    std::cout<<"meanImbalance "<<meanImbalance<< std::endl;
-    std::cout<<"std "<<std<< std::endl;
-    std::cout<<"normalizedStd "<<normalizedStd<< std::endl;
-}
-
-std::vector<double> AbstractTestExample::GetImbalanceRatio()
-{
-    std::vector<double> imbalanceRatioList;
-    int posN=0;
-    int negN=0;
-    double imbalanceRatio=0;
-    int steps=1;
-    for(int i=0; i<trainN;i++)
-    {
-        double tempL=trainData->at(i)->back();
-        if(tempL==1.0)posN++;
-        else negN++;
-        
-        if(i==trainIndexEachUpdate[steps]-1)
-        {
-            imbalanceRatio=(double)negN/posN;
-            imbalanceRatioList.push_back(imbalanceRatio);
-            steps++;
-        }
-    }
-    return imbalanceRatioList;
-}
 void AbstractTestExample::SetTrainDataOnline(int startIndex, int endIndex)
 {
     trainIndexEachUpdate.resize(endIndex-startIndex+2);
@@ -478,7 +130,7 @@ void AbstractTestExample::SetTrainDataOnline(int startIndex, int endIndex)
     }
 }
 
-void AbstractTestExample::Run(int MaxIter)
+void AbstractTestExample::Run(int maxIter)
 {
     Sensitivity.clear();
     Specificity.clear();
@@ -489,8 +141,8 @@ void AbstractTestExample::Run(int MaxIter)
     compareSpecificity.clear();
     compareGmean.clear();
     compareTime.clear();
-
-    for(int idx=0;idx<MaxIter;idx++)
+    
+    for(int idx=0;idx<maxIter;idx++)
     {
         for(int i=0;i<instanceN/2;i++)
         {
@@ -505,8 +157,6 @@ void AbstractTestExample::Run(int MaxIter)
                 originData->at(idx2)=tempSample;
             }
         }
-        
-
         
         int posItrain=0;
         int negItrain=0;
@@ -540,43 +190,12 @@ void AbstractTestExample::Run(int MaxIter)
             }
         }
         
-//        // ensure the first training data trunck includes two classes
-//        bool singleClass=true;
-//        while(singleClass)
-//        {
-//            double firstL=trainData->at(0)->back();
-//            for(int i=1;i<trainIndexEachUpdate[1];i++)
-//            {
-//                double anotherL=trainData->at(i)->back();
-//                if(firstL!=anotherL)
-//                {
-//                    singleClass=false;
-//                    break;
-//                }
-//            }
-//            
-//            if(singleClass)
-//            {
-//                for(int i=0;i<trainIndexEachUpdate[1]/2;i++)
-//                {
-//                    int idx1=(double)trainN*rand()/RAND_MAX;
-//                    int idx2=(double)trainN*rand()/RAND_MAX;
-//                    if(idx1!=idx2)
-//                    {
-//                        std::shared_ptr<std::vector<double> > tempSample=trainData->at(idx1);
-//                        trainData->at(idx1)=trainData->at(idx2);
-//                        trainData->at(idx2)=tempSample;
-//                    }
-//                }
-//            }
-//        }
-        
         std::cout<<"iteration "<<idx<<", data prepared"<< std::endl;
         RandomForest::ORForest<double> rf;
-        rf.Init(20, 20,10);// tree number, depth, sample number in node
+        rf.Init(50, 20,10);// tree number, depth, sample number in node
         rf.SetSamplingType(RandomForest::DownSamplingMajority);
         rf.SetBalanceType(RandomForest::DynamicImbalanceAdaptableBootstrap);
-    
+        
         std::vector<double>  Sensitivity0;
         std::vector<double>  Specificity0;
         std::vector<double>  Gmean0;
@@ -632,7 +251,7 @@ void AbstractTestExample::Run(int MaxIter)
             compareTime0.push_back(during1);
             
             offrf.Predict(testData, &predict_off);
-
+            
             int PosN=0;
             int NegN=0;
             int correctPosPredict_on=0;
@@ -707,7 +326,7 @@ void AbstractTestExample::Run(int MaxIter)
         Sensitivity.push_back(Sensitivity0);
         Specificity.push_back(Specificity0);
         Gmean.push_back(Gmean0);
-
+        
         compareSensitivity.push_back(compareSensitivity0);
         compareSpecificity.push_back(compareSpecificity0);
         compareGmean.push_back(compareGmean0);
@@ -720,7 +339,7 @@ void AbstractTestExample::PrintPerformance()
     std::cout<<"sampleNumber ";
     std::cout<<"SensitivityMean std SpecificityMean std GmeanMean std ";
     std::cout<<"compareSensitivityMean std compareSpecificityMean std  compareGmeanMean std"<< std::endl;
-
+    
     std::vector<double> SensitivityMean;
     std::vector<double> SensitivityStd;
     std::vector<double> SpecificityMean;
@@ -743,7 +362,7 @@ void AbstractTestExample::PrintPerformance()
     GetMeanAndStd(compareSensitivity, &compareSensitivityMean, &compareSensitivityStd);
     GetMeanAndStd(compareSpecificity, &compareSpecificityMean, &compareSpecificityStd);
     GetMeanAndStd(compareGmean, &compareGmeanMean, &compareGmeanStd);
-
+    
     for(int i=0;i<SensitivityMean.size();i++)
     {
         std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
@@ -762,3 +381,344 @@ void AbstractTestExample::PrintPerformance()
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanStd[i]<<" "<< std::endl;
     }
 }
+
+void AbstractTestExample::PrintDataInformation()
+{
+    // print imbalance ratio after one data chunk arrives
+    int posN=0;
+    int negN=0;
+    double imbalanceRatio=0;
+    double sum=0;
+    double sumsq=0;
+    int steps=1;
+    for(int i=0; i<trainN;i++)
+    {
+        double tempL=trainData->at(i)->back();
+        if(tempL==1.0)posN++;
+        else negN++;
+        
+        if(i==trainIndexEachUpdate[steps]-1)
+        {
+            imbalanceRatio=(double)negN/posN;
+            sum+=imbalanceRatio;
+            sumsq+=imbalanceRatio*imbalanceRatio;
+            steps++;
+            double percent=(double)i/trainN;
+            std::cout<<std::setw(4)<< std::fixed<< std::setprecision(2)<<percent<<"   "
+                <<std::setw(4)<< std::fixed<< std::setprecision(2)<<imbalanceRatio<<std::endl;
+        }
+    }
+    
+    double meanImbalance=sum/(steps-1);
+    double std=sqrt(sumsq/(steps-1)-meanImbalance*meanImbalance);
+    double normalizedStd=std/meanImbalance;
+    std::cout<<"meanImbalance "<<meanImbalance<< std::endl;
+    std::cout<<"std "<<std<< std::endl;
+    std::cout<<"normalizedStd "<<normalizedStd<< std::endl;
+}
+
+std::vector<double> AbstractTestExample::GetImbalanceRatio()
+{
+    std::vector<double> imbalanceRatioList;
+    int posN=0;
+    int negN=0;
+    double imbalanceRatio=0;
+    int steps=1;
+    for(int i=0; i<trainN;i++)
+    {
+        double tempL=trainData->at(i)->back();
+        if(tempL==1.0)posN++;
+        else negN++;
+        
+        if(i==trainIndexEachUpdate[steps]-1)
+        {
+            imbalanceRatio=(double)negN/posN;
+            imbalanceRatioList.push_back(imbalanceRatio);
+            steps++;
+        }
+    }
+    return imbalanceRatioList;
+}
+
+int AbstractTestExample::GetTrainN() const
+{
+    return trainN;
+};
+
+void AbstractTestExample::GetMeanAndStd(std::vector<std::vector<double> > i_array, std::vector<double> * o_mean, std::vector<double> * o_std)
+{
+    int rows=i_array.size();
+    int column=i_array.at(0).size();
+    std::vector<double> sum(column);
+    std::vector<double> sumSq(column);
+    std::vector<double> mean(column);
+    std::vector<double> std(column);
+    for(int i=0;i<column;i++)
+    {
+        sum[i]=0;
+        sumSq[i]=0;
+    }
+    for(int i=0;i<rows;i++)
+    {
+        for(int j=0;j<column;j++)
+        {
+            double tempV=i_array.at(i).at(j);
+            sum[j]+=tempV;
+            sumSq[j]+=tempV*tempV;
+        }
+    }
+    
+    for(int i=0;i<column;i++)
+    {
+        mean[i]=sum[i]/rows;
+        std[i]=sqrt(sumSq[i]/rows-mean[i]*mean[i]);
+        o_mean->push_back(mean[i]);
+        o_std->push_back(std[i]);
+    }
+}
+
+bool AbstractTestExample::LoadCTGDataSet()
+{
+    std::string fileName="../../data/CTG.txt";
+    std::ifstream fileLoader(fileName.c_str());
+    if(!fileLoader.is_open())
+    {
+        std::cout<<"open file failed. "<<fileName<<" not found"<<std::endl;
+        return false;
+    }
+    featureN=21;
+    instanceN=2126;
+    positiveN=0;
+    negtiveN=0;
+    
+    featureTypeList.resize(featureN);
+    for(int i=0;i<featureN;i++)
+    {
+        featureTypeList[i]= (i==featureN-1) ? MULTINOMIAL : GAUSSIAN;
+    }
+    
+    double label;
+    double posLabel=8;//4,7
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
+    readData->reserve(instanceN);
+    for(int i=0;i<instanceN;i++)
+    {
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
+        tempSample->reserve(featureN+1);
+        for(int j=0;j<featureN;j++)
+        {
+            double tempV;
+            fileLoader>>tempV;
+            tempSample->push_back(tempV);
+        }
+        
+        fileLoader>>label;
+        if(label==posLabel)
+        {
+            tempSample->push_back(1);
+            positiveN++;
+        }
+        else{
+            tempSample->push_back(0);
+            negtiveN++;
+        }
+        readData->push_back(tempSample);
+    }
+    originData=readData;
+    std::cout<<"DataSet    Feature Value"<<std::endl;
+    std::cout<<"CTG        "<<posLabel<<std::endl;
+    UpdateDataInfo();
+    return true;
+}
+
+
+bool AbstractTestExample::LoadWineDataSet()
+{
+    std::string fileName="../../data/winequality.data";
+    std::ifstream fileLoader(fileName.c_str());
+    if(!fileLoader.is_open())
+    {
+        std::cout<<"open file failed. "<<fileName<<" not found"<<std::endl;
+        return false;
+    }
+    featureN=11;
+    instanceN=6497;
+    positiveN=0;
+    negtiveN=0;
+    
+    featureTypeList.resize(featureN);
+    for(int i=0;i<featureN;i++)
+    {
+        featureTypeList[i]= GAUSSIAN;
+    }
+    
+    int label;
+    int posLabel=8;//5,8
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
+    readData->reserve(instanceN);
+    for(int i=0;i<instanceN;i++)
+    {
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
+        tempSample->reserve(featureN+1);
+        
+        for(int j=0;j<featureN;j++)
+        {
+            double tempV;
+            fileLoader>>tempV;
+            tempSample->push_back(tempV);
+            char comma;
+            fileLoader>>comma;
+        }
+        
+        fileLoader>>label;
+        if(label==posLabel)
+        {
+            tempSample->push_back(1);
+            positiveN++;
+        }
+        else{
+            tempSample->push_back(0);
+            negtiveN++;
+        }
+        readData->push_back(tempSample);
+    }
+    originData=readData;
+    std::cout<<"DataSet    Feature Value"<<std::endl;
+    std::cout<<"Wine       "<<posLabel<<std::endl;
+    UpdateDataInfo();
+    
+    return true;
+}
+
+
+bool AbstractTestExample::LoadMuskDataSet()
+{
+    std::string fileName="../../data/musk1.data";
+    std::ifstream fileLoader(fileName.c_str());
+    if(!fileLoader.is_open())
+    {
+        std::cout<<"open file failed. "<<fileName<<" not found"<<std::endl;
+        return false;
+    }
+    featureN=166;
+    instanceN=476;//6598;//476
+    positiveN=0;
+    negtiveN=0;
+    
+    featureTypeList.resize(featureN);
+    for(int i=0;i<featureN;i++)
+    {
+        featureTypeList[i]= GAUSSIAN;
+    }
+    
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
+    readData->reserve(instanceN*2);
+    
+    int label;
+    int posLabel=1;
+    for(int i=0;i<instanceN;i++)
+    {
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
+        tempSample->reserve(featureN+1);
+        
+        std::string str1,str2;
+        fileLoader>>str1>>str2;
+        for(int j=0;j<featureN;j++)
+        {
+            double tempV;
+            fileLoader>>tempV;
+            tempSample->push_back(tempV);
+        }
+        
+        fileLoader>>label;
+        if(label==posLabel)
+        {
+            tempSample->push_back(1);
+            positiveN++;
+        }
+        else{
+            tempSample->push_back(0);
+            negtiveN++;
+        }
+        readData->push_back(tempSample);
+    }
+    originData=readData;
+    std::cout<<"DataSet   Feature Value"<<std::endl;
+    std::cout<<"Musk  "<<posLabel<<std::endl;
+    UpdateDataInfo();
+    return true;
+}
+
+bool AbstractTestExample::LoadBiodegDataSet()
+{
+    std::string fileName="../../data/biodeg.csv";
+    std::ifstream fileLoader(fileName.c_str());
+    if(!fileLoader.is_open())
+    {
+        std::cout<<"open file failed. "<<fileName<<" not found"<<std::endl;
+        return false;
+    }
+    featureN=41;
+    instanceN=1055;
+    positiveN=0;
+    negtiveN=0;
+    
+    featureTypeList.resize(featureN);
+    for(int i=0;i<featureN;i++)
+    {
+        featureTypeList[i]= GAUSSIAN;
+    }
+    
+    std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > readData(new std::vector<std::shared_ptr<std::vector<double> > >);
+    readData->reserve(instanceN*2);
+    
+    std::string label;
+    std::string posLabel="RB";
+    for(int i=0;i<instanceN;i++)
+    {
+        std::shared_ptr<std::vector<double> > tempSample(new std::vector<double>);
+        tempSample->reserve(featureN+1);
+        
+        for(int j=0;j<featureN;j++)
+        {
+            double tempV;
+            fileLoader>>tempV;
+            tempSample->push_back(tempV);
+            char comma;
+            fileLoader>>comma;
+        }
+        
+        fileLoader>>label;
+        if(label==posLabel)
+        {
+            tempSample->push_back(1);
+            positiveN++;
+        }
+        else{
+            tempSample->push_back(0);
+            negtiveN++;
+        }
+        readData->push_back(tempSample);
+    }
+    originData=readData;
+    std::cout<<"DataSet   Feature Value"<<std::endl;
+    std::cout<<"Biodeg  "<<posLabel<<std::endl;
+    UpdateDataInfo();
+    return true;
+}
+
+void AbstractTestExample::UpdateDataInfo()
+{
+    std::cout<<"postive   "<<positiveN<<std::endl;
+    std::cout<<"negative  "<<negtiveN<<std::endl;
+    std::cout<<"imbalance "<<std::setprecision(4)<<(double)negtiveN/positiveN<<std::endl;
+    
+    double testRate=0.2;
+    testN=instanceN*testRate;
+    trainN=instanceN-testN;
+    posNtest=positiveN*testRate;
+    negNtest=testN-posNtest;
+    posNtrain=positiveN-posNtest;
+    negNtrain=negtiveN-negNtest;
+}
+

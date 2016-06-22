@@ -31,7 +31,6 @@ RandomForest::ODTree<T>::ODTree()
 template<typename T>
 RandomForest::ODTree<T>::~ODTree()
 {
-    if(root) delete root;
     if(posTrainDataList) posTrainDataList.reset();
     if(negSampledList) negTrainDataList.reset();
     if(posSampledList) posSampledList.reset();
@@ -40,45 +39,9 @@ RandomForest::ODTree<T>::~ODTree()
 }
 
 template<typename T>
-int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
-{
-    double L=exp(-lambda);
-    int k=0;
-    double p=1;
-    do{
-        k=k+1;
-        double u=(double)rand()/RAND_MAX;
-        p=p*u;
-    }
-    while(p>L);
-    k=k-1;
-    return k;
-}
-
-template<typename T>
-void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list)
-{
-    o_list->reserve(Ns*bagFactor);
-    for(int i=0;i<Ns;i++)
-    {
-        double randNumber=(double)rand()/RAND_MAX;
-        if(randNumber>bagFactor)continue;
-        int k=GetPossionNumber(possionLambda);
-        for(int j=0;j<k;j++)
-        {
-            o_list->push_back(i);
-        }
-    }
-}
-
-template<typename T>
 void RandomForest::ODTree<T>::Reset()
 {
-    if(root)
-    {
-        delete root;
-        root=nullptr;
-    }
+    root=nullptr;
     trainData=nullptr;
     posTrainDataList=std::make_shared<std::vector<int> >();
     negTrainDataList=std::make_shared<std::vector<int> >();
@@ -88,6 +51,202 @@ void RandomForest::ODTree<T>::Reset()
     oldPosLambda=1.0;
     oldNegLambda=1.0;
 }
+
+
+
+template<typename T>
+void RandomForest::ODTree<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
+{
+    int oldNs=0;
+    if(trainData)
+    {
+        oldNs=trainData->size();
+    }
+    trainData=i_trainData;
+    std::shared_ptr<std::vector<int> > addSampleIndexList;
+    std::shared_ptr<std::vector<int> > rmvSampleIndexList;
+    
+    if(root==nullptr)//create tree
+    {
+        //online bagging
+        while (posSampledList->size()==0 || negSampledList->size()==0)
+        {
+            if(balanceType==SingleParameterBoostrap){
+                SingleParameterBoostrapSampling(oldNs,&addSampleIndexList);
+            }
+            else {//if (balanceType==MultipleParameterBoostrap || balanceType==DynamicImbalanceAdaptableBootstrap){
+                DynamicImbalanceAdaptiveBoostrapSampling(oldNs, &rmvSampleIndexList, &addSampleIndexList);
+            }
+        }
+        std::shared_ptr<Node<T> > tempRoot(new Node<T>(this));
+        root=tempRoot;
+        root->SetSampleIndexList(addSampleIndexList);
+        root->CreateTree();
+    }
+    else //update tree, now training data is the expanded data set
+    {
+        
+        if(balanceType==SingleParameterBoostrap){
+            SingleParameterBoostrapSampling(oldNs,&addSampleIndexList);
+            root->UpdateTree(addSampleIndexList);
+        }
+        else if (balanceType==MultipleParameterBoostrap){
+            MultipleParameterBoostrapSampling(oldNs, &addSampleIndexList);
+            root->UpdateTree(addSampleIndexList);
+        }
+        else//balanceType==DynamicImbalanceAdaptableBootstrap
+        {
+            DynamicImbalanceAdaptiveBoostrapSampling(oldNs,&rmvSampleIndexList, &addSampleIndexList);
+            root->UpdateTree(rmvSampleIndexList, addSampleIndexList);
+            std::shared_ptr<std::vector<int> > newPosSampleList(new std::vector<int>);
+            std::shared_ptr<std::vector<int> > newNegSampleList(new std::vector<int>);
+            root->GetSampleList(newPosSampleList, newNegSampleList);
+            posSampledList=newPosSampleList;
+            negSampledList=newNegSampleList;
+        }
+    }
+}
+
+template<typename T>
+void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_forecast)
+{
+    std::vector<float> *tempPredict=new std::vector<float>;
+    tempPredict->resize(i_testData->size());
+    for(int i=0;i<i_testData->size();i++)
+    {
+        tempPredict->at(i)=root->PredictOneSample(i_testData->at(i));
+    }
+    *o_forecast=tempPredict;
+}
+
+
+template<typename T>
+double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
+{
+    double incorrectPrediction=0;
+    for(int i=0;i<i_testData->size();i++)
+    {
+        double prediction=root->PredictOneSample(i_testData->at(i));
+        double trueLabel=i_testData->at(i)->at(i_testData->at(i)->size()-1);
+        if((prediction>=0.5 && trueLabel<0.5) || (prediction<0.5 && trueLabel>=0.5))
+        {
+            incorrectPrediction++;
+        }
+    }
+    double oobe=-1;
+    
+    oobe=incorrectPrediction/i_testData->size();
+    return oobe;
+}
+
+template<typename T>
+std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >
+RandomForest::ODTree<T>::GetTrainData() const
+{
+    return trainData;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetActureTreeDepth(int d)
+{
+    actureTreeDepth=d;
+};
+
+template<typename T>
+int RandomForest::ODTree<T>::GetActureTreeDepth() const
+{
+    return actureTreeDepth;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetDepthUpperBound(int d)
+{
+    depthUpperBound=d;
+};
+
+template<typename T>
+int RandomForest::ODTree<T>::GetDepthUpperBound() const
+{
+    return depthUpperBound;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetActureTreeNode(int n)
+{
+    actureTreeNode=n;
+};
+
+template<typename T>
+int RandomForest::ODTree<T>::GetActureTreeNode() const
+{
+    return actureTreeNode;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetVarTreshold(double t)
+{
+    varThreshold=t;
+};
+
+template<typename T>
+double RandomForest::ODTree<T>::GetVarThreshold() const
+{
+    return varThreshold;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetSampleNumberThreshold(int n)
+{
+    sampleNumberThreshold=n;
+};
+
+template<typename T>
+int RandomForest::ODTree<T>::GetSampleNumberThreshold() const
+{
+    return sampleNumberThreshold;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetBalanceType(BalanceType type)
+{
+    balanceType=type;
+};
+
+template<typename T>
+RandomForest::BalanceType RandomForest::ODTree<T>::GetBalanceType() const
+{
+    return balanceType;
+};
+
+template<typename T>
+void RandomForest::ODTree<T>::SetSamplingType(SamplingType type)
+{
+    samplingType=type;
+};
+
+template<typename T>
+RandomForest::SamplingType RandomForest::ODTree<T>::GetSamplingType() const
+{
+    return samplingType;
+};
+
+
+template<typename T>
+void RandomForest::ODTree<T>::UpdateGiniImportance()
+{
+    giniImportance->resize(trainData->at(0)->size()-1);
+    for(int i=0;i<giniImportance->size();i++) giniImportance->at(i)=0.0;
+    root->UpdateGiniImportance();
+}
+
+template<typename T>
+std::shared_ptr<std::vector<double> > RandomForest::ODTree<T>::GetGiniImportance() const
+{
+    return giniImportance;
+};
+
+
+////private functions
 
 template<typename T>
 void RandomForest::ODTree<T>::UpdateTrainDataList(int oldNs)
@@ -344,144 +503,39 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     oldNegLambda=newNegLambda;
 }
 
+
 template<typename T>
-void RandomForest::ODTree<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
+int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
 {
-    int oldNs=0;
-    if(trainData)
-    {
-        oldNs=trainData->size();
+    double L=exp(-lambda);
+    int k=0;
+    double p=1;
+    do{
+        k=k+1;
+        double u=(double)rand()/RAND_MAX;
+        p=p*u;
     }
-    trainData=i_trainData;
-    std::shared_ptr<std::vector<int> > addSampleIndexList;
-    std::shared_ptr<std::vector<int> > rmvSampleIndexList;
-    
-	if(root==nullptr)//create tree
-	{
-		//online bagging
-        while (posSampledList->size()==0 || negSampledList->size()==0)
-        {
-            if(balanceType==SingleParameterBoostrap){
-                SingleParameterBoostrapSampling(oldNs,&addSampleIndexList);
-            }
-            else {//if (balanceType==MultipleParameterBoostrap || balanceType==DynamicImbalanceAdaptableBootstrap){
-                DynamicImbalanceAdaptiveBoostrapSampling(oldNs, &rmvSampleIndexList, &addSampleIndexList);
-            }
-        }
-        root=new Node<T>;
-		root->SetTree(this);
-		root->SetSampleIndexList(addSampleIndexList);
-		root->CreateTree();
-	}
-	else //update tree, now training data is the expanded data set
-	{
-        if(balanceType==SingleParameterBoostrap){
-            SingleParameterBoostrapSampling(oldNs,&addSampleIndexList);
-            root->UpdateTree(addSampleIndexList);
-        }
-        else if (balanceType==MultipleParameterBoostrap){
-            MultipleParameterBoostrapSampling(oldNs, &addSampleIndexList);
-            root->UpdateTree(addSampleIndexList);
-        }
-        else//balanceType==DynamicImbalanceAdaptableBootstrap
-        {
-            DynamicImbalanceAdaptiveBoostrapSampling(oldNs,&rmvSampleIndexList, &addSampleIndexList);
-            root->UpdateTree(rmvSampleIndexList, addSampleIndexList);
-            std::shared_ptr<std::vector<int> > newPosSampleList(new std::vector<int>);
-            std::shared_ptr<std::vector<int> > newNegSampleList(new std::vector<int>);
-            root->GetSampleList(newPosSampleList, newNegSampleList);
-            posSampledList=newPosSampleList;
-            negSampledList=newNegSampleList;
-        }
-	}
+    while(p>L);
+    k=k-1;
+    return k;
 }
 
+
 template<typename T>
-void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_forecast)
+void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list)
 {
-    std::vector<float> *tempPredict=new std::vector<float>;
-    tempPredict->resize(i_testData->size());
-    for(int i=0;i<i_testData->size();i++)
+    o_list->reserve(Ns*bagFactor);
+    for(int i=0;i<Ns;i++)
     {
-        tempPredict->at(i)=root->PredictOneSample(i_testData->at(i));
-    }
-    *o_forecast=tempPredict;
-}
-
-template<typename T>
-void RandomForest::ODTree<T>::UpdateGiniImportance()
-{
-    giniImportance->resize(trainData->at(0)->size()-1);
-    for(int i=0;i<giniImportance->size();i++) giniImportance->at(i)=0.0;
-    root->UpdateGiniImportance();
-}
-
-template<typename T>
-double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
-{
-    double incorrectPrediction=0;
-    for(int i=0;i<i_testData->size();i++)
-    {
-        double prediction=root->PredictOneSample(i_testData->at(i));
-        double trueLabel=i_testData->at(i)->at(i_testData->at(i)->size()-1);
-        if((prediction>=0.5 && trueLabel<0.5) || (prediction<0.5 && trueLabel>=0.5))
-       {
-           incorrectPrediction++;
-       }
-    }
-    double oobe=-1;
-    
-    oobe=incorrectPrediction/i_testData->size();
-    return oobe;
-}
-
-template<typename T>
-double RandomForest::ODTree<T>::GetBalancedOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
-{
-    double incorPredPos=0;
-    double incorPredNeg=0;
-    double totalPredPos=0;
-    double totalPredNeg=0;
-    for(int i=0;i<i_testData->size();i++)
-    {
-        T tempLabel=i_testData->at(i)->back();
-        if(tempLabel<0.5)
+        double randNumber=(double)rand()/RAND_MAX;
+        if(randNumber>bagFactor)continue;
+        int k=GetPossionNumber(possionLambda);
+        for(int j=0;j<k;j++)
         {
-            if(root->PredictOneSample(i_testData->at(i))>=0.5)
-            {
-                incorPredNeg++;
-            }
-            totalPredNeg++;
-        }
-        else if(tempLabel>=0.5)
-        {
-            if(root->PredictOneSample(i_testData->at(i))<0.5)
-            {
-                incorPredPos++;
-            }
-            totalPredPos++;
+            o_list->push_back(i);
         }
     }
-    double errorRatePos=0;
-    double errorRateNeg=0;
-    
-    if(totalPredPos>0)errorRatePos=incorPredPos/totalPredPos;
-    if(totalPredNeg>0)errorRateNeg=incorPredNeg/totalPredNeg;
-    return (errorRatePos+errorRateNeg)/2;
 }
-
-template<typename T>
-void RandomForest::ODTree<T>::ConvertTreeToList(int * io_left, int * io_right,
-        int *io_splitFeature, double *io_splitValue)
-{
-    int currentListIndex=0;
-    int globalListIndex=0;
-    root->ConvertTreeToList(io_left, io_right, 
-        io_splitFeature, io_splitValue,
-        currentListIndex,&globalListIndex);
-}
-
-
 
 template class RandomForest::ODTree<double>;
 template class RandomForest::ODTree<float>;

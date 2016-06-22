@@ -36,7 +36,7 @@ void getFeatureRange(const std::shared_ptr<std::vector<std::shared_ptr<std::vect
 //Node
 ////////////////////////////
 template<typename T>
-RandomForest::Node<T>::Node()
+RandomForest::Node<T>::Node(ODTree<T> * parentTree)
 {
     left=nullptr;
     right=nullptr;
@@ -44,14 +44,29 @@ RandomForest::Node<T>::Node()
     splitValue=0;
     depth=0;
     sampleIndexList=nullptr;
-    tree=NULL;
+    tree=parentTree;
 }
 
 template<typename T>
 RandomForest::Node<T>::~Node()
 {
-    if(left)  delete left;
-    if(right) delete right;
+}
+
+template<typename T>
+void RandomForest::Node<T>::GetFeatureRange(int fIndex,T * min,T * max)
+{
+   	T tempMin=100000;
+    T tempMax=-100000;
+    for (int i=0;i<sampleIndexList->size();i++)
+    {
+        int sampleIndex=sampleIndexList->at(i);
+        T value=tree->GetTrainData()->at(sampleIndex)->at(fIndex);
+        if(value>tempMax)tempMax=value;
+        if(value<tempMin)tempMin=value;
+    }
+    
+    *min=tempMin;
+    *max=tempMax;
 }
 
 template<typename T>
@@ -59,13 +74,13 @@ void RandomForest::Node<T>::binSplitDataSet(const std::shared_ptr<std::vector<in
                               std::shared_ptr<std::vector<int> > o_indexList0, std::shared_ptr<std::vector<int> > o_indexList1)
 {
     //cout<<"binSplitDataSet started"<< std::endl;
-    if(tree->TrainData()==nullptr)return;
+    if(tree->GetTrainData()==nullptr)return;
     o_indexList0->reserve(i_indexList->size());
     o_indexList1->reserve(i_indexList->size());
     for(int i=0;i<i_indexList->size();i++)
     {
         int sampleIndex=i_indexList->at(i);
-        T value=tree->TrainData()->at(sampleIndex)->at(featureIdx);
+        T value=tree->GetTrainData()->at(sampleIndex)->at(featureIdx);
         if(value>featureValue)
         {
             o_indexList0->push_back(sampleIndex);
@@ -78,138 +93,15 @@ void RandomForest::Node<T>::binSplitDataSet(const std::shared_ptr<std::vector<in
 }
 
 template<typename T>
-double RandomForest::Node<T>::meanLeaf()
-{
-    if(sampleIndexList==nullptr || sampleIndexList->size()==0)return -1;
-    T sum=0;
-    for (int i=0;i<sampleIndexList->size();i++)
-    {
-        int sampleIndex=sampleIndexList->at(i);
-        T label=tree->TrainData()->at(sampleIndex)->back();
-        sum=sum+label;
-    }
-    double mean=(double)sum/sampleIndexList->size();
-    return mean;
-}
-
-template<typename T>
-void RandomForest::Node<T>::GetFeatureRange(int fIndex,T * min,T * max)
-{
-   	T tempMin=100000;
-    T tempMax=-100000;
-    for (int i=0;i<sampleIndexList->size();i++)
-    {
-        int sampleIndex=sampleIndexList->at(i);
-        T value=tree->TrainData()->at(sampleIndex)->at(fIndex);
-        if(value>tempMax)tempMax=value;
-        if(value<tempMin)tempMin=value;
-    }
-    
-    *min=tempMin;
-    *max=tempMax;
-}
-
-template<typename T>
-double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList)
-{
-    //	double sum=0;
-    //	double sq_sum=0;
-    //	for (int i=0;i<sampleNumber;i++)
-    //	{
-    //		int sampleIndex=i_sampleIndexList[i];
-    //		double label=getDataValue(i_dataSet,Ns,Nfp1,sampleIndex,Nfp1-1);
-    //		sum=sum+label;
-    //		sq_sum=sq_sum+label*label;
-    //	}
-    //	double mean=sum/sampleNumber;
-    //	double var=sqrt(sq_sum/sampleNumber-mean*mean);
-    //	return var*sampleNumber;
-    
-    // Gini index
-    if(i_sampleIndexList==nullptr)return -1;
-    double N0=0;
-    double N1=0;
-    int sampleNumber=i_sampleIndexList->size();
-    for (int i=0;i<sampleNumber;i++)
-    {
-        int sampleIndex=i_sampleIndexList->at(i);
-        T label=tree->TrainData()->at(sampleIndex)->back();
-        if(label>=1)
-        {
-            N1++;
-        }
-        else
-        {
-            N0++;
-        }
-    }
-    return (1.0-(N0/sampleNumber)*(N0/sampleNumber)-(N1/sampleNumber)*(N1/sampleNumber))*sampleNumber;
-}
-template<typename T>
-double RandomForest::Node<T>::impurityLeafWithWeight(const std::shared_ptr<std::vector<int> > i_sampleIndexList, double * w1, double * w0)
-{
-   	if(i_sampleIndexList==nullptr)return -1;
-    double N0=0;
-    double N1=0;
-    int sampleNumber=i_sampleIndexList->size();
-    for (int i=0;i<sampleNumber;i++)
-    {
-        int sampleIndex=i_sampleIndexList->at(i);
-        T label=tree->TrainData()->at(sampleIndex)->back();
-        if(label>=1)
-        {
-            N1++;
-        }
-        else
-        {
-            N0++;
-        }
-    }
-    double tempW1=N1>N0?1.0:N0/N1;
-    double tempW0=N1>N0?N1/N0:1.0;
-    double tempN=tempW1*N1+tempW0*N0;
-    double p1=tempW1*N1/tempN;
-    double p0=1.0-p1;
-    *w1=tempW1;
-    *w0=tempW0;
-    return (1.0-p1*p1-p0*p0)*tempN;
-}
-template<typename T>
-double RandomForest::Node<T>::impurityLeafWithWeight(const std::shared_ptr<std::vector<int> > i_sampleIndexList, double w1, double w0)
-{
-   	if(i_sampleIndexList==nullptr)return -1;
-    double N0=0;
-    double N1=0;
-    int sampleNumber=i_sampleIndexList->size();
-    for (int i=0;i<sampleNumber;i++)
-    {
-        int sampleIndex=i_sampleIndexList->at(i);
-        T label=tree->TrainData()->at(sampleIndex)->back();
-        if(label>=1)
-        {
-            N1++;
-        }
-        else
-        {
-            N0++;
-        }
-    }
-    double tempN=w1*N1+w0*N0;
-    double p1=w1*N1/tempN;
-    double p0=1.0-p1;
-    return (1.0-p1*p1-p0*p0)*tempN;
-}
-
-template<typename T>
 void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_bestFeatureValue, double * o_decreadedImpurity)
 {
     bool singleCls=true;
-    T label0=tree->TrainData()->at(sampleIndexList->at(0))->back();
+    T label0=tree->GetTrainData()->at(sampleIndexList->at(0))->back();
     int sampleNumber=sampleIndexList->size();
     for(int i=0;i<sampleNumber;i++)
     {
         int sampleIndex=sampleIndexList->at(i);
-        T label=tree->TrainData()->at(sampleIndex)->back();
+        T label=tree->GetTrainData()->at(sampleIndex)->back();
         if(label!=label0)
         {
             singleCls=false;
@@ -227,11 +119,11 @@ void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_best
     bestS=S;
     
     // randomly selected features for split
-    int Nfsq=sqrt(tree->TrainData()->at(0)->size()-1)+1;
+    int Nfsq=sqrt(tree->GetTrainData()->at(0)->size()-1)+1;
     for(int i=0;i<Nfsq;i++)
     {
         double randf=(double)rand()/RAND_MAX;
-        int fIndex=(tree->TrainData()->at(0)->size()-1)*randf;
+        int fIndex=(tree->GetTrainData()->at(0)->size()-1)*randf;
         T max=0;
         T min=0;
         GetFeatureRange(fIndex, &min, &max);
@@ -263,6 +155,49 @@ void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_best
     }
 }
 
+
+template<typename T>
+double RandomForest::Node<T>::meanLeaf()
+{
+    if(sampleIndexList==nullptr || sampleIndexList->size()==0)return -1;
+    T sum=0;
+    for (int i=0;i<sampleIndexList->size();i++)
+    {
+        int sampleIndex=sampleIndexList->at(i);
+        T label=tree->GetTrainData()->at(sampleIndex)->back();
+        sum=sum+label;
+    }
+    double mean=(double)sum/sampleIndexList->size();
+    return mean;
+}
+
+
+
+template<typename T>
+double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList)
+{
+    // Gini index
+    if(i_sampleIndexList==nullptr)return -1;
+    double N0=0;
+    double N1=0;
+    int sampleNumber=i_sampleIndexList->size();
+    for (int i=0;i<sampleNumber;i++)
+    {
+        int sampleIndex=i_sampleIndexList->at(i);
+        T label=tree->GetTrainData()->at(sampleIndex)->back();
+        if(label>=1)
+        {
+            N1++;
+        }
+        else
+        {
+            N0++;
+        }
+    }
+    return (1.0-(N0/sampleNumber)*(N0/sampleNumber)-(N1/sampleNumber)*(N1/sampleNumber))*sampleNumber;
+}
+
+
 template<typename T>
 void RandomForest::Node<T>::CreateTree()
 {
@@ -290,45 +225,25 @@ void RandomForest::Node<T>::CreateTree()
     binSplitDataSet(sampleIndexList, bestFeatureIndex,  bestFeatureValue,
                     indexList0,indexList1);
     
-//    std::shared_ptr<Node<T> > leftchild(new Node<T>);
-    Node<T> *leftchild=new Node<T>;
+    std::shared_ptr<Node<T> > leftchild(new Node<T>(GetTree()));
     leftchild->SetDepth(depth+1);
     if(leftchild->GetDepth() > tree->GetActureTreeDepth())
     {
         tree->SetActureTreeDepth(leftchild->GetDepth());
     }
     leftchild->SetSampleIndexList(indexList0);
-    leftchild->SetTree(tree);
     leftchild->CreateTree();
     left=leftchild;
     
-//    std::shared_ptr<Node<T> >  rightchild(new Node<T>);
-    Node<T> *rightchild=new Node<T>;
+    std::shared_ptr<Node<T> >  rightchild(new Node<T>(GetTree()));
     rightchild->SetDepth(depth+1);
     if(rightchild->GetDepth() > tree->GetActureTreeDepth())
     {
         tree->SetActureTreeDepth(rightchild->GetDepth());
     }
     rightchild->SetSampleIndexList(indexList1);
-    rightchild->SetTree(tree);
     rightchild->CreateTree();
     right=rightchild;
-}
-
-template<typename T>
-void RandomForest::Node<T>::UpdateGiniImportance()
-{
-    if(featureIndex==-1)
-    {
-        return;
-    }
-    else
-    {
-        double oldImportance=tree->GiniImportance()->at(featureIndex);
-        tree->GiniImportance()->at(featureIndex)=oldImportance+ decreasedImpurity;
-        left->UpdateGiniImportance();
-        right->UpdateGiniImportance();
-    }
 }
 
 template<typename T>
@@ -382,10 +297,8 @@ int RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> > i
     binSplitDataSet(i_addSampleList, featureIndex, splitValue, addSampleList0, addSampleList1);
     int leftSize=left->UpdateTree(rmvSampleList0, addSampleList0);
     int rightSize=right->UpdateTree(rmvSampleList1, addSampleList1);
-//    if(leftSize==0 || rightSize==0)
     if(i_rmvSampleList->size()>0 || i_addSampleList->size()>0)
     {
-//        if(leftSize==0 || rightSize==0 || left->GetFeatureIndex()==-1 || right->GetFeatureIndex()==-1)
         if(leftSize==0 || rightSize==0 )
         {
             sampleIndexList->clear();
@@ -406,7 +319,7 @@ void RandomForest::Node<T>::GetSampleList(std::shared_ptr<std::vector<int> > o_p
         for(int i=0;i<sampleIndexList->size();i++)
         {
             int tempIndex=sampleIndexList->at(i);
-            T label=tree->TrainData()->at(tempIndex)->back();
+            T label=tree->GetTrainData()->at(tempIndex)->back();
             if(label>0)
             {
                 o_posSampleList->push_back(tempIndex);
@@ -422,14 +335,81 @@ void RandomForest::Node<T>::GetSampleList(std::shared_ptr<std::vector<int> > o_p
 }
 
 template<typename T>
-RandomForest::Node<T> * RandomForest::Node<T>::GetLeft() const {
+void RandomForest::Node<T>::SetLeft(std::shared_ptr<RandomForest::Node<T> > l)
+{
+    left=l;
+};
+
+template<typename T>
+std::shared_ptr<RandomForest::Node<T> > RandomForest::Node<T>::GetLeft() const
+{
     return left;
 }
 
 template<typename T>
-RandomForest::Node<T> * RandomForest::Node<T>::GetRight() const {
+void RandomForest::Node<T>::SetRight(std::shared_ptr<RandomForest::Node<T> > r)
+{
+    right=r;
+};
+
+template<typename T>
+std::shared_ptr<RandomForest::Node<T> > RandomForest::Node<T>::GetRight() const
+{
     return right;
 }
+template<typename T>
+void RandomForest::Node<T>::SetFeatureIndex(int idx)
+{
+    featureIndex=idx;
+};
+
+template<typename T>
+int RandomForest::Node<T>::GetFeatureIndex() const
+{
+    return featureIndex;
+};
+
+template<typename T>
+void RandomForest::Node<T>::SetSplitValue(double v)
+{
+    splitValue=v;
+};
+
+template<typename T>
+double RandomForest::Node<T>::GetSplitValue() const
+{
+    return splitValue;
+};
+
+template<typename T>
+void RandomForest::Node<T>::SetDepth(int d)
+{
+    depth=d;
+};
+
+template<typename T>
+int RandomForest::Node<T>::GetDepth() const
+{
+    return depth;
+};
+
+template<typename T>
+void RandomForest::Node<T>::SetSampleIndexList(std::shared_ptr<std::vector<int> > list)
+{
+    sampleIndexList=list;
+};
+
+template<typename T>
+std::shared_ptr<std::vector<int> > RandomForest::Node<T>::GetSampleIndexList()
+{
+    return sampleIndexList;
+};
+
+template<typename T>
+RandomForest::ODTree<T> * RandomForest::Node<T>::GetTree() const
+{
+    return tree;
+};
 
 template<typename T>
 double RandomForest::Node<T>::PredictOneSample(const std::shared_ptr<std::vector<T> > i_inData)
@@ -449,29 +429,21 @@ double RandomForest::Node<T>::PredictOneSample(const std::shared_ptr<std::vector
 }
 
 template<typename T>
-void RandomForest::Node<T>::ConvertTreeToList(int * io_left, int * io_right,
-                                int *io_splitFeature, double *io_splitValue,
-                                int currentListIndex, int * io_globalListIndex)
+void RandomForest::Node<T>::UpdateGiniImportance()
 {
-    io_splitFeature[currentListIndex]=featureIndex;
-    io_splitValue[currentListIndex]=splitValue;
-    if(featureIndex!=-1)
+    if(featureIndex==-1)
     {
-        *io_globalListIndex=*io_globalListIndex+1;
-        int leftListIndex=*io_globalListIndex;
-        io_left[currentListIndex]=leftListIndex;
-        left->ConvertTreeToList(io_left, io_right, 
-                                io_splitFeature, io_splitValue, 
-                                leftListIndex, io_globalListIndex);
-        
-        *io_globalListIndex=*io_globalListIndex+1;
-        int rightListIndex=*io_globalListIndex;
-        io_right[currentListIndex]=rightListIndex;
-        right->ConvertTreeToList(io_left, io_right, 
-                                 io_splitFeature, io_splitValue, 
-                                 rightListIndex, io_globalListIndex);
+        return;
+    }
+    else
+    {
+        double oldImportance=tree->GetGiniImportance()->at(featureIndex);
+        tree->GetGiniImportance()->at(featureIndex)=oldImportance+ decreasedImpurity;
+        left->UpdateGiniImportance();
+        right->UpdateGiniImportance();
     }
 }
+
 
 template class RandomForest::Node<double>;
 template class RandomForest::Node<float>;

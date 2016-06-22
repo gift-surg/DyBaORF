@@ -56,6 +56,7 @@ void RFTestExample::Run(int MaxIter)
     int sampleN=6;
     for(int idx=0;idx<MaxIter;idx++)
     {
+        std::cout<<"iter="<<idx<<std::endl;
         bool singleClass=true;
         while(singleClass)
         {

@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     if(testExample.LoadData(BIODEG)) //DataSetName: BIODEG, MUSK, CTG, WINE
     {
         testExample.SetTrainDataChunk(0.5,1.0, 0.05);
-        testExample.Run(100);
+        testExample.Run(4);
         testExample.PrintPerformance();
     }
     return EXIT_SUCCESS;

@@ -13,13 +13,13 @@ set (RF_SOURCES_SOURCE ${RF_SOURCES_DIR}/Node.cpp
 
 
 FILE(GLOB HEADERS RF_SOURCES_HEADER Test/*.h)
-FILE(GLOB SOURCES_FILES main.cpp ${RF_SOURCES_SOURCE} Test/*.cpp ${HEADERS})
+FILE(GLOB SOURCES_FILES main.cpp ${RF_SOURCES_SOURCE} Test/*.cpp ${HEADERS} RF/*.h)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${RF_SOURCES_DIR})
 
 ADD_EXECUTABLE(DyBaORF_test ${SOURCES_FILES})
 
-source_group(RF\\Headers FILES ${RF_SOURCES_HEADER})
+source_group(RF\\Headers REGULAR_EXPRESSION "RF/.*\\.h")
 source_group(RF\\Sources FILES ${RF_SOURCES_SOURCE})
 
 source_group(Test\\Headers REGULAR_EXPRESSION "Test/.*\\.h")

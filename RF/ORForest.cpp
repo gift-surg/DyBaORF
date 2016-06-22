@@ -21,7 +21,6 @@ RandomForest::ORForest<T>::ORForest()
 	treeNumber=20;
 	maxDepth=10;
 	leastNsample=10;
-	trees=NULL;
     trainData=nullptr;;
     testData=nullptr;
     testDataRatio=0.3;
@@ -33,7 +32,6 @@ RandomForest::ORForest<T>::ORForest()
 template<typename T>
 RandomForest::ORForest<T>::~ORForest()
 {
-    Clear();
 }
 
 template<typename T>
@@ -47,10 +45,9 @@ void RandomForest::ORForest<T>::Init(int Ntree,int treeDepth, int leastNsampleFo
 template<typename T>
 void RandomForest::ORForest<T>::Clear()
 {
-    if(trees)
+    if(trees.size()>0)
     {
-        delete [] trees;
-        trees=NULL;
+        trees.resize(0);
     }
     if(trainData)
     {
@@ -64,7 +61,35 @@ void RandomForest::ORForest<T>::Clear()
     }
 }
 
+template<typename T>
+void RandomForest::ORForest<T>::SetBalanceType(BalanceType type)
+{
+    balanceType=type;
+};
 
+template<typename T>
+RandomForest::BalanceType RandomForest::ORForest<T>::GetBalanceType() const
+{
+    return balanceType;
+};
+
+template<typename T>
+void RandomForest::ORForest<T>::SetSamplingType(RandomForest::SamplingType type)
+{
+    samplingType=type;
+};
+
+template<typename T>
+RandomForest::SamplingType RandomForest::ORForest<T>::GetSamplingType() const
+{
+    return samplingType;
+};
+
+template<typename T>
+void RandomForest::ORForest<T>::DisableOnlineUpdate()
+{
+    onlineUpdate=false;
+};
 
 template<typename T>
 void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
@@ -161,8 +186,8 @@ void RandomForest::ORForest<T>::Train(const T *i_trainData, int i_Ns, int i_Nfp1
 template<typename T>
 void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
 {
-	if(trees==nullptr || onlineUpdate==false)
-	{
+    if(trees.size()==0 || onlineUpdate==false)
+    {
         int posN=0, negN=0;
         while(posN==0 || negN==0)
         {
@@ -174,14 +199,12 @@ void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::sha
                 else negN++;
             }
         }
-//        int newNs=trainData->size();
-        if(trees)
-        {
-            delete [] trees;
-        }
-        trees=new ODTree<T>[treeNumber];
-		for(int i=0;i<treeNumber;i++)
+
+        trees.resize(treeNumber);
+        for(int i=0;i<treeNumber;i++)
 		{
+            ODTree<T> tempTree;
+            trees[i]=tempTree;
 			trees[i].SetDepthUpperBound(maxDepth);
             trees[i].SetSampleNumberThreshold(leastNsample);
             trees[i].SetBalanceType(balanceType);
@@ -242,27 +265,7 @@ int RandomForest::ORForest<T>::GetActureMaxTreeDepth()
     return tempD;
 }
 
-template<typename T>
-double RandomForest::ORForest<T>::GetAverageOOBE()
-{
-    double oobe=0;
-    for(int i=0;i<treeNumber;i++)
-    {
-        oobe+=trees[i].GetOOBE(testData);
-    }
-    return oobe/treeNumber;
-}
 
-template<typename T>
-double RandomForest::ORForest<T>::GetAverageBalancedOOBE()
-{
-    double balancedOobe=0;
-    for(int i=0;i<treeNumber;i++)
-    {
-        balancedOobe+=trees[i].GetBalancedOOBE(testData);
-    }
-    return balancedOobe/treeNumber;
-}
 template<typename T>
 int RandomForest::ORForest<T>::GetActureMaxTreeNode()
 {
@@ -276,6 +279,18 @@ int RandomForest::ORForest<T>::GetActureMaxTreeNode()
     }
     return n;
 }
+
+template<typename T>
+double RandomForest::ORForest<T>::GetAverageOOBE()
+{
+    double oobe=0;
+    for(int i=0;i<treeNumber;i++)
+    {
+        oobe+=trees[i].GetOOBE(testData);
+    }
+    return oobe/treeNumber;
+}
+
 
 template<typename T>
 void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::vector<int> > * o_featureIndexList,  std::shared_ptr<std::vector<double> > * o_giniImportanceList)
@@ -294,7 +309,7 @@ void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::ve
         trees[i].UpdateGiniImportance();
         for(int j=0;j<featureIndexList->size();j++)
         {
-            giniImportanceList->at(j)=giniImportanceList->at(j)+trees[i].GiniImportance()->at(j);
+            giniImportanceList->at(j)=giniImportanceList->at(j)+trees[i].GetGiniImportance()->at(j);
         }
     }
     
@@ -319,19 +334,6 @@ void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::ve
     
     *o_featureIndexList=featureIndexList;
     *o_giniImportanceList=giniImportanceList;
-}
-
-
-template<typename T>
-void RandomForest::ORForest<T>::ConvertTreeToList(int * io_left, int * io_right,
-        int *io_splitFeature, double *io_splitValue,
-        int maxNodeNumber)
-{
-	for(int i=0;i<treeNumber;i++)
-	{
-        trees[i].ConvertTreeToList(io_left+i*maxNodeNumber, io_right+i*maxNodeNumber,
-        	io_splitFeature+i*maxNodeNumber, io_splitValue+i*maxNodeNumber);
-	}
 }
 
 
