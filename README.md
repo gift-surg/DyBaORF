@@ -1,9 +1,9 @@
 DyBa ORF
 --------
 DyBa ORF is a Dymanically Balanced Online Random Forest, which addresses three problems in learning with Random Forests:  
-1). Online learning. It can accept gradually arrived training data and update the model on-the-fly.
-2). Data imbalance. It deals with imbalanced data of different classes, avoiding low correct rate of classification for minor class.
-3). Changing imbalance ratio. The ratio (degree) of imbalance may dynamically change when new training data arrive sequentially. Compared with traditionaly Online Random Forest (Saffari, A. 2009, Barinova, O. 2012) which assumes the imblance ratio do not change,
+* Online learning. It can accept gradually arrived training data and update the model on-the-fly.
+* Data imbalance. It deals with imbalanced data of different classes, avoiding low correct rate of classification for minor class.
+* Changing imbalance ratio. The ratio (degree) of imbalance may dynamically change when new training data arrive sequentially. Compared with traditionaly Online Random Forest (Saffari, A. 2009, Barinova, O. 2012) which assumes the imblance ratio do not change,
     DyBa ORF updates the model dynamically with the ability to be adapted to new imbalance ratio.
 
 DyBa ORF was was developed as part of the [GIFT-Surg][giftsurg] project. The algorithm and software were developed by [Guotai Wang][guotai] at the [Translational Imaging Group][tig] in the [Centre for Medical Image Computing][cmic] at [University College London (UCL)][ucl].
@@ -13,8 +13,7 @@ How to cite
 
 If you use this software, please cite this paper:
 
-Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin
-Dynamically Balanced Online Random Forests for Interactive Segmentation, MICCAI 2016. (accepted)
+Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin. Dynamically Balanced Online Random Forests for Interactive Segmentation, MICCAI 2016. (accepted)
 
 Software links
 --------------
@@ -39,12 +38,12 @@ The current version of DyBa ORF requries:
 How to use
 -------------------
 
-1, Suppose the source code directory is $DyBaORF, create a new folder named "build" under that.
-2, Switch to the $DyBaORF directory.
-3, Open Cmake, set the source code directory as $DyBaORF, and set the build directory as $DyBaORF/build.
-4, Click Configure, select the c++ compile you use. (VS in Windows, Clang++ in Mac, gcc in Linux)
-5, Click Generate to generate the project, which can be found at $DyBaORF/build.
-6, Go to $DyBaORF/build to open the generated project, compile it and then you can run it.
+- 1, Suppose the source code directory is $DyBaORF, create a new folder named "build" under that.
+- 2, Switch to the $DyBaORF directory.
+- 3, Open Cmake, set the source code directory as $DyBaORF, and set the build directory as $DyBaORF/build.
+- 4, Click Configure, select the c++ compile you use. (VS in Windows, Clang++ in Mac, gcc in Linux)
+- 5, Click Generate to generate the project, which can be found at $DyBaORF/build.
+- 6, Go to $DyBaORF/build to open the generated project, compile it and then you can run it.
 
 Funding
 -------------------

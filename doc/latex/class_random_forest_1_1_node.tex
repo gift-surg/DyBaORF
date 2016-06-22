@@ -1,0 +1,377 @@
+\hypertarget{class_random_forest_1_1_node}{}\section{Random\+Forest\+:\+:Node$<$ T $>$ Class Template Reference}
+\label{class_random_forest_1_1_node}\index{Random\+Forest\+::\+Node$<$ T $>$@{Random\+Forest\+::\+Node$<$ T $>$}}
+
+
+class \hyperlink{class_random_forest_1_1_node}{Node}  
+
+
+
+
+{\ttfamily \#include $<$Node.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_random_forest_1_1_node_a3996771f5b42b9b26c313a63f2fe26b2}{Node} (\hyperlink{class_random_forest_1_1_o_d_tree}{O\+D\+Tree}$<$ T $>$ $\ast$parent\+Tree)
+\item 
+\hyperlink{class_random_forest_1_1_node_aa34fbfdaa3bb9a2c62d9c9ed1bd5a101}{$\sim$\+Node} ()
+\item 
+void \hyperlink{class_random_forest_1_1_node_a24884df64c914c6edfc1f937efe151c6}{Get\+Feature\+Range} (int f\+Index, T $\ast$min, T $\ast$max)
+\item 
+void \hyperlink{class_random_forest_1_1_node_aeb41cbf5e08e8df0cc3079daba5c67d1}{bin\+Split\+Data\+Set} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+index\+List, int feature, T feature\+Value, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+index\+List0, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+index\+List1)
+\item 
+void \hyperlink{class_random_forest_1_1_node_ae9596ccf9ecf94e1c1b27bff947e05f8}{choose\+Best\+Split} (int $\ast$o\+\_\+best\+Feature\+Index, T $\ast$o\+\_\+best\+Feature\+Value, double $\ast$o\+\_\+decreaded\+Impurity)
+\begin{DoxyCompactList}\small\item\em Find the best split. \end{DoxyCompactList}\item 
+double \hyperlink{class_random_forest_1_1_node_ae6a47546e59805dd886777a40bcd8ef9}{mean\+Leaf} ()
+\item 
+double \hyperlink{class_random_forest_1_1_node_a3872cc9afe9ce1e85b6ec7f5dcf20a3f}{impurity\+Leaf} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+sample\+Index\+List)
+\item 
+void \hyperlink{class_random_forest_1_1_node_a838a0e84d4e3ea2d2e26e02b45021512}{Create\+Tree} ()
+\item 
+void \hyperlink{class_random_forest_1_1_node_aab9d283cdff74672e8051b1e613de4df}{Update\+Tree} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+add\+Sample\+List)
+\item 
+int \hyperlink{class_random_forest_1_1_node_a9b8536d9708bb77d7a0bc69ce68336ba}{Update\+Tree} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+rmv\+Sample\+List, const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+add\+Sample\+List)
+\item 
+void \hyperlink{class_random_forest_1_1_node_a3f4736073de15bc3379585591fa7d84a}{Get\+Sample\+List} (std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+pos\+Sample\+List, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+neg\+Sample\+List)
+\item 
+void \hyperlink{class_random_forest_1_1_node_a4666298bf8be2f0bcb775ecec5ba3aed}{Set\+Left} (std\+::shared\+\_\+ptr$<$ \hyperlink{class_random_forest_1_1_node}{Node}$<$ T $>$ $>$ l)
+\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{class_random_forest_1_1_node}{Node}$<$ T $>$ $>$ \hyperlink{class_random_forest_1_1_node_aa4b92a60a58285a05ef17828d67685bb}{Get\+Left} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_node_a531a4604c9f0dd009342f99d54075781}{Set\+Right} (std\+::shared\+\_\+ptr$<$ \hyperlink{class_random_forest_1_1_node}{Node}$<$ T $>$ $>$r)
+\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{class_random_forest_1_1_node}{Node}$<$ T $>$ $>$ \hyperlink{class_random_forest_1_1_node_ae573b9d512ad8c91d0a6bfc196952579}{Get\+Right} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_node_abf3bd7e9dd9a1c97d5ec9c8e041fd78c}{Set\+Feature\+Index} (int idx)
+\item 
+int \hyperlink{class_random_forest_1_1_node_a193a52330c2577fe3ac986a7d5b47f78}{Get\+Feature\+Index} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_node_a647977bc484290719bf04159acf37328}{Set\+Split\+Value} (double v)
+\item 
+double \hyperlink{class_random_forest_1_1_node_ad6428488fffdfec3e69417937bfe786b}{Get\+Split\+Value} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_node_a161f6e7ef5f1a017ea3927dc699dcffb}{Set\+Depth} (int d)
+\item 
+int \hyperlink{class_random_forest_1_1_node_a0d04591229581053a11b7ea572b550be}{Get\+Depth} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_node_ab76cbfde0c579c7c2a012ca023fb079a}{Set\+Sample\+Index\+List} (std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ list)
+\item 
+std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ \hyperlink{class_random_forest_1_1_node_a6848146a381aea5526d97df0774c556d}{Get\+Sample\+Index\+List} ()
+\item 
+\hyperlink{class_random_forest_1_1_o_d_tree}{O\+D\+Tree}$<$ T $>$ $\ast$ \hyperlink{class_random_forest_1_1_node_af6755fa1a90d9c2dd68a6e34b3775875}{Get\+Tree} () const 
+\item 
+double \hyperlink{class_random_forest_1_1_node_abc1b5d071f4ae9fdf4aa1e7e5c674a33}{Predict\+One\+Sample} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ i\+\_\+in\+Data)
+\item 
+void \hyperlink{class_random_forest_1_1_node_a781cdf34b7fc5bbb12575c2397b51d56}{Update\+Gini\+Importance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\\*
+class Random\+Forest\+::\+Node$<$ T $>$}
+
+class \hyperlink{class_random_forest_1_1_node}{Node} 
+
+There are two kinds of nodes\+: split node and leaf node For each split node, the best split feature and value are found based on Gini impurity. For each leaf node, the histogram of samples is calculated for inference. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Node@{Node}}
+\index{Node@{Node}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Node(\+O\+D\+Tree$<$ T $>$ $\ast$parent\+Tree)}{Node(ODTree< T > *parentTree)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::{\bf Node} (
+\begin{DoxyParamCaption}
+\item[{{\bf O\+D\+Tree}$<$ T $>$ $\ast$}]{parent\+Tree}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a3996771f5b42b9b26c313a63f2fe26b2}{}\label{class_random_forest_1_1_node_a3996771f5b42b9b26c313a63f2fe26b2}
+Construction function 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent\+Tree} & The parent tree of this node. \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!````~Node@{$\sim$\+Node}}
+\index{````~Node@{$\sim$\+Node}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{$\sim$\+Node()}{~Node()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::$\sim${\bf Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_aa34fbfdaa3bb9a2c62d9c9ed1bd5a101}{}\label{class_random_forest_1_1_node_aa34fbfdaa3bb9a2c62d9c9ed1bd5a101}
+Deconstruction function 
+
+\subsection{Member Function Documentation}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!bin\+Split\+Data\+Set@{bin\+Split\+Data\+Set}}
+\index{bin\+Split\+Data\+Set@{bin\+Split\+Data\+Set}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{bin\+Split\+Data\+Set(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+index\+List, int feature, T feature\+Value, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+index\+List0, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+index\+List1)}{binSplitDataSet(const std::shared_ptr< std::vector< int > > i_indexList, int feature, T featureValue, std::shared_ptr< std::vector< int > > o_indexList0, std::shared_ptr< std::vector< int > > o_indexList1)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::bin\+Split\+Data\+Set (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{i\+\_\+index\+List, }
+\item[{int}]{feature, }
+\item[{T}]{feature\+Value, }
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{o\+\_\+index\+List0, }
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{o\+\_\+index\+List1}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_aeb41cbf5e08e8df0cc3079daba5c67d1}{}\label{class_random_forest_1_1_node_aeb41cbf5e08e8df0cc3079daba5c67d1}
+Split the data set based on one feature threshold 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+index\+List} & the index of all the data that is splitted \\
+\hline
+\mbox{\tt in}  & {\em feature} & the feature index that is used \\
+\hline
+\mbox{\tt in}  & {\em feature\+Value} & the threshold that is used \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+index\+List0} & the first output sample index, with feature value less than feature\+Value \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+index\+List1} & the second output sample index, with feature value higher than feature\+Value \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!choose\+Best\+Split@{choose\+Best\+Split}}
+\index{choose\+Best\+Split@{choose\+Best\+Split}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{choose\+Best\+Split(int $\ast$o\+\_\+best\+Feature\+Index, T $\ast$o\+\_\+best\+Feature\+Value, double $\ast$o\+\_\+decreaded\+Impurity)}{chooseBestSplit(int *o_bestFeatureIndex, T *o_bestFeatureValue, double *o_decreadedImpurity)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::choose\+Best\+Split (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{o\+\_\+best\+Feature\+Index, }
+\item[{T $\ast$}]{o\+\_\+best\+Feature\+Value, }
+\item[{double $\ast$}]{o\+\_\+decreaded\+Impurity}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_ae9596ccf9ecf94e1c1b27bff947e05f8}{}\label{class_random_forest_1_1_node_ae9596ccf9ecf94e1c1b27bff947e05f8}
+
+
+Find the best split. 
+
+Return the corresponding feature index, the feature value and the decreased inpurity of the best split 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em o\+\_\+best\+Feature\+Index} & the return feature index \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+best\+Feature\+Value} & the return feature value \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+decreaded\+Impurity} & the return decreased impurity \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Create\+Tree@{Create\+Tree}}
+\index{Create\+Tree@{Create\+Tree}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Create\+Tree()}{CreateTree()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Create\+Tree (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a838a0e84d4e3ea2d2e26e02b45021512}{}\label{class_random_forest_1_1_node_a838a0e84d4e3ea2d2e26e02b45021512}
+Create a new tree from scratch. Generate the left and right child recursively \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Depth@{Get\+Depth}}
+\index{Get\+Depth@{Get\+Depth}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Depth() const }{GetDepth() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ int {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Depth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_a0d04591229581053a11b7ea572b550be}{}\label{class_random_forest_1_1_node_a0d04591229581053a11b7ea572b550be}
+Get the depth of this node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Feature\+Index@{Get\+Feature\+Index}}
+\index{Get\+Feature\+Index@{Get\+Feature\+Index}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Feature\+Index() const }{GetFeatureIndex() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ int {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Feature\+Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_a193a52330c2577fe3ac986a7d5b47f78}{}\label{class_random_forest_1_1_node_a193a52330c2577fe3ac986a7d5b47f78}
+Get the feature index \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Feature\+Range@{Get\+Feature\+Range}}
+\index{Get\+Feature\+Range@{Get\+Feature\+Range}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Feature\+Range(int f\+Index, T $\ast$min, T $\ast$max)}{GetFeatureRange(int fIndex, T *min, T *max)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Feature\+Range (
+\begin{DoxyParamCaption}
+\item[{int}]{f\+Index, }
+\item[{T $\ast$}]{min, }
+\item[{T $\ast$}]{max}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a24884df64c914c6edfc1f937efe151c6}{}\label{class_random_forest_1_1_node_a24884df64c914c6edfc1f937efe151c6}
+Calculate the value range of one feature 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f\+Index} & the feature index \\
+\hline
+\mbox{\tt out}  & {\em min} & minimum value of feature {\ttfamily f\+Index} \\
+\hline
+\mbox{\tt out}  & {\em max} & maximum value of feature {\ttfamily f\+Indx} \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Left@{Get\+Left}}
+\index{Get\+Left@{Get\+Left}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Left() const }{GetLeft() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\+::shared\+\_\+ptr$<$ {\bf Random\+Forest\+::\+Node}$<$ T $>$ $>$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_aa4b92a60a58285a05ef17828d67685bb}{}\label{class_random_forest_1_1_node_aa4b92a60a58285a05ef17828d67685bb}
+Get the left child of this node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Right@{Get\+Right}}
+\index{Get\+Right@{Get\+Right}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Right() const }{GetRight() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\+::shared\+\_\+ptr$<$ {\bf Random\+Forest\+::\+Node}$<$ T $>$ $>$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Right (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_ae573b9d512ad8c91d0a6bfc196952579}{}\label{class_random_forest_1_1_node_ae573b9d512ad8c91d0a6bfc196952579}
+Get the right child of this node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Sample\+Index\+List@{Get\+Sample\+Index\+List}}
+\index{Get\+Sample\+Index\+List@{Get\+Sample\+Index\+List}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Sample\+Index\+List()}{GetSampleIndexList()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Sample\+Index\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a6848146a381aea5526d97df0774c556d}{}\label{class_random_forest_1_1_node_a6848146a381aea5526d97df0774c556d}
+Get the sample index list of this node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Sample\+List@{Get\+Sample\+List}}
+\index{Get\+Sample\+List@{Get\+Sample\+List}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Sample\+List(std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+pos\+Sample\+List, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ o\+\_\+neg\+Sample\+List)}{GetSampleList(std::shared_ptr< std::vector< int > > o_posSampleList, std::shared_ptr< std::vector< int > > o_negSampleList)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Sample\+List (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{o\+\_\+pos\+Sample\+List, }
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{o\+\_\+neg\+Sample\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a3f4736073de15bc3379585591fa7d84a}{}\label{class_random_forest_1_1_node_a3f4736073de15bc3379585591fa7d84a}
+Get the positive and negative sample list of a node 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em o\+\_\+pos\+Sample\+List} & the returned positive sample list \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+neg\+Sample\+List} & the returned negative sample list \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Split\+Value@{Get\+Split\+Value}}
+\index{Get\+Split\+Value@{Get\+Split\+Value}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Split\+Value() const }{GetSplitValue() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ double {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Split\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_ad6428488fffdfec3e69417937bfe786b}{}\label{class_random_forest_1_1_node_ad6428488fffdfec3e69417937bfe786b}
+Get the split value \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Get\+Tree@{Get\+Tree}}
+\index{Get\+Tree@{Get\+Tree}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Get\+Tree() const }{GetTree() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Random\+Forest\+::\+O\+D\+Tree}$<$ T $>$ $\ast$ {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Get\+Tree (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_node_af6755fa1a90d9c2dd68a6e34b3775875}{}\label{class_random_forest_1_1_node_af6755fa1a90d9c2dd68a6e34b3775875}
+Get the parent tree of this node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!impurity\+Leaf@{impurity\+Leaf}}
+\index{impurity\+Leaf@{impurity\+Leaf}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{impurity\+Leaf(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+sample\+Index\+List)}{impurityLeaf(const std::shared_ptr< std::vector< int > > i_sampleIndexList)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ double {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::impurity\+Leaf (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{i\+\_\+sample\+Index\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a3872cc9afe9ce1e85b6ec7f5dcf20a3f}{}\label{class_random_forest_1_1_node_a3872cc9afe9ce1e85b6ec7f5dcf20a3f}
+Calculate the impurity of a leaf 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+sample\+Index\+List} & the sample index list of the leaf node \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!mean\+Leaf@{mean\+Leaf}}
+\index{mean\+Leaf@{mean\+Leaf}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{mean\+Leaf()}{meanLeaf()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ double {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::mean\+Leaf (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_ae6a47546e59805dd886777a40bcd8ef9}{}\label{class_random_forest_1_1_node_ae6a47546e59805dd886777a40bcd8ef9}
+Calculate the mean label value of a leaf node \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Predict\+One\+Sample@{Predict\+One\+Sample}}
+\index{Predict\+One\+Sample@{Predict\+One\+Sample}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Predict\+One\+Sample(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ i\+\_\+in\+Data)}{PredictOneSample(const std::shared_ptr< std::vector< T > > i_inData)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ double {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Predict\+One\+Sample (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$}]{i\+\_\+in\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_abc1b5d071f4ae9fdf4aa1e7e5c674a33}{}\label{class_random_forest_1_1_node_abc1b5d071f4ae9fdf4aa1e7e5c674a33}
+Predict the probability of one sample 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+in\+Data} & the input sample data \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Depth@{Set\+Depth}}
+\index{Set\+Depth@{Set\+Depth}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Depth(int d)}{SetDepth(int d)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Depth (
+\begin{DoxyParamCaption}
+\item[{int}]{d}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a161f6e7ef5f1a017ea3927dc699dcffb}{}\label{class_random_forest_1_1_node_a161f6e7ef5f1a017ea3927dc699dcffb}
+Set the depth of this node 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em d} & the input depth \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Feature\+Index@{Set\+Feature\+Index}}
+\index{Set\+Feature\+Index@{Set\+Feature\+Index}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Feature\+Index(int idx)}{SetFeatureIndex(int idx)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Feature\+Index (
+\begin{DoxyParamCaption}
+\item[{int}]{idx}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_abf3bd7e9dd9a1c97d5ec9c8e041fd78c}{}\label{class_random_forest_1_1_node_abf3bd7e9dd9a1c97d5ec9c8e041fd78c}
+Set the feature index used for split 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em idx} & the input feature index \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Left@{Set\+Left}}
+\index{Set\+Left@{Set\+Left}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Left(std\+::shared\+\_\+ptr$<$ Node$<$ T $>$ $>$ l)}{SetLeft(std::shared_ptr< Node< T > > l)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Left (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ {\bf Node}$<$ T $>$ $>$}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a4666298bf8be2f0bcb775ecec5ba3aed}{}\label{class_random_forest_1_1_node_a4666298bf8be2f0bcb775ecec5ba3aed}
+Set the left child of this node 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em l} & the left child \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Right@{Set\+Right}}
+\index{Set\+Right@{Set\+Right}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Right(std\+::shared\+\_\+ptr$<$ Node$<$ T $>$ $>$r)}{SetRight(std::shared_ptr< Node< T > >r)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Right (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ {\bf Node}$<$ T $>$ $>$}]{r}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a531a4604c9f0dd009342f99d54075781}{}\label{class_random_forest_1_1_node_a531a4604c9f0dd009342f99d54075781}
+Set the right child of this node 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em r} & the right child \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Sample\+Index\+List@{Set\+Sample\+Index\+List}}
+\index{Set\+Sample\+Index\+List@{Set\+Sample\+Index\+List}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Sample\+Index\+List(std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ list)}{SetSampleIndexList(std::shared_ptr< std::vector< int > > list)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Sample\+Index\+List (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{list}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_ab76cbfde0c579c7c2a012ca023fb079a}{}\label{class_random_forest_1_1_node_ab76cbfde0c579c7c2a012ca023fb079a}
+Set the sample index list of this node 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em list} & the input sample index list \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Set\+Split\+Value@{Set\+Split\+Value}}
+\index{Set\+Split\+Value@{Set\+Split\+Value}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Set\+Split\+Value(double v)}{SetSplitValue(double v)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Set\+Split\+Value (
+\begin{DoxyParamCaption}
+\item[{double}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a647977bc484290719bf04159acf37328}{}\label{class_random_forest_1_1_node_a647977bc484290719bf04159acf37328}
+Set the feature value used for split 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em v} & the input feature value \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Update\+Gini\+Importance@{Update\+Gini\+Importance}}
+\index{Update\+Gini\+Importance@{Update\+Gini\+Importance}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Update\+Gini\+Importance()}{UpdateGiniImportance()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Update\+Gini\+Importance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a781cdf34b7fc5bbb12575c2397b51d56}{}\label{class_random_forest_1_1_node_a781cdf34b7fc5bbb12575c2397b51d56}
+Update the gini importance of all the fatures \index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Update\+Tree@{Update\+Tree}}
+\index{Update\+Tree@{Update\+Tree}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Update\+Tree(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+add\+Sample\+List)}{UpdateTree(const std::shared_ptr< std::vector< int > > i_addSampleList)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Update\+Tree (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{i\+\_\+add\+Sample\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_aab9d283cdff74672e8051b1e613de4df}{}\label{class_random_forest_1_1_node_aab9d283cdff74672e8051b1e613de4df}
+Update a tree with an add set. Grow the tree with newly arrived training data 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+add\+Sample\+List} & the set of data that is added to the tree. \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}!Update\+Tree@{Update\+Tree}}
+\index{Update\+Tree@{Update\+Tree}!Random\+Forest\+::\+Node@{Random\+Forest\+::\+Node}}
+\subsubsection[{\texorpdfstring{Update\+Tree(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+rmv\+Sample\+List, const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ i\+\_\+add\+Sample\+List)}{UpdateTree(const std::shared_ptr< std::vector< int > > i_rmvSampleList, const std::shared_ptr< std::vector< int > > i_addSampleList)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ int {\bf Random\+Forest\+::\+Node}$<$ T $>$\+::Update\+Tree (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{i\+\_\+rmv\+Sample\+List, }
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$}]{i\+\_\+add\+Sample\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_node_a9b8536d9708bb77d7a0bc69ce68336ba}{}\label{class_random_forest_1_1_node_a9b8536d9708bb77d7a0bc69ce68336ba}
+Update a tree with an add set and a remove set 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+rmv\+Sample\+List} & the set of data that would be removed from the tree. \\
+\hline
+\mbox{\tt in}  & {\em i\+\_\+add\+Sample\+List} & the set of data that would be added to the tree. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/guotaiwang/\+Documents/workspace/git\+\_\+repository/\+Dy\+Ba\+O\+R\+F/\+R\+F/Node.\+h\item 
+/\+Users/guotaiwang/\+Documents/workspace/git\+\_\+repository/\+Dy\+Ba\+O\+R\+F/\+R\+F/Node.\+cpp\end{DoxyCompactItemize}

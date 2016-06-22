@@ -1,0 +1,245 @@
+\hypertarget{class_random_forest_1_1_o_r_forest}{}\section{Random\+Forest\+:\+:O\+R\+Forest$<$ T $>$ Class Template Reference}
+\label{class_random_forest_1_1_o_r_forest}\index{Random\+Forest\+::\+O\+R\+Forest$<$ T $>$@{Random\+Forest\+::\+O\+R\+Forest$<$ T $>$}}
+
+
+Class \hyperlink{class_random_forest_1_1_o_r_forest}{O\+R\+Forest}.  
+
+
+
+
+{\ttfamily \#include $<$O\+R\+Forest.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_random_forest_1_1_o_r_forest_a970fb124452965dc744e967845991048}{O\+R\+Forest} ()
+\item 
+\hyperlink{class_random_forest_1_1_o_r_forest_a000d2832b0a69043208119976d89d1cc}{$\sim$\+O\+R\+Forest} ()
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a52fb96dc5c407c929b6aad07dc0aa0d7}{Init} (int Ntree, int tree\+Depth, int least\+Nsample\+For\+Split)
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a08714e0dde73bbceb75fd81bdf34961a}{Clear} ()
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a5894ca367569e0c0f0048d388cfbbc13}{Set\+Balance\+Type} (Balance\+Type type)
+\item 
+Balance\+Type \hyperlink{class_random_forest_1_1_o_r_forest_ad41da1786cff19a7976c79933d1021fa}{Get\+Balance\+Type} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a2a118fd19305941ec9d8622fffa31f55}{Set\+Sampling\+Type} (Sampling\+Type type)
+\item 
+Sampling\+Type \hyperlink{class_random_forest_1_1_o_r_forest_a434008e6cf7d89966e237c39dff87c0a}{Get\+Sampling\+Type} () const 
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a6523f13de8fe3a05f83863d9a21d0e57}{Disable\+Online\+Update} ()
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a07eb95bf23556e48c736c65c0b85a3b3}{Get\+Train\+And\+Test\+Data} (std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+train\+Data)
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a24d7835d66a8c5f275952d941359f8b2}{Train} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+train\+Data)
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a563f5efa7e4dbdc0a29d50b9dc0751ff}{Train} (const T $\ast$i\+\_\+train\+Data, int i\+\_\+\+Ns, int i\+\_\+\+Nfp1)
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a2b9cb16f3727b0209e5cd085b73fa32c}{Predict} (const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+test\+Data, std\+::vector$<$ float $>$ $\ast$$\ast$o\+\_\+predict)
+\item 
+int \hyperlink{class_random_forest_1_1_o_r_forest_a9cb2e020812c11513b2924891404864e}{Get\+Acture\+Max\+Tree\+Depth} ()
+\item 
+int \hyperlink{class_random_forest_1_1_o_r_forest_af0dac83c048a6e1745bd4c2dcabe2e8e}{Get\+Acture\+Max\+Tree\+Node} ()
+\item 
+double \hyperlink{class_random_forest_1_1_o_r_forest_ab3987c4f1e54db159a6fd5325ade360d}{Get\+Average\+O\+O\+BE} ()
+\item 
+void \hyperlink{class_random_forest_1_1_o_r_forest_a6048f25c611cdccbef5293e39300f788}{Get\+Ranked\+Gini\+Importance} (std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ $\ast$feature\+Index\+List, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ double $>$ $>$ $\ast$gini\+Importance\+List)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\\*
+class Random\+Forest\+::\+O\+R\+Forest$<$ T $>$}
+
+Class \hyperlink{class_random_forest_1_1_o_r_forest}{O\+R\+Forest}. 
+
+A random forest contains a number of trees and each tree is trained speratively. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!O\+R\+Forest@{O\+R\+Forest}}
+\index{O\+R\+Forest@{O\+R\+Forest}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{O\+R\+Forest()}{ORForest()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::{\bf O\+R\+Forest} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a970fb124452965dc744e967845991048}{}\label{class_random_forest_1_1_o_r_forest_a970fb124452965dc744e967845991048}
+Construction function \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!````~O\+R\+Forest@{$\sim$\+O\+R\+Forest}}
+\index{````~O\+R\+Forest@{$\sim$\+O\+R\+Forest}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{$\sim$\+O\+R\+Forest()}{~ORForest()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::$\sim${\bf O\+R\+Forest} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a000d2832b0a69043208119976d89d1cc}{}\label{class_random_forest_1_1_o_r_forest_a000d2832b0a69043208119976d89d1cc}
+Deconstruction fuction 
+
+\subsection{Member Function Documentation}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Clear@{Clear}}
+\index{Clear@{Clear}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Clear()}{Clear()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a08714e0dde73bbceb75fd81bdf34961a}{}\label{class_random_forest_1_1_o_r_forest_a08714e0dde73bbceb75fd81bdf34961a}
+Delete trees and training data \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Disable\+Online\+Update@{Disable\+Online\+Update}}
+\index{Disable\+Online\+Update@{Disable\+Online\+Update}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Disable\+Online\+Update()}{DisableOnlineUpdate()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Disable\+Online\+Update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a6523f13de8fe3a05f83863d9a21d0e57}{}\label{class_random_forest_1_1_o_r_forest_a6523f13de8fe3a05f83863d9a21d0e57}
+Disable online update. Train from scratch when new data arrives \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Acture\+Max\+Tree\+Depth@{Get\+Acture\+Max\+Tree\+Depth}}
+\index{Get\+Acture\+Max\+Tree\+Depth@{Get\+Acture\+Max\+Tree\+Depth}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Acture\+Max\+Tree\+Depth()}{GetActureMaxTreeDepth()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ int {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Acture\+Max\+Tree\+Depth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a9cb2e020812c11513b2924891404864e}{}\label{class_random_forest_1_1_o_r_forest_a9cb2e020812c11513b2924891404864e}
+Get acture max tree deepth \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Acture\+Max\+Tree\+Node@{Get\+Acture\+Max\+Tree\+Node}}
+\index{Get\+Acture\+Max\+Tree\+Node@{Get\+Acture\+Max\+Tree\+Node}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Acture\+Max\+Tree\+Node()}{GetActureMaxTreeNode()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ int {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Acture\+Max\+Tree\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_af0dac83c048a6e1745bd4c2dcabe2e8e}{}\label{class_random_forest_1_1_o_r_forest_af0dac83c048a6e1745bd4c2dcabe2e8e}
+Get acture max tree nodes \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Average\+O\+O\+BE@{Get\+Average\+O\+O\+BE}}
+\index{Get\+Average\+O\+O\+BE@{Get\+Average\+O\+O\+BE}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Average\+O\+O\+B\+E()}{GetAverageOOBE()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ double {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Average\+O\+O\+BE (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_ab3987c4f1e54db159a6fd5325ade360d}{}\label{class_random_forest_1_1_o_r_forest_ab3987c4f1e54db159a6fd5325ade360d}
+Get average O\+O\+BE across all the trees \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Balance\+Type@{Get\+Balance\+Type}}
+\index{Get\+Balance\+Type@{Get\+Balance\+Type}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Balance\+Type() const }{GetBalanceType() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ Random\+Forest\+::\+Balance\+Type {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Balance\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_o_r_forest_ad41da1786cff19a7976c79933d1021fa}{}\label{class_random_forest_1_1_o_r_forest_ad41da1786cff19a7976c79933d1021fa}
+Get balance type \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Ranked\+Gini\+Importance@{Get\+Ranked\+Gini\+Importance}}
+\index{Get\+Ranked\+Gini\+Importance@{Get\+Ranked\+Gini\+Importance}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Ranked\+Gini\+Importance(std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ $\ast$feature\+Index\+List, std\+::shared\+\_\+ptr$<$ std\+::vector$<$ double $>$ $>$ $\ast$gini\+Importance\+List)}{GetRankedGiniImportance(std::shared_ptr< std::vector< int > > *featureIndexList, std::shared_ptr< std::vector< double > > *giniImportanceList)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Ranked\+Gini\+Importance (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ int $>$ $>$ $\ast$}]{feature\+Index\+List, }
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ double $>$ $>$ $\ast$}]{gini\+Importance\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a6048f25c611cdccbef5293e39300f788}{}\label{class_random_forest_1_1_o_r_forest_a6048f25c611cdccbef5293e39300f788}
+Get racnked Gini importance of all the features 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em feature\+Index\+List} & a list of feature index with the one with the highest importance going first \\
+\hline
+\mbox{\tt out}  & {\em gini\+Importance\+List} & a list of gini importance with the highest value going first \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Sampling\+Type@{Get\+Sampling\+Type}}
+\index{Get\+Sampling\+Type@{Get\+Sampling\+Type}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Sampling\+Type() const }{GetSamplingType() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ Random\+Forest\+::\+Sampling\+Type {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Sampling\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_random_forest_1_1_o_r_forest_a434008e6cf7d89966e237c39dff87c0a}{}\label{class_random_forest_1_1_o_r_forest_a434008e6cf7d89966e237c39dff87c0a}
+Get sampling type \index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Get\+Train\+And\+Test\+Data@{Get\+Train\+And\+Test\+Data}}
+\index{Get\+Train\+And\+Test\+Data@{Get\+Train\+And\+Test\+Data}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Get\+Train\+And\+Test\+Data(std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+train\+Data)}{GetTrainAndTestData(std::shared_ptr< std::vector< std::shared_ptr< std::vector< T > > > > i_trainData)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Get\+Train\+And\+Test\+Data (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$}]{i\+\_\+train\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a07eb95bf23556e48c736c65c0b85a3b3}{}\label{class_random_forest_1_1_o_r_forest_a07eb95bf23556e48c736c65c0b85a3b3}
+Get the data for train and validate 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+train\+Data} & the entire input dataset \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Init@{Init}}
+\index{Init@{Init}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Init(int Ntree, int tree\+Depth, int least\+Nsample\+For\+Split)}{Init(int Ntree, int treeDepth, int leastNsampleForSplit)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Init (
+\begin{DoxyParamCaption}
+\item[{int}]{Ntree, }
+\item[{int}]{tree\+Depth, }
+\item[{int}]{least\+Nsample\+For\+Split}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a52fb96dc5c407c929b6aad07dc0aa0d7}{}\label{class_random_forest_1_1_o_r_forest_a52fb96dc5c407c929b6aad07dc0aa0d7}
+Init function 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Ntree} & number of trees \\
+\hline
+\mbox{\tt in}  & {\em tree\+Depth} & the maximal depth allowded for each tree \\
+\hline
+\mbox{\tt in}  & {\em least\+Nsample\+For\+Split} & the least number of samples for split test \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Predict@{Predict}}
+\index{Predict@{Predict}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Predict(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+test\+Data, std\+::vector$<$ float $>$ $\ast$$\ast$o\+\_\+predict)}{Predict(const std::shared_ptr< std::vector< std::shared_ptr< std::vector< T > > > > i_testData, std::vector< float > **o_predict)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Predict (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$}]{i\+\_\+test\+Data, }
+\item[{std\+::vector$<$ float $>$ $\ast$$\ast$}]{o\+\_\+predict}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a2b9cb16f3727b0209e5cd085b73fa32c}{}\label{class_random_forest_1_1_o_r_forest_a2b9cb16f3727b0209e5cd085b73fa32c}
+Predict 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+test\+Data} & the input test data set \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+predict} & the prediction result of the test data \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Set\+Balance\+Type@{Set\+Balance\+Type}}
+\index{Set\+Balance\+Type@{Set\+Balance\+Type}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Set\+Balance\+Type(\+Balance\+Type type)}{SetBalanceType(BalanceType type)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Set\+Balance\+Type (
+\begin{DoxyParamCaption}
+\item[{Balance\+Type}]{type}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a5894ca367569e0c0f0048d388cfbbc13}{}\label{class_random_forest_1_1_o_r_forest_a5894ca367569e0c0f0048d388cfbbc13}
+Set balance type 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em type} & the input balance type \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Set\+Sampling\+Type@{Set\+Sampling\+Type}}
+\index{Set\+Sampling\+Type@{Set\+Sampling\+Type}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Set\+Sampling\+Type(\+Sampling\+Type type)}{SetSamplingType(SamplingType type)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Set\+Sampling\+Type (
+\begin{DoxyParamCaption}
+\item[{Random\+Forest\+::\+Sampling\+Type}]{type}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a2a118fd19305941ec9d8622fffa31f55}{}\label{class_random_forest_1_1_o_r_forest_a2a118fd19305941ec9d8622fffa31f55}
+Set sampling type 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em type} & the input sampling type \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Train@{Train}}
+\index{Train@{Train}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Train(const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$ i\+\_\+train\+Data)}{Train(const std::shared_ptr< std::vector< std::shared_ptr< std::vector< T > > > > i_trainData)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Train (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ std\+::vector$<$ T $>$ $>$ $>$ $>$}]{i\+\_\+train\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a24d7835d66a8c5f275952d941359f8b2}{}\label{class_random_forest_1_1_o_r_forest_a24d7835d66a8c5f275952d941359f8b2}
+Train with the training data 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+train\+Data} & the input training data set \\
+\hline
+\end{DoxyParams}
+\index{Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}!Train@{Train}}
+\index{Train@{Train}!Random\+Forest\+::\+O\+R\+Forest@{Random\+Forest\+::\+O\+R\+Forest}}
+\subsubsection[{\texorpdfstring{Train(const T $\ast$i\+\_\+train\+Data, int i\+\_\+\+Ns, int i\+\_\+\+Nfp1)}{Train(const T *i_trainData, int i_Ns, int i_Nfp1)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf Random\+Forest\+::\+O\+R\+Forest}$<$ T $>$\+::Train (
+\begin{DoxyParamCaption}
+\item[{const T $\ast$}]{i\+\_\+train\+Data, }
+\item[{int}]{i\+\_\+\+Ns, }
+\item[{int}]{i\+\_\+\+Nfp1}
+\end{DoxyParamCaption}
+)}\hypertarget{class_random_forest_1_1_o_r_forest_a563f5efa7e4dbdc0a29d50b9dc0751ff}{}\label{class_random_forest_1_1_o_r_forest_a563f5efa7e4dbdc0a29d50b9dc0751ff}
+Train with the training data, a variance of \hyperlink{class_random_forest_1_1_o_r_forest_a24d7835d66a8c5f275952d941359f8b2}{Train(const std\+::shared\+\_\+ptr$<$std\+::vector$<$std\+::shared\+\_\+ptr$<$std\+::vector$<$\+T$>$ $>$ $>$ $>$ i\+\_\+train\+Data)} 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i\+\_\+train\+Data} & a pointer pointing to the data \\
+\hline
+\mbox{\tt in}  & {\em i\+\_\+\+Ns} & the number of samples \\
+\hline
+\mbox{\tt in}  & {\em i\+\_\+\+Nfp1} & the number of features plus 1 \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/guotaiwang/\+Documents/workspace/git\+\_\+repository/\+Dy\+Ba\+O\+R\+F/\+R\+F/O\+R\+Forest.\+h\item 
+/\+Users/guotaiwang/\+Documents/workspace/git\+\_\+repository/\+Dy\+Ba\+O\+R\+F/\+R\+F/O\+R\+Forest.\+cpp\end{DoxyCompactItemize}
