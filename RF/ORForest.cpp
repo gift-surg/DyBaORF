@@ -124,7 +124,7 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::v
     int add_nTest=0;
     while(add_nTest<addNTest)
     {
-        double randf=(double)rand()/RAND_MAX;
+        double randf=static_cast<double>(rand())/RAND_MAX;
         int tempIdx=i_addNs*randf;
         if(TestDataMask[tempIdx]==false)
         {

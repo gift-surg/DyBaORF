@@ -140,7 +140,7 @@ void RFTestExample::Run(int MaxIter)
 #if USE_PROPOSED_ORF
             time_t startTrain=clock();
             rf.Train(tempOnlineTrainData);
-            double duringTrain=(double)(clock()-startTrain)/CLOCKS_PER_SEC;
+            double duringTrain=static_cast<double>((clock()-startTrain))/CLOCKS_PER_SEC;
             Time_on.push_back(duringTrain);
             //int node1=rf.GetActureMaxTreeNode();
             
@@ -159,7 +159,7 @@ void RFTestExample::Run(int MaxIter)
 #if COMPARE_WITH_MPB_ORF
             time_t startTrain1=clock();
             rf1.Train(tempOnlineTrainData);
-            double duringTrain1=(double)(clock()-startTrain1)/CLOCKS_PER_SEC;
+            double duringTrain1=static_cast<double>((clock()-startTrain1))/CLOCKS_PER_SEC;
             Time_on1.push_back(duringTrain1);
             //int node2=rf1.GetActureMaxTreeNode();
             
@@ -177,7 +177,7 @@ void RFTestExample::Run(int MaxIter)
 #if COMPARE_WITH_SPB_ORF
             time_t startTrain2=clock();
             rf2.Train(tempOnlineTrainData);
-            double duringTrain2=(double)(clock()-startTrain2)/CLOCKS_PER_SEC;
+            double duringTrain2=static_cast<double>((clock()-startTrain2))/CLOCKS_PER_SEC;
             Time_on2.push_back(duringTrain2);
             //int node2=rf1.GetActureMaxTreeNode();
             
@@ -212,7 +212,7 @@ void RFTestExample::Run(int MaxIter)
             
             time_t startTrain3=clock();
             offrf.Train(tempOfflineTrainData);
-            double duringTrain3=(double)(clock()-startTrain3)/CLOCKS_PER_SEC;
+            double duringTrain3=static_cast<double>((clock()-startTrain3))/CLOCKS_PER_SEC;
             
             Time_off.push_back(duringTrain3);
             
@@ -321,8 +321,8 @@ void RFTestExample::Run(int MaxIter)
 #endif
             }
 #if USE_PROPOSED_ORF
-            double sensitivity_on=(double)correctPosPredict_on/PosN;
-            double specificity_on=(double)correctNegPredict_on/NegN;
+            double sensitivity_on=static_cast<double>(correctPosPredict_on)/PosN;
+            double specificity_on=static_cast<double>(correctNegPredict_on)/NegN;
             double gMean_on=sqrt(sensitivity_on*specificity_on);
             
             Sensitivity_on.push_back(sensitivity_on);
@@ -330,8 +330,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on.push_back(gMean_on);
 #endif
 #if COMPARE_WITH_MPB_ORF
-            double sensitivity_on1=(double)correctPosPredict_on1/PosN;
-            double specificity_on1=(double)correctNegPredict_on1/NegN;
+            double sensitivity_on1=static_cast<double>(correctPosPredict_on1)/PosN;
+            double specificity_on1=static_cast<double>(correctNegPredict_on1)/NegN;
             double gMean_on1=sqrt(sensitivity_on1*specificity_on1);
             
             Sensitivity_on1.push_back(sensitivity_on1);
@@ -339,8 +339,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on1.push_back(gMean_on1);
 #endif
 #if COMPARE_WITH_SPB_ORF
-            double sensitivity_on2=(double)correctPosPredict_on2/PosN;
-            double specificity_on2=(double)correctNegPredict_on2/NegN;
+            double sensitivity_on2=static_cast<double>(correctPosPredict_on2)/PosN;
+            double specificity_on2=static_cast<double>(correctNegPredict_on2)/NegN;
             double gMean_on2=sqrt(sensitivity_on2*specificity_on2);
             
             Sensitivity_on2.push_back(sensitivity_on2);
@@ -348,8 +348,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on2.push_back(gMean_on2);
 #endif
 #if COMPARE_WITH_OFFLINE
-            double sensitivity_off=(double)correctPosPredict_off/PosN;
-            double specificity_off=(double)correctNegPredict_off/NegN;
+            double sensitivity_off=static_cast<double>(correctPosPredict_off)/PosN;
+            double specificity_off=static_cast<double>(correctNegPredict_off)/NegN;
             double gMean_off=sqrt(sensitivity_off*specificity_off);
             
             Sensitivity_off.push_back(sensitivity_off);
@@ -402,7 +402,7 @@ void RFTestExample::PrintPerformance()
     GetMeanAndStd(imbalanceRatio, &imbalanceRatioMean, &imbalanceRatioStd);
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
-        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<<static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioMean[i]<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioStd[i]<< std::endl;
     }
@@ -509,7 +509,7 @@ void RFTestExample::PrintPerformance()
 
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
-        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<<static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
 #if USE_PROPOSED_ORF
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
@@ -544,7 +544,7 @@ void RFTestExample::PrintPerformance()
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
 #if COMPARE_WITH_SPB_ORF | COMPARE_WITH_OFFLINE
-        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
 #endif
 #if COMPARE_WITH_SPB_ORF
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity2Mean[i]<<" ";

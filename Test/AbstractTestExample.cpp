@@ -147,9 +147,9 @@ void AbstractTestExample::Run(int maxIter)
         for(int i=0;i<instanceN/2;i++)
         {
             int idx1=instanceN;
-            while(idx1==instanceN) idx1=(double)instanceN*rand()/RAND_MAX;
+            while(idx1==instanceN) idx1=static_cast<double>(instanceN*rand())/RAND_MAX;
             int idx2=instanceN;
-            while(idx2==instanceN) idx2=(double)instanceN*rand()/RAND_MAX;
+            while(idx2==instanceN) idx2=static_cast<double>(instanceN*rand())/RAND_MAX;
             if(idx1!=idx2)
             {
                 std::shared_ptr<std::vector<double> > tempSample=originData->at(idx1);
@@ -227,7 +227,7 @@ void AbstractTestExample::Run(int maxIter)
             
             time_t start0=clock();
             rf.Train(tempOnlineTrainData);
-            double during0=(double)(clock()-start0)/CLOCKS_PER_SEC;
+            double during0=static_cast<double>((clock()-start0))/CLOCKS_PER_SEC;
             Time0.push_back(during0);
             
             rf.Predict(testData,&predict_on);
@@ -247,7 +247,7 @@ void AbstractTestExample::Run(int maxIter)
             offrf.DisableOnlineUpdate();
             time_t start1=clock();
             offrf.Train(tempOfflineTrainData);
-            double during1=(double)(clock()-start1)/CLOCKS_PER_SEC;
+            double during1=static_cast<double>((clock()-start1))/CLOCKS_PER_SEC;
             compareTime0.push_back(during1);
             
             offrf.Predict(testData, &predict_off);
@@ -307,12 +307,12 @@ void AbstractTestExample::Run(int maxIter)
                 }
             }
             
-            double sensitivity_on=(double)correctPosPredict_on/PosN;
-            double specificity_on=(double)correctNegPredict_on/NegN;
+            double sensitivity_on=static_cast<double>(correctPosPredict_on)/PosN;
+            double specificity_on=static_cast<double>(correctNegPredict_on)/NegN;
             double gMean_on=sqrt(sensitivity_on*specificity_on);
             
-            double sensitivity_off=(double)correctPosPredict_off/PosN;
-            double specificity_off=(double)correctNegPredict_off/NegN;
+            double sensitivity_off=static_cast<double>(correctPosPredict_off)/PosN;
+            double specificity_off=static_cast<double>(correctNegPredict_off)/NegN;
             double gMean_off=sqrt(sensitivity_off*specificity_off);
             
             Sensitivity0.push_back(sensitivity_on);
@@ -399,11 +399,11 @@ void AbstractTestExample::PrintDataInformation()
         
         if(i==trainIndexEachUpdate[steps]-1)
         {
-            imbalanceRatio=(double)negN/posN;
+            imbalanceRatio=static_cast<double>(negN)/posN;
             sum+=imbalanceRatio;
             sumsq+=imbalanceRatio*imbalanceRatio;
             steps++;
-            double percent=(double)i/trainN;
+            double percent=static_cast<double>(i)/trainN;
             std::cout<<std::setw(4)<< std::fixed<< std::setprecision(2)<<percent<<"   "
                 <<std::setw(4)<< std::fixed<< std::setprecision(2)<<imbalanceRatio<<std::endl;
         }
@@ -432,7 +432,7 @@ std::vector<double> AbstractTestExample::GetImbalanceRatio()
         
         if(i==trainIndexEachUpdate[steps]-1)
         {
-            imbalanceRatio=(double)negN/posN;
+            imbalanceRatio=static_cast<double>(negN)/posN;
             imbalanceRatioList.push_back(imbalanceRatio);
             steps++;
         }
@@ -711,7 +711,7 @@ void AbstractTestExample::UpdateDataInfo()
 {
     std::cout<<"postive   "<<positiveN<<std::endl;
     std::cout<<"negative  "<<negtiveN<<std::endl;
-    std::cout<<"imbalance "<<std::setprecision(4)<<(double)negtiveN/positiveN<<std::endl;
+    std::cout<<"imbalance "<<std::setprecision(4)<<static_cast<double>(negtiveN)/positiveN<<std::endl;
     
     double testRate=0.2;
     testN=instanceN*testRate;

@@ -24,7 +24,6 @@ RandomForest::ODTree<T>::ODTree()
     balanceType=SingleParameterBoostrap;
     samplingType=DownSamplingMajority;
     subDataSetRatio=1.0;
-    srand(time(0));
     Reset();
 }
 
@@ -342,7 +341,7 @@ void RandomForest::ODTree<T>::MultipleParameterBoostrapSampling(int oldNs, std::
     int newPosN=posTrainDataList->size();
     int newNegN=negTrainDataList->size();
 
-    double imbalanceRatio=(double)newNegN/newPosN;
+    double imbalanceRatio=static_cast<double>(newNegN)/newPosN;
     double posLambda, negLambda;
     if(samplingType==DownSamplingMajority)
     {
@@ -382,7 +381,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     int newNegN=negTrainDataList->size();
     
     
-    double newImbalanceRatio=(double)newNegN/newPosN;
+    double newImbalanceRatio=static_cast<double>(newNegN)/newPosN;
     double newPosLambda,newNegLambda;
     if(samplingType==DownSamplingMajority)
     {
@@ -512,7 +511,7 @@ int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
     double p=1;
     do{
         k=k+1;
-        double u=(double)rand()/RAND_MAX;
+        double u=static_cast<double>(rand())/RAND_MAX;
         p=p*u;
     }
     while(p>L);
@@ -527,7 +526,7 @@ void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, dou
     o_list->reserve(Ns*bagFactor);
     for(int i=0;i<Ns;i++)
     {
-        double randNumber=(double)rand()/RAND_MAX;
+        double randNumber=static_cast<double>(rand())/RAND_MAX;
         if(randNumber>bagFactor)continue;
         int k=GetPossionNumber(possionLambda);
         for(int j=0;j<k;j++)

@@ -122,14 +122,14 @@ void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_best
     int Nfsq=sqrt(tree->GetTrainData()->at(0)->size()-1)+1;
     for(int i=0;i<Nfsq;i++)
     {
-        double randf=(double)rand()/RAND_MAX;
+        double randf=static_cast<double>(rand())/RAND_MAX;
         int fIndex=(tree->GetTrainData()->at(0)->size()-1)*randf;
         T max=0;
         T min=0;
         GetFeatureRange(fIndex, &min, &max);
         for(int j=0;j<10;j++)
         {
-            double splitValue=min+(double)(max-min)*rand()/RAND_MAX;
+            double splitValue=min+static_cast<double>((max-min))*rand()/RAND_MAX;
             std::shared_ptr<std::vector<int> > indexList0(new std::vector<int>);
             std::shared_ptr<std::vector<int> > indexList1(new std::vector<int>);
             binSplitDataSet(sampleIndexList,fIndex,  splitValue,indexList0,indexList1);
@@ -167,7 +167,7 @@ double RandomForest::Node<T>::meanLeaf()
         T label=tree->GetTrainData()->at(sampleIndex)->back();
         sum=sum+label;
     }
-    double mean=(double)sum/sampleIndexList->size();
+    double mean=static_cast<double>(sum)/sampleIndexList->size();
     return mean;
 }
 
