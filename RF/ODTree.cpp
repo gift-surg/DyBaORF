@@ -143,91 +143,91 @@ std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >
 RandomForest::ODTree<T>::GetTrainData() const
 {
     return trainData;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetActureTreeDepth(int d)
 {
     actureTreeDepth=d;
-};
+}
 
 template<typename T>
 int RandomForest::ODTree<T>::GetActureTreeDepth() const
 {
     return actureTreeDepth;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetDepthUpperBound(int d)
 {
     depthUpperBound=d;
-};
+}
 
 template<typename T>
 int RandomForest::ODTree<T>::GetDepthUpperBound() const
 {
     return depthUpperBound;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetActureTreeNode(int n)
 {
     actureTreeNode=n;
-};
+}
 
 template<typename T>
 int RandomForest::ODTree<T>::GetActureTreeNode() const
 {
     return actureTreeNode;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetVarTreshold(double t)
 {
     varThreshold=t;
-};
+}
 
 template<typename T>
 double RandomForest::ODTree<T>::GetVarThreshold() const
 {
     return varThreshold;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetSampleNumberThreshold(int n)
 {
     sampleNumberThreshold=n;
-};
+}
 
 template<typename T>
 int RandomForest::ODTree<T>::GetSampleNumberThreshold() const
 {
     return sampleNumberThreshold;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetBalanceType(BalanceType type)
 {
     balanceType=type;
-};
+}
 
 template<typename T>
 RandomForest::BalanceType RandomForest::ODTree<T>::GetBalanceType() const
 {
     return balanceType;
-};
+}
 
 template<typename T>
 void RandomForest::ODTree<T>::SetSamplingType(SamplingType type)
 {
     samplingType=type;
-};
+}
 
 template<typename T>
 RandomForest::SamplingType RandomForest::ODTree<T>::GetSamplingType() const
 {
     return samplingType;
-};
+}
 
 
 template<typename T>
@@ -242,7 +242,7 @@ template<typename T>
 std::shared_ptr<std::vector<double> > RandomForest::ODTree<T>::GetGiniImportance() const
 {
     return giniImportance;
-};
+}
 
 
 ////private functions

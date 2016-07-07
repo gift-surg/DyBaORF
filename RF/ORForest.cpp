@@ -27,7 +27,7 @@ RandomForest::ORForest<T>::ORForest()
     balanceType=SingleParameterBoostrap;
     samplingType=DownSamplingMajority;
     onlineUpdate=true;
-};
+}
 
 template<typename T>
 RandomForest::ORForest<T>::~ORForest()
@@ -65,31 +65,31 @@ template<typename T>
 void RandomForest::ORForest<T>::SetBalanceType(BalanceType type)
 {
     balanceType=type;
-};
+}
 
 template<typename T>
 RandomForest::BalanceType RandomForest::ORForest<T>::GetBalanceType() const
 {
     return balanceType;
-};
+}
 
 template<typename T>
 void RandomForest::ORForest<T>::SetSamplingType(RandomForest::SamplingType type)
 {
     samplingType=type;
-};
+}
 
 template<typename T>
 RandomForest::SamplingType RandomForest::ORForest<T>::GetSamplingType() const
 {
     return samplingType;
-};
+}
 
 template<typename T>
 void RandomForest::ORForest<T>::DisableOnlineUpdate()
 {
     onlineUpdate=false;
-};
+}
 
 template<typename T>
 void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)

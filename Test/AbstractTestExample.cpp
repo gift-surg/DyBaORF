@@ -443,7 +443,7 @@ std::vector<double> AbstractTestExample::GetImbalanceRatio()
 int AbstractTestExample::GetTrainN() const
 {
     return trainN;
-};
+}
 
 void AbstractTestExample::GetMeanAndStd(std::vector<std::vector<double> > i_array, std::vector<double> * o_mean, std::vector<double> * o_std)
 {
