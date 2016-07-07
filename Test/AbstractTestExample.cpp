@@ -365,7 +365,7 @@ void AbstractTestExample::PrintPerformance()
     
     for(int i=0;i<SensitivityMean.size();i++)
     {
-        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< static_cast<double>trainIndexEachUpdate.at(i+1)/trainN<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
         std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityMean[i]<<" ";
