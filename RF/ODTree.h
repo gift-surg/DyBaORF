@@ -89,7 +89,7 @@ public:
      *
      * @param[in] i_testData the input test data with label to calculate the prediction correct rate.
      */
-    double GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData);
+    double GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData) const;
     
     /** Get the training data set of this tree */
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > GetTrainData() const;

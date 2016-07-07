@@ -311,7 +311,7 @@ int RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> > i
 }
 
 template<typename T>
-void RandomForest::Node<T>::GetSampleList(std::shared_ptr<std::vector<int> > o_posSampleList, std::shared_ptr<std::vector<int> > o_negSampleList)
+void RandomForest::Node<T>::GetSampleList(std::shared_ptr<std::vector<int> > o_posSampleList, std::shared_ptr<std::vector<int> > o_negSampleList) const
 {
     if(featureIndex==-1)
     {

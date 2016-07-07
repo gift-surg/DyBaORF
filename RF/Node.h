@@ -77,10 +77,10 @@ public:
 
     /** Calculate the mean label value of a leaf node */
     double meanLeaf() const;
-     *  @param[in] i_sampleIndexList the sample index list of the leaf node
-     */
 
     /** Calculate the impurity of a leaf
+     *  @param[in] i_sampleIndexList the sample index list of the leaf node
+     */
     double impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList) const;
 
     /** Create a new tree from scratch. Generate the left and right child recursively */
@@ -104,7 +104,7 @@ public:
      *  @param[out] o_negSampleList the returned negative sample list
      */
     void GetSampleList(std::shared_ptr<std::vector<int> > o_posSampleList,
-                       std::shared_ptr<std::vector<int> > o_negSampleList);
+                       std::shared_ptr<std::vector<int> > o_negSampleList) const;
 
     /** Set the left child of this node
      *  @param[in] l the left child
@@ -152,7 +152,6 @@ public:
     void SetSampleIndexList(std::shared_ptr<std::vector<int> > list);
 
     /** Get the sample index list of this node */
-    
     std::shared_ptr<std::vector<int> > GetSampleIndexList() const;
     /** Get the parent tree of this node */
     ODTree<T> * GetTree() const;

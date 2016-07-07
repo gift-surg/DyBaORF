@@ -120,7 +120,7 @@ void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::sha
 
 
 template<typename T>
-double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData)
+double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData) const
 {
     double incorrectPrediction=0;
     for(int i=0;i<i_testData->size();i++)
