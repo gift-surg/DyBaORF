@@ -53,7 +53,7 @@ RandomForest::Node<T>::~Node()
 }
 
 template<typename T>
-void RandomForest::Node<T>::GetFeatureRange(int fIndex,T * min,T * max)
+void RandomForest::Node<T>::GetFeatureRange(int fIndex,T * min,T * max) const
 {
    	T tempMin=100000;
     T tempMax=-100000;
@@ -157,7 +157,7 @@ void RandomForest::Node<T>::chooseBestSplit(int * o_bestFeatureIndex, T * o_best
 
 
 template<typename T>
-double RandomForest::Node<T>::meanLeaf()
+double RandomForest::Node<T>::meanLeaf() const
 {
     if(sampleIndexList==nullptr || sampleIndexList->size()==0)return -1;
     T sum=0;
@@ -172,9 +172,8 @@ double RandomForest::Node<T>::meanLeaf()
 }
 
 
-
 template<typename T>
-double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList)
+double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList) const
 {
     // Gini index
     if(i_sampleIndexList==nullptr)return -1;
@@ -400,7 +399,7 @@ void RandomForest::Node<T>::SetSampleIndexList(std::shared_ptr<std::vector<int> 
 };
 
 template<typename T>
-std::shared_ptr<std::vector<int> > RandomForest::Node<T>::GetSampleIndexList()
+std::shared_ptr<std::vector<int> > RandomForest::Node<T>::GetSampleIndexList() const
 {
     return sampleIndexList;
 };
