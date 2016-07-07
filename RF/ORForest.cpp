@@ -252,7 +252,7 @@ void RandomForest::ORForest<T>::Predict(const std::shared_ptr<std::vector<std::s
 }
 
 template<typename T>
-int RandomForest::ORForest<T>::GetActureMaxTreeDepth()
+int RandomForest::ORForest<T>::GetActureMaxTreeDepth() const
 {
     int tempD=0;
     for(int i=0;i<treeNumber;i++)
@@ -267,7 +267,7 @@ int RandomForest::ORForest<T>::GetActureMaxTreeDepth()
 
 
 template<typename T>
-int RandomForest::ORForest<T>::GetActureMaxTreeNode()
+int RandomForest::ORForest<T>::GetActureMaxTreeNode() const
 {
     int n=0;
     for(int i=0;i<treeNumber;i++)
@@ -281,7 +281,7 @@ int RandomForest::ORForest<T>::GetActureMaxTreeNode()
 }
 
 template<typename T>
-double RandomForest::ORForest<T>::GetAverageOOBE()
+double RandomForest::ORForest<T>::GetAverageOOBE() const
 {
     double oobe=0;
     for(int i=0;i<treeNumber;i++)

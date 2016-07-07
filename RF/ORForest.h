@@ -87,13 +87,13 @@ public:
     void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_predict);
     
     /** Get acture max tree deepth */
-    int GetActureMaxTreeDepth();
+    int GetActureMaxTreeDepth() const;
     
     /** Get acture max tree nodes */
-    int GetActureMaxTreeNode();
+    int GetActureMaxTreeNode() const;
     
     /** Get average OOBE across all the trees */
-    double GetAverageOOBE();
+    double GetAverageOOBE() const;
     
     /** Get racnked Gini importance of all the features 
      * @param[out] featureIndexList a list of feature index with the one with the highest importance going first
