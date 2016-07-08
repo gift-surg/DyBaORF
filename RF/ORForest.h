@@ -102,7 +102,6 @@ public:
     void GetRankedGiniImportance(std::shared_ptr<std::vector<int> > * featureIndexList,
                                  std::shared_ptr<std::vector<double> > * giniImportanceList);
 
-
 private:
     int treeNumber;
     int maxDepth;
@@ -110,7 +109,7 @@ private:
     BalanceType balanceType;
     SamplingType samplingType;
     bool onlineUpdate;
-    double testDataRatio;// how many percents of given data are used as test data (10% or 20%)
+    double testDataRatio; /// how many percents of given data are used as test data (10% or 20%)
     
     std::vector<ODTree<T> > trees;
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > trainData;

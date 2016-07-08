@@ -183,6 +183,7 @@ void RandomForest::ORForest<T>::Train(const T *i_trainData, int i_Ns, int i_Nfp1
     }
     Train(tempTrainData);
 }
+
 template<typename T>
 void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_trainData)
 {
@@ -265,7 +266,6 @@ int RandomForest::ORForest<T>::GetActureMaxTreeDepth() const
     return tempD;
 }
 
-
 template<typename T>
 int RandomForest::ORForest<T>::GetActureMaxTreeNode() const
 {
@@ -290,7 +290,6 @@ double RandomForest::ORForest<T>::GetAverageOOBE() const
     }
     return oobe/treeNumber;
 }
-
 
 template<typename T>
 void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::vector<int> > * o_featureIndexList,  std::shared_ptr<std::vector<double> > * o_giniImportanceList)
@@ -335,7 +334,6 @@ void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::ve
     *o_featureIndexList=featureIndexList;
     *o_giniImportanceList=giniImportanceList;
 }
-
 
 template class RandomForest::ORForest<float>;
 template class RandomForest::ORForest<double>;

@@ -153,6 +153,7 @@ public:
 
     /** Get the sample index list of this node */
     std::shared_ptr<std::vector<int> > GetSampleIndexList() const;
+
     /** Get the parent tree of this node */
     ODTree<T> * GetTree() const;
 
