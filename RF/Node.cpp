@@ -12,31 +12,6 @@
 
 
 #include "Node.h"
-/////////////////////////////
-//common functions
-////////////////////////////
-
-template<typename T>
-void getFeatureRange(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_dataSet, int featureIndx,
-                     T *o_min,T *o_max)
-{
-    T min=100000;
-    T max=-100000;
-    for (int i=0; i<i_dataSet->size(); i++)
-    {
-        T value=i_dataSet->at(i)->at(featureIndx);
-        if (value>max)
-        {
-            max=value;
-        }
-        if (value<min)
-        {
-            min=value;
-        }
-    }
-    *o_min=min;
-    *o_max=max;
-}
 
 /////////////////////////////
 //Node
