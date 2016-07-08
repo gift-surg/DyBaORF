@@ -337,7 +337,7 @@ template<typename T>
 void RandomForest::Node<T>::SetLeft(std::shared_ptr<RandomForest::Node<T> > l)
 {
     left=l;
-};
+}
 
 template<typename T>
 std::shared_ptr<RandomForest::Node<T> > RandomForest::Node<T>::GetLeft() const
@@ -349,7 +349,7 @@ template<typename T>
 void RandomForest::Node<T>::SetRight(std::shared_ptr<RandomForest::Node<T> > r)
 {
     right=r;
-};
+}
 
 template<typename T>
 std::shared_ptr<RandomForest::Node<T> > RandomForest::Node<T>::GetRight() const
@@ -360,55 +360,55 @@ template<typename T>
 void RandomForest::Node<T>::SetFeatureIndex(int idx)
 {
     featureIndex=idx;
-};
+}
 
 template<typename T>
 int RandomForest::Node<T>::GetFeatureIndex() const
 {
     return featureIndex;
-};
+}
 
 template<typename T>
 void RandomForest::Node<T>::SetSplitValue(double v)
 {
     splitValue=v;
-};
+}
 
 template<typename T>
 double RandomForest::Node<T>::GetSplitValue() const
 {
     return splitValue;
-};
+}
 
 template<typename T>
 void RandomForest::Node<T>::SetDepth(int d)
 {
     depth=d;
-};
+}
 
 template<typename T>
 int RandomForest::Node<T>::GetDepth() const
 {
     return depth;
-};
+}
 
 template<typename T>
 void RandomForest::Node<T>::SetSampleIndexList(std::shared_ptr<std::vector<int> > list)
 {
     sampleIndexList=list;
-};
+}
 
 template<typename T>
 std::shared_ptr<std::vector<int> > RandomForest::Node<T>::GetSampleIndexList() const
 {
     return sampleIndexList;
-};
+}
 
 template<typename T>
 RandomForest::ODTree<T> * RandomForest::Node<T>::GetTree() const
 {
     return tree;
-};
+}
 
 template<typename T>
 double RandomForest::Node<T>::PredictOneSample(const std::shared_ptr<std::vector<T> > i_inData)
