@@ -82,14 +82,14 @@ public:
      * @param[in] i_testData the input test data list
      * @param[out] o_forecast the predicted probability for each test sample
      */
-    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData,
+    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData,
                  std::vector<float> ** o_forecast);
     
     /** Get the out of bag error
      *
      * @param[in] i_testData the input test data with label to calculate the prediction correct rate.
      */
-    double GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData) const;
+    double GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData) const;
     
     /** Get the training data set of this tree */
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > GetTrainData() const;
@@ -208,7 +208,7 @@ private:
      * @param[in] lambda the parameter for Possion distribution
      * @return a integer number than belongs to Pos(lambda)
      */
-    int GetPossionNumber(double lambda);
+    int GetPossionNumber(double lambda) const;
     
     /** Bootsttrap sampling Ns samples. each sample is sampled k times, where k belongs to Pois(possonLambda).
      * @param[in] possionLambda the parameter for Possion distribution

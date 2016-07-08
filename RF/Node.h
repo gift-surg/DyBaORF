@@ -58,7 +58,7 @@ public:
      * @param[out] o_indexList0 the first output sample index, with feature value less than featureValue
      * @param[out] o_indexList1 the second output sample index, with feature value higher than featureValue
      */
-    void binSplitDataSet(const std::shared_ptr<std::vector<int> > i_indexList,
+    void binSplitDataSet(const std::shared_ptr<std::vector<int> >& i_indexList,
                          int feature,
                          T featureValue,
                          std::shared_ptr<std::vector<int> > o_indexList0,
@@ -81,7 +81,7 @@ public:
     /** Calculate the impurity of a leaf
      *  @param[in] i_sampleIndexList the sample index list of the leaf node
      */
-    double impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList) const;
+    double impurityLeaf(const std::shared_ptr<std::vector<int> >& i_sampleIndexList) const;
 
     /** Create a new tree from scratch. Generate the left and right child recursively */
     void CreateTree();
@@ -90,14 +90,14 @@ public:
      *  Grow the tree with newly arrived training data
      *  @param[in] i_addSampleList the set of data  that is added to the tree.
      */
-    void UpdateTree(const std::shared_ptr<std::vector<int> > i_addSampleList);
+    void UpdateTree(const std::shared_ptr<std::vector<int> >& i_addSampleList);
 
     /** Update a tree with an add set and a remove set
      *  @param[in] i_rmvSampleList the set of data that would be removed from the tree.
      *  @param[in] i_addSampleList the set of data that would be added to the tree.
      */
-    int UpdateTree(const std::shared_ptr<std::vector<int> > i_rmvSampleList,
-                   const std::shared_ptr<std::vector<int> > i_addSampleList);
+    int UpdateTree(const std::shared_ptr<std::vector<int> >& i_rmvSampleList,
+                   const std::shared_ptr<std::vector<int> >& i_addSampleList);
 
     /** Get the positive and negative sample list of a node
      *  @param[out] o_posSampleList the returned positive sample list

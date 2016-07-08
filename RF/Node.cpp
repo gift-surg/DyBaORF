@@ -13,9 +13,6 @@
 
 #include "Node.h"
 
-/////////////////////////////
-//Node
-////////////////////////////
 template<typename T>
 RandomForest::Node<T>::Node(ODTree<T> * parentTree)
 {
@@ -51,7 +48,7 @@ void RandomForest::Node<T>::GetFeatureRange(int fIndex,T * min,T * max) const
 }
 
 template<typename T>
-void RandomForest::Node<T>::binSplitDataSet(const std::shared_ptr<std::vector<int> > i_indexList, int featureIdx,  T featureValue,
+void RandomForest::Node<T>::binSplitDataSet(const std::shared_ptr<std::vector<int> >& i_indexList, int featureIdx,  T featureValue,
                               std::shared_ptr<std::vector<int> > o_indexList0, std::shared_ptr<std::vector<int> > o_indexList1)
 {
     //cout<<"binSplitDataSet started"<< std::endl;
@@ -154,7 +151,7 @@ double RandomForest::Node<T>::meanLeaf() const
 
 
 template<typename T>
-double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList) const
+double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> >& i_sampleIndexList) const
 {
     // Gini index
     if (i_sampleIndexList == nullptr) {
@@ -228,7 +225,7 @@ void RandomForest::Node<T>::CreateTree()
 }
 
 template<typename T>
-void RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> > i_addSampleList)
+void RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> >& i_addSampleList)
 {
     if (i_addSampleList->size() == 0)
     {
@@ -251,7 +248,7 @@ void RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> > 
 
 //the returned value is the number of samples at current node
 template<typename T>
-int RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> > i_rmvSampleList, const std::shared_ptr<std::vector<int> > i_addSampleList)
+int RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> >& i_rmvSampleList, const std::shared_ptr<std::vector<int> >& i_addSampleList)
 {
     if(i_rmvSampleList->size()==0 && i_addSampleList->size()==0)return sampleIndexList->size();
     if(featureIndex==-1)

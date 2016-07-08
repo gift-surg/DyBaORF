@@ -84,7 +84,7 @@ public:
      * @param[in] i_testData the input test data set
      * @param[out] o_predict the prediction result of the test data
      */
-    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_predict);
+    void Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData, std::vector<float> ** o_predict);
     
     /** Get acture max tree deepth */
     int GetActureMaxTreeDepth() const;

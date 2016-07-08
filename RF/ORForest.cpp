@@ -234,7 +234,7 @@ void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::sha
 }
 
 template<typename T>
-void RandomForest::ORForest<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float>  ** o_predict)
+void RandomForest::ORForest<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData, std::vector<float>  ** o_predict)
 {
     std::vector<float> *sumPredict=new std::vector<float>;
     sumPredict->resize(i_testData->size());

@@ -107,7 +107,7 @@ void RandomForest::ODTree<T>::Train(const std::shared_ptr<std::vector<std::share
 }
 
 template<typename T>
-void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData, std::vector<float> ** o_forecast)
+void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData, std::vector<float> ** o_forecast)
 {
     std::vector<float> *tempPredict=new std::vector<float>;
     tempPredict->resize(i_testData->size());
@@ -119,7 +119,7 @@ void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::sha
 }
 
 template<typename T>
-double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData) const
+double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > >& i_testData) const
 {
     double incorrectPrediction=0;
     for(int i=0;i<i_testData->size();i++)
@@ -500,7 +500,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
 }
 
 template<typename T>
-int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
+int RandomForest::ODTree<T>::GetPossionNumber(double lambda) const
 {
     double L=exp(-lambda);
     int k=0;
