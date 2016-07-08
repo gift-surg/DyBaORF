@@ -57,7 +57,7 @@ void RandomForest::ORForest<T>::Clear()
     if(testData)
     {
         testData.reset();
-        trainData=nullptr;
+        testData=nullptr;
     }
 }
 
