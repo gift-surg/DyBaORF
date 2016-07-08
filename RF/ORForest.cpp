@@ -217,14 +217,14 @@ void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::sha
 	{
         // combine old training data and newly arrived training data
         GetTrainAndTestData(i_trainData);
-		for(int i=0;i<treeNumber;i++)
+        for (TreeListIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
 		{
-			trees[i].Train(trainData);
-			T oobe=trees[i].GetOOBE(testData);
-			if(oobe>0.4)
+            tree_iter->Train(trainData);
+            T oobe = tree_iter->GetOOBE(testData);
+            if (oobe>0.4)
 			{
-                trees[i].Reset();
-				trees[i].Train(trainData);
+                tree_iter->Reset();
+                tree_iter->Train(trainData);
 			}
 		}
 	}
@@ -235,11 +235,16 @@ void RandomForest::ORForest<T>::Predict(const std::shared_ptr<std::vector<std::s
 {
     std::vector<float> *sumPredict=new std::vector<float>;
     sumPredict->resize(i_testData->size());
-    for(int i=0;i<i_testData->size();i++) sumPredict->at(i)=0;
-    for(int i=0;i<treeNumber;i++)
+
+    for(int i=0;i<i_testData->size();i++)
+    {
+        sumPredict->at(i)=0;
+    }
+
+    for (TreeListIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
     {
         std::vector<float> * tempPredict;
-        trees[i].Predict(i_testData, &tempPredict);
+        tree_iter->Predict(i_testData, &tempPredict);
         for(int j=0;j<sumPredict->size();j++)
         {
             sumPredict->at(j)+=tempPredict->at(j);
@@ -256,11 +261,11 @@ template<typename T>
 int RandomForest::ORForest<T>::GetActureMaxTreeDepth() const
 {
     int tempD=0;
-    for(int i=0;i<treeNumber;i++)
+    for (TreeListConstIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
     {
-        if(tempD < trees[i].GetActureTreeDepth())
+        if (tempD < tree_iter->GetActureTreeDepth())
         {
-            tempD = trees[i].GetActureTreeDepth();
+            tempD = tree_iter->GetActureTreeDepth();
         }
     }
     return tempD;
@@ -270,11 +275,11 @@ template<typename T>
 int RandomForest::ORForest<T>::GetActureMaxTreeNode() const
 {
     int n=0;
-    for(int i=0;i<treeNumber;i++)
+    for (TreeListConstIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
     {
-        if(n<trees[i].GetActureTreeNode())
+        if (n < tree_iter->GetActureTreeNode())
         {
-            n=trees[i].GetActureTreeNode();
+            n = tree_iter->GetActureTreeNode();
         }
     }
     return n;
@@ -284,9 +289,10 @@ template<typename T>
 double RandomForest::ORForest<T>::GetAverageOOBE() const
 {
     double oobe=0;
-    for(int i=0;i<treeNumber;i++)
+
+    for (TreeListConstIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
     {
-        oobe+=trees[i].GetOOBE(testData);
+        oobe += tree_iter->GetOOBE(testData);
     }
     return oobe/treeNumber;
 }
@@ -303,12 +309,12 @@ void RandomForest::ORForest<T>::GetRankedGiniImportance( std::shared_ptr<std::ve
         featureIndexList->at(i)=i;
         giniImportanceList->at(i)=0.0;
     }
-    for(int i=0;i<treeNumber;i++)
+    for (TreeListIterator tree_iter = trees.begin(); tree_iter != trees.end(); tree_iter++)
     {
-        trees[i].UpdateGiniImportance();
+        tree_iter->UpdateGiniImportance();
         for(int j=0;j<featureIndexList->size();j++)
         {
-            giniImportanceList->at(j)=giniImportanceList->at(j)+trees[i].GetGiniImportance()->at(j);
+            giniImportanceList->at(j) = giniImportanceList->at(j) + tree_iter->GetGiniImportance()->at(j);
         }
     }
     

@@ -111,7 +111,10 @@ private:
     bool onlineUpdate;
     double testDataRatio; /// how many percents of given data are used as test data (10% or 20%)
     
-    std::vector<ODTree<T> > trees;
+    typedef std::vector< ODTree<T> > TreeList;
+    typedef typename TreeList::iterator TreeListIterator;
+    typedef typename TreeList::const_iterator TreeListConstIterator;
+    TreeList trees;
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > trainData;
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > testData; // for validating
 };

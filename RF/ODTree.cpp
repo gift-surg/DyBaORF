@@ -118,7 +118,6 @@ void RandomForest::ODTree<T>::Predict(const std::shared_ptr<std::vector<std::sha
     *o_forecast=tempPredict;
 }
 
-
 template<typename T>
 double RandomForest::ODTree<T>::GetOOBE(const std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > i_testData) const
 {
@@ -229,7 +228,6 @@ RandomForest::SamplingType RandomForest::ODTree<T>::GetSamplingType() const
     return samplingType;
 }
 
-
 template<typename T>
 void RandomForest::ODTree<T>::UpdateGiniImportance()
 {
@@ -243,7 +241,6 @@ std::shared_ptr<std::vector<double> > RandomForest::ODTree<T>::GetGiniImportance
 {
     return giniImportance;
 }
-
 
 ////private functions
 
@@ -502,7 +499,6 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     oldNegLambda=newNegLambda;
 }
 
-
 template<typename T>
 int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
 {
@@ -518,7 +514,6 @@ int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
     k=k-1;
     return k;
 }
-
 
 template<typename T>
 void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list)

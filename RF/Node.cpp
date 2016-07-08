@@ -176,7 +176,9 @@ template<typename T>
 double RandomForest::Node<T>::impurityLeaf(const std::shared_ptr<std::vector<int> > i_sampleIndexList) const
 {
     // Gini index
-    if(i_sampleIndexList==nullptr)return -1;
+    if(i_sampleIndexList==nullptr) {
+        return -1;
+    }
     double N0=0;
     double N1=0;
     int sampleNumber=i_sampleIndexList->size();
