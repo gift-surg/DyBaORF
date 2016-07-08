@@ -418,7 +418,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         std::vector<int> posBootstrapList;
         BoostrapSampling(newPosLambda-oldPosLambda, oldPosN, 1.0, &posBootstrapList);
         tempPosSampledList->resize(posBootstrapList.size());
-        for(int i=0;i<posBootstrapList.size();i++)
+        for (int i=0; i<posBootstrapList.size(); i++)
         {
             tempPosSampledList->at(i)=posTrainDataList->at(posBootstrapList[i]);
         }
@@ -434,9 +434,9 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         std::vector<int> posSampledListCopy;
         posSampledListCopy.insert(posSampledListCopy.end(), posSampledList->begin(),posSampledList->end());
         
-        if(deltaN<posSampledListCopy.size())
+        if (deltaN<posSampledListCopy.size())
         {
-            for(int j=0;j<deltaN;j++)
+            for(int j=0; j<deltaN; j++)
             {
                 int tempIdx=rand() % posSampledListCopy.size();
                 rmvSampledPosList->push_back(posSampledListCopy.at(tempIdx));
@@ -450,13 +450,13 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
     }
     
     // negLambda increased, shoud add samples from previous negative training data set.
-    if(oldNegN>0 &&  newNegLambda>oldNegLambda)
+    if (oldNegN>0 &&  newNegLambda>oldNegLambda)
     {
         std::shared_ptr<std::vector<int> > tempNegSampledList(new std::vector<int>);
         std::vector<int> negBootstrapList;
         BoostrapSampling(newNegLambda-oldNegLambda, oldNegN, 1.0, &negBootstrapList);
         tempNegSampledList->resize(negBootstrapList.size());
-        for(int i=0;i<negBootstrapList.size();i++)
+        for (int i=0; i<negBootstrapList.size(); i++)
         {
             tempNegSampledList->at(i)=negTrainDataList->at(negBootstrapList[i]);
         }
@@ -471,9 +471,9 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
         std::vector<int> negSampledListCopy;
         negSampledListCopy.insert(negSampledListCopy.end(), negSampledList->begin(),negSampledList->end());
         
-        if(deltaN<negSampledListCopy.size())
+        if (deltaN<negSampledListCopy.size())
         {
-            for(int j=0;j<deltaN;j++)
+            for (int j=0;j<deltaN;j++)
             {
                 int tempIdx=rand() % negSampledListCopy.size();
                 rmvSampledNegList->push_back(negSampledListCopy.at(tempIdx));
@@ -481,7 +481,7 @@ void RandomForest::ODTree<T>::DynamicImbalanceAdaptiveBoostrapSampling(int oldNs
                 negSampledListCopy.pop_back();
             }
         }
-        else{
+        else {
             rmvSampledNegList->insert(rmvSampledNegList->end(), negSampledList->begin(),negSampledList->end());
         }
     }
@@ -505,7 +505,7 @@ int RandomForest::ODTree<T>::GetPossionNumber(double lambda)
     double L=exp(-lambda);
     int k=0;
     double p=1;
-    do{
+    do {
         k=k+1;
         double u=static_cast<double>(rand())/RAND_MAX;
         p=p*u;
@@ -519,12 +519,16 @@ template<typename T>
 void RandomForest::ODTree<T>::BoostrapSampling(double possionLambda, int Ns, double bagFactor, std::vector<int> *o_list)
 {
     o_list->reserve(Ns*bagFactor);
-    for(int i=0;i<Ns;i++)
+    for (int i=0;i<Ns;i++)
     {
         double randNumber=static_cast<double>(rand())/RAND_MAX;
-        if(randNumber>bagFactor)continue;
+        if (randNumber>bagFactor)
+        {
+            continue;
+        }
+
         int k=GetPossionNumber(possionLambda);
-        for(int j=0;j<k;j++)
+        for (int j=0; j<k; j++)
         {
             o_list->push_back(i);
         }

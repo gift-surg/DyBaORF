@@ -118,17 +118,20 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::v
     int addNTrain=i_addNs-addNTest;
     
     // select train and test data randomly
-    std::vector<bool> TestDataMask;
-    for(int i=0;i<i_addNs;i++) TestDataMask.push_back(false);
+    std::vector<bool> testDataMask;
+    for (int i=0; i<i_addNs; i++)
+    {
+        testDataMask.push_back(false);
+    }
 
     int add_nTest=0;
-    while(add_nTest<addNTest)
+    while (add_nTest<addNTest)
     {
         double randf=static_cast<double>(rand())/RAND_MAX;
         int tempIdx=i_addNs*randf;
-        if(TestDataMask[tempIdx]==false)
+        if(testDataMask[tempIdx]==false)
         {
-            TestDataMask[tempIdx]=true;
+            testDataMask[tempIdx]=true;
             add_nTest++;
         }
     }
@@ -137,9 +140,9 @@ void RandomForest::ORForest<T>::GetTrainAndTestData(const std::shared_ptr<std::v
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > addTestData(new std::vector<std::shared_ptr<std::vector<T> > >);
     addTrainData->reserve(addNTrain);
     addTestData->reserve(addNTest);
-    for(int i=0;i<i_addNs;i++)
+    for (int i=0; i<i_addNs; i++)
     {
-        if(TestDataMask[i])
+        if(testDataMask[i])
         {
             addTestData->push_back(i_trainData->at(i));
         }
@@ -171,11 +174,11 @@ void RandomForest::ORForest<T>::Train(const T *i_trainData, int i_Ns, int i_Nfp1
 {
     std::shared_ptr<std::vector<std::shared_ptr<std::vector<T> > > > tempTrainData(new std::vector<std::shared_ptr<std::vector<T> > >);
     tempTrainData->resize(i_Ns);
-    for(int i=0;i<i_Ns;i++)
+    for (int i=0; i<i_Ns; i++)
     {
         std::shared_ptr<std::vector<T> > tempSample(new std::vector<T>);
         tempSample->resize(i_Nfp1);
-        for(int j=0;j<i_Nfp1;j++)
+        for (int j=0; j<i_Nfp1; j++)
         {
             tempSample->at(j)=*(i_trainData+i*i_Nfp1+j);
         }
@@ -193,7 +196,7 @@ void RandomForest::ORForest<T>::Train(const std::shared_ptr<std::vector<std::sha
         while(posN==0 || negN==0)
         {
             GetTrainAndTestData(i_trainData);
-            for(int i=0;i<trainData->size();i++)
+            for (int i=0; i<trainData->size(); i++)
             {
                 T tempL=trainData->at(i)->back();
                 if(tempL==1.0)posN++;
