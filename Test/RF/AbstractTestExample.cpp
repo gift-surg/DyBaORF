@@ -479,7 +479,7 @@ void AbstractTestExample::GetMeanAndStd(std::vector<std::vector<double> > i_arra
 
 bool AbstractTestExample::LoadCTGDataSet()
 {
-    std::string fileName="../../data/CTG.txt";
+    std::string fileName="../DyBaOrf/Test/data/CTG.txt";
     std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
@@ -534,7 +534,7 @@ bool AbstractTestExample::LoadCTGDataSet()
 
 bool AbstractTestExample::LoadWineDataSet()
 {
-    std::string fileName="../../data/winequality.data";
+    std::string fileName="../DyBaOrf/Test/data/winequality.data";
     std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
@@ -593,7 +593,7 @@ bool AbstractTestExample::LoadWineDataSet()
 
 bool AbstractTestExample::LoadMuskDataSet()
 {
-    std::string fileName="../../data/musk1.data";
+    std::string fileName="../DyBaOrf/Test/data/musk1.data";
     std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
@@ -651,7 +651,7 @@ bool AbstractTestExample::LoadMuskDataSet()
 
 bool AbstractTestExample::LoadBiodegDataSet()
 {
-    std::string fileName="../../data/biodeg.csv";
+    std::string fileName="../DyBaOrf/Test/data/biodeg.csv";
     std::ifstream fileLoader(fileName.c_str());
     if(!fileLoader.is_open())
     {
