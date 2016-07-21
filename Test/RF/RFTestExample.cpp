@@ -56,6 +56,7 @@ void RFTestExample::Run(int MaxIter)
     int sampleN=6;
     for(int idx=0;idx<MaxIter;idx++)
     {
+        std::cout<<"iter="<<idx<<std::endl;
         bool singleClass=true;
         while(singleClass)
         {
@@ -75,20 +76,20 @@ void RFTestExample::Run(int MaxIter)
                 }
             }
         }
-        vector<double> tempImbalanceRatio=GetImbalanceRatio();
+        std::vector<double> tempImbalanceRatio=GetImbalanceRatio();
         imbalanceRatio.push_back(tempImbalanceRatio);
         
-        cout<<"iteration "<<idx<<", data prepared"<<endl;
+        std::cout<<"iteration "<<idx<<", data prepared"<< std::endl;
 #if USE_PROPOSED_ORF
         // proposed method
         RandomForest::ORForest<double> rf;
         rf.Init(treeN, depth,sampleN);// tree number, depth, sample number in node
         rf.SetSamplingType(RandomForest::DownSamplingMajority);
         rf.SetBalanceType(RandomForest::DynamicImbalanceAdaptableBootstrap);
-        vector<double>  Sensitivity_on;
-        vector<double>  Specificity_on;
-        vector<double>  Gmean_on;
-        vector<double>  Time_on;
+        std::vector<double>  Sensitivity_on;
+        std::vector<double>  Specificity_on;
+        std::vector<double>  Gmean_on;
+        std::vector<double>  Time_on;
 #endif
         
 #if COMPARE_WITH_MPB_ORF
@@ -97,10 +98,10 @@ void RFTestExample::Run(int MaxIter)
         rf1.Init(treeN, depth,sampleN);// tree number, depth, sample number in node
         rf1.SetSamplingType(RandomForest::DownSamplingMajority);
         rf1.SetBalanceType(RandomForest::MultipleParameterBoostrap);
-        vector<double>  Sensitivity_on1;
-        vector<double>  Specificity_on1;
-        vector<double>  Gmean_on1;
-        vector<double>  Time_on1;
+        std::vector<double>  Sensitivity_on1;
+        std::vector<double>  Specificity_on1;
+        std::vector<double>  Gmean_on1;
+        std::vector<double>  Time_on1;
 #endif
         
 #if COMPARE_WITH_SPB_ORF
@@ -109,17 +110,17 @@ void RFTestExample::Run(int MaxIter)
         rf2.Init(treeN, depth,sampleN);// tree number, depth, sample number in node
         rf2.SetSamplingType(RandomForest::DownSamplingMajority);
         rf2.SetBalanceType(RandomForest::SingleParameterBoostrap);
-        vector<double>  Sensitivity_on2;
-        vector<double>  Specificity_on2;
-        vector<double>  Gmean_on2;
-        vector<double>  Time_on2;
+        std::vector<double>  Sensitivity_on2;
+        std::vector<double>  Specificity_on2;
+        std::vector<double>  Gmean_on2;
+        std::vector<double>  Time_on2;
 #endif
         
 #if COMPARE_WITH_OFFLINE
-        vector<double>  Sensitivity_off;
-        vector<double>  Specificity_off;
-        vector<double>  Gmean_off;
-        vector<double>  Time_off;
+        std::vector<double>  Sensitivity_off;
+        std::vector<double>  Specificity_off;
+        std::vector<double>  Gmean_off;
+        std::vector<double>  Time_off;
 #endif
         
         for(int it=0;it<trainIndexEachUpdate.size()-1;it++)
@@ -130,7 +131,7 @@ void RFTestExample::Run(int MaxIter)
             if(addTrainN==0)break;
             
             ///get online training data
-            shared_ptr<vector<shared_ptr<vector<double> > > > tempOnlineTrainData(new vector<shared_ptr<vector<double> > >);
+            std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempOnlineTrainData(new std::vector<std::shared_ptr<std::vector<double> > >);
             tempOnlineTrainData->reserve(addTrainN);
             for(int i=addTrainStart;i<addtrainEnd;i++)
             {
@@ -139,14 +140,12 @@ void RFTestExample::Run(int MaxIter)
 #if USE_PROPOSED_ORF
             time_t startTrain=clock();
             rf.Train(tempOnlineTrainData);
-            double duringTrain=(double)(clock()-startTrain)/CLOCKS_PER_SEC;
+            double duringTrain=static_cast<double>((clock()-startTrain))/CLOCKS_PER_SEC;
             Time_on.push_back(duringTrain);
             //int node1=rf.GetActureMaxTreeNode();
             
-            vector<float> *predict_on;
-            time_t startTest=clock();
+            std::vector<float> *predict_on;
             rf.Predict(testData,&predict_on);
-            double duringTest=(double)(clock()-startTest)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on=0;
             int correctNegPredict_on=0;
@@ -160,14 +159,12 @@ void RFTestExample::Run(int MaxIter)
 #if COMPARE_WITH_MPB_ORF
             time_t startTrain1=clock();
             rf1.Train(tempOnlineTrainData);
-            double duringTrain1=(double)(clock()-startTrain1)/CLOCKS_PER_SEC;
+            double duringTrain1=static_cast<double>((clock()-startTrain1))/CLOCKS_PER_SEC;
             Time_on1.push_back(duringTrain1);
             //int node2=rf1.GetActureMaxTreeNode();
             
-            vector<float> *predict_on1;
-            time_t startTest1=clock();
+            std::vector<float> *predict_on1;
             rf1.Predict(testData, &predict_on1);
-            double duringTest1=(double)(clock()-startTest1)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on1=0;
             int correctNegPredict_on1=0;
@@ -180,14 +177,12 @@ void RFTestExample::Run(int MaxIter)
 #if COMPARE_WITH_SPB_ORF
             time_t startTrain2=clock();
             rf2.Train(tempOnlineTrainData);
-            double duringTrain2=(double)(clock()-startTrain2)/CLOCKS_PER_SEC;
+            double duringTrain2=static_cast<double>((clock()-startTrain2))/CLOCKS_PER_SEC;
             Time_on2.push_back(duringTrain2);
             //int node2=rf1.GetActureMaxTreeNode();
             
-            vector<float> *predict_on2;
-            time_t startTest2=clock();
+            std::vector<float> *predict_on2;
             rf2.Predict(testData, &predict_on2);
-            double duringTest2=(double)(clock()-startTest2)/CLOCKS_PER_SEC;
             
             int correctPosPredict_on2=0;
             int correctNegPredict_on2=0;
@@ -200,7 +195,7 @@ void RFTestExample::Run(int MaxIter)
 #endif
             
 #if COMPARE_WITH_OFFLINE
-            vector<float> *predict_off;
+            std::vector<float> *predict_off;
             // offline RF
             RandomForest::ORForest<double> offrf;
             offrf.Init(treeN, depth,sampleN);// tree number, depth, sample number in node
@@ -208,7 +203,7 @@ void RFTestExample::Run(int MaxIter)
             offrf.SetBalanceType(RandomForest::DynamicImbalanceAdaptableBootstrap);
             
             // get offline train data
-            shared_ptr<vector<shared_ptr<vector<double> > > > tempOfflineTrainData(new vector<shared_ptr<vector<double> > >);
+            std::shared_ptr<std::vector<std::shared_ptr<std::vector<double> > > > tempOfflineTrainData(new std::vector<std::shared_ptr<std::vector<double> > >);
             tempOfflineTrainData->reserve(addtrainEnd);
             for(int i=0;i<addtrainEnd;i++)
             {
@@ -217,7 +212,7 @@ void RFTestExample::Run(int MaxIter)
             
             time_t startTrain3=clock();
             offrf.Train(tempOfflineTrainData);
-            double duringTrain3=(double)(clock()-startTrain3)/CLOCKS_PER_SEC;
+            double duringTrain3=static_cast<double>((clock()-startTrain3))/CLOCKS_PER_SEC;
             
             Time_off.push_back(duringTrain3);
             
@@ -326,8 +321,8 @@ void RFTestExample::Run(int MaxIter)
 #endif
             }
 #if USE_PROPOSED_ORF
-            double sensitivity_on=(double)correctPosPredict_on/PosN;
-            double specificity_on=(double)correctNegPredict_on/NegN;
+            double sensitivity_on=static_cast<double>(correctPosPredict_on)/PosN;
+            double specificity_on=static_cast<double>(correctNegPredict_on)/NegN;
             double gMean_on=sqrt(sensitivity_on*specificity_on);
             
             Sensitivity_on.push_back(sensitivity_on);
@@ -335,8 +330,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on.push_back(gMean_on);
 #endif
 #if COMPARE_WITH_MPB_ORF
-            double sensitivity_on1=(double)correctPosPredict_on1/PosN;
-            double specificity_on1=(double)correctNegPredict_on1/NegN;
+            double sensitivity_on1=static_cast<double>(correctPosPredict_on1)/PosN;
+            double specificity_on1=static_cast<double>(correctNegPredict_on1)/NegN;
             double gMean_on1=sqrt(sensitivity_on1*specificity_on1);
             
             Sensitivity_on1.push_back(sensitivity_on1);
@@ -344,8 +339,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on1.push_back(gMean_on1);
 #endif
 #if COMPARE_WITH_SPB_ORF
-            double sensitivity_on2=(double)correctPosPredict_on2/PosN;
-            double specificity_on2=(double)correctNegPredict_on2/NegN;
+            double sensitivity_on2=static_cast<double>(correctPosPredict_on2)/PosN;
+            double specificity_on2=static_cast<double>(correctNegPredict_on2)/NegN;
             double gMean_on2=sqrt(sensitivity_on2*specificity_on2);
             
             Sensitivity_on2.push_back(sensitivity_on2);
@@ -353,8 +348,8 @@ void RFTestExample::Run(int MaxIter)
             Gmean_on2.push_back(gMean_on2);
 #endif
 #if COMPARE_WITH_OFFLINE
-            double sensitivity_off=(double)correctPosPredict_off/PosN;
-            double specificity_off=(double)correctNegPredict_off/NegN;
+            double sensitivity_off=static_cast<double>(correctPosPredict_off)/PosN;
+            double specificity_off=static_cast<double>(correctNegPredict_off)/NegN;
             double gMean_off=sqrt(sensitivity_off*specificity_off);
             
             Sensitivity_off.push_back(sensitivity_off);
@@ -388,13 +383,13 @@ void RFTestExample::Run(int MaxIter)
 #endif
 //        if(idx==MaxIter-1)
 //        {
-//            shared_ptr<vector<int> > featureIndexList(new vector<int>);
-//            shared_ptr<vector<double> > featureImportanceList(new vector<double>);
+//            std::shared_ptr<std::vector<int> > featureIndexList(new std::vector<int>);
+//            std::shared_ptr<std::vector<double> > featureImportanceList(new std::vector<double>);
 //            rf.GetRankedGiniImportance(&featureIndexList, &featureImportanceList);
-//            cout<<"Feature Importance "<<endl;
+//            std::cout<<"Feature Importance "<< std::endl;
 //            for(int i=0;i<featureIndexList->size();i++)
 //            {
-//                cout<<std::setw(6)<<featureIndexList->at(i)<<" "<<featureImportanceList->at(i)<<endl;
+//                std::cout<<std::setw(6)<<featureIndexList->at(i)<<" "<<featureImportanceList->at(i)<< std::endl;
 //            }
 //        }
     }
@@ -402,176 +397,176 @@ void RFTestExample::Run(int MaxIter)
 
 void RFTestExample::PrintPerformance()
 {
-    vector<double> imbalanceRatioMean;
-    vector<double> imbalanceRatioStd;
+    std::vector<double> imbalanceRatioMean;
+    std::vector<double> imbalanceRatioStd;
     GetMeanAndStd(imbalanceRatio, &imbalanceRatioMean, &imbalanceRatioStd);
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
-        cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioStd[i]<<endl;
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<<static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(2)<<imbalanceRatioStd[i]<< std::endl;
     }
     
-    cout<<"comparison between  ";
+    std::cout<<"comparison between  ";
 #if USE_PROPOSED_ORF
-    cout<<"DIA ORF,  ";
+    std::cout<<"DIA ORF,  ";
 #endif
 #if COMPARE_WITH_MPB_ORF
-    cout<<"MPB ORF,  ";
+    std::cout<<"MPB ORF,  ";
 #endif
 #if COMPARE_WITH_SPB_ORF
-    cout<<"SPB ORF,  ";
+    std::cout<<"SPB ORF,  ";
 #endif
 #if COMPARE_WITH_OFFLINE
-    cout<<"Offline RF";
+    std::cout<<"Offline RF";
 #endif
-    cout<<endl;
+    std::cout<< std::endl;
     
 #if USE_PROPOSED_ORF
-    cout<<std::setw(36)<<"Proposed Balanced Online Random Forests"<<"                           ";
+    std::cout<<std::setw(36)<<"Proposed Balanced Online Random Forests"<<"                           ";
 #endif
 #if COMPARE_WITH_MPB_ORF
-    cout<<std::setw(36)<<"Balanced Online Random Forests with MPB"<<"     ";
+    std::cout<<std::setw(36)<<"Balanced Online Random Forests with MPB"<<"     ";
 #endif
-    cout<<endl;
+    std::cout<< std::endl;
     
 #if USE_PROPOSED_ORF
-    vector<double> SensitivityMean;
-    vector<double> SensitivityStd;
-    vector<double> SpecificityMean;
-    vector<double> SpecificityStd;
-    vector<double> GmeanMean;
-    vector<double> GmeanStd;
-    vector<double> TimeMean;
-    vector<double> TimeStd;
+    std::vector<double> SensitivityMean;
+    std::vector<double> SensitivityStd;
+    std::vector<double> SpecificityMean;
+    std::vector<double> SpecificityStd;
+    std::vector<double> GmeanMean;
+    std::vector<double> GmeanStd;
+    std::vector<double> TimeMean;
+    std::vector<double> TimeStd;
     GetMeanAndStd(Sensitivity, &SensitivityMean, &SensitivityStd);
     GetMeanAndStd(Specificity, &SpecificityMean, &SpecificityStd);
     GetMeanAndStd(Gmean, &GmeanMean, &GmeanStd);
     GetMeanAndStd(Time, &TimeMean, &TimeStd);
-    cout<<"dia orf, sen, spec, gmean"<<endl;
+    std::cout<<"dia orf, sen, spec, gmean"<< std::endl;
     for(int i=0;i<Gmean.size();i++)
     {
-        cout<<Sensitivity[i].back()<<" "<<Specificity[i].back()<<" "<<Gmean[i].back()<<endl;
+        std::cout<<Sensitivity[i].back()<<" "<<Specificity[i].back()<<" "<<Gmean[i].back()<< std::endl;
     }
 #endif
 #if COMPARE_WITH_MPB_ORF
-    vector<double> compareSensitivityMean;
-    vector<double> compareSensitivityStd;
-    vector<double> compareSpecificityMean;
-    vector<double> compareSpecificityStd;
-    vector<double> compareGmeanMean;
-    vector<double> compareGmeanStd;
-    vector<double> compareTimeMean;
-    vector<double> compareTimeStd;
+    std::vector<double> compareSensitivityMean;
+    std::vector<double> compareSensitivityStd;
+    std::vector<double> compareSpecificityMean;
+    std::vector<double> compareSpecificityStd;
+    std::vector<double> compareGmeanMean;
+    std::vector<double> compareGmeanStd;
+    std::vector<double> compareTimeMean;
+    std::vector<double> compareTimeStd;
     GetMeanAndStd(compareSensitivity, &compareSensitivityMean, &compareSensitivityStd);
     GetMeanAndStd(compareSpecificity, &compareSpecificityMean, &compareSpecificityStd);
     GetMeanAndStd(compareGmean, &compareGmeanMean, &compareGmeanStd);
     GetMeanAndStd(compareTime, &compareTimeMean, &compareTimeStd);
-    cout<<"mpb orf, sen, spec, gmean"<<endl;
+    std::cout<<"mpb orf, sen, spec, gmean"<< std::endl;
     for(int i=0;i<compareGmean.size();i++)
     {
-        cout<<compareSensitivity[i].back()<<" "<<compareSpecificity[i].back()<<" "<<compareGmean[i].back()<<endl;
+        std::cout<<compareSensitivity[i].back()<<" "<<compareSpecificity[i].back()<<" "<<compareGmean[i].back()<< std::endl;
     }
 #endif
 #if COMPARE_WITH_SPB_ORF
-    vector<double> compareSensitivity2Mean;
-    vector<double> compareSensitivity2Std;
-    vector<double> compareSpecificity2Mean;
-    vector<double> compareSpecificity2Std;
-    vector<double> compareGmean2Mean;
-    vector<double> compareGmean2Std;
-    vector<double> compareTime2Mean;
-    vector<double> compareTime2Std;
+    std::vector<double> compareSensitivity2Mean;
+    std::vector<double> compareSensitivity2Std;
+    std::vector<double> compareSpecificity2Mean;
+    std::vector<double> compareSpecificity2Std;
+    std::vector<double> compareGmean2Mean;
+    std::vector<double> compareGmean2Std;
+    std::vector<double> compareTime2Mean;
+    std::vector<double> compareTime2Std;
     GetMeanAndStd(compareSensitivity2, &compareSensitivity2Mean, &compareSensitivity2Std);
     GetMeanAndStd(compareSpecificity2, &compareSpecificity2Mean, &compareSpecificity2Std);
     GetMeanAndStd(compareGmean2, &compareGmean2Mean, &compareGmean2Std);
     GetMeanAndStd(compareTime2, &compareTime2Mean, &compareTime2Std);
-    cout<<"spb orf, sen, spec, gmean"<<endl;
+    std::cout<<"spb orf, sen, spec, gmean"<< std::endl;
     for(int i=0;i<compareGmean2.size();i++)
     {
-        cout<<compareSensitivity2[i].back()<<" "<<compareSpecificity2[i].back()<<" "<<compareGmean2[i].back()<<endl;
+        std::cout<<compareSensitivity2[i].back()<<" "<<compareSpecificity2[i].back()<<" "<<compareGmean2[i].back()<< std::endl;
     }
 #endif
 #if COMPARE_WITH_OFFLINE
-    vector<double> compareSensitivity3Mean;
-    vector<double> compareSensitivity3Std;
-    vector<double> compareSpecificity3Mean;
-    vector<double> compareSpecificity3Std;
-    vector<double> compareGmean3Mean;
-    vector<double> compareGmean3Std;
-    vector<double> compareTime3Mean;
-    vector<double> compareTime3Std;
+    std::vector<double> compareSensitivity3Mean;
+    std::vector<double> compareSensitivity3Std;
+    std::vector<double> compareSpecificity3Mean;
+    std::vector<double> compareSpecificity3Std;
+    std::vector<double> compareGmean3Mean;
+    std::vector<double> compareGmean3Std;
+    std::vector<double> compareTime3Mean;
+    std::vector<double> compareTime3Std;
     GetMeanAndStd(compareSensitivity3, &compareSensitivity3Mean, &compareSensitivity3Std);
     GetMeanAndStd(compareSpecificity3, &compareSpecificity3Mean, &compareSpecificity3Std);
     GetMeanAndStd(compareGmean3, &compareGmean3Mean, &compareGmean3Std);
     GetMeanAndStd(compareTime3, &compareTime3Mean, &compareTime3Std);
-    cout<<"offline rf, sen, spec, gmean"<<endl;
+    std::cout<<"offline rf, sen, spec, gmean"<< std::endl;
     for(int i=0;i<compareGmean3.size();i++)
     {
-        cout<<compareSensitivity3[i].back()<<" "<<compareSpecificity3[i].back()<<" "<<compareGmean3[i].back()<<endl;
+        std::cout<<compareSensitivity3[i].back()<<" "<<compareSpecificity3[i].back()<<" "<<compareGmean3[i].back()<< std::endl;
     }
 #endif
 
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
-        cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<<static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
 #if USE_PROPOSED_ORF
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanStd[i]<<"  ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< TimeMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< TimeStd[i]<<"     ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SensitivityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< SpecificityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< GmeanStd[i]<<"  ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< TimeMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< TimeStd[i]<<"     ";
 #endif
 #if COMPARE_WITH_MPB_ORF
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityStd[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanStd[i]<<"  ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTimeMean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTimeStd[i]<<"     ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificityStd[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmeanStd[i]<<"  ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTimeMean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTimeStd[i]<<"     ";
 #endif
-        cout<<endl;
+        std::cout<< std::endl;
     }
 
-    cout<<endl;
+    std::cout<< std::endl;
 #if COMPARE_WITH_SPB_ORF
-    cout<<std::setw(36)<<"Balanced Online Random Forests with SPB"<<"                      ";
+    std::cout<<std::setw(36)<<"Balanced Online Random Forests with SPB"<<"                      ";
 #endif
 #if COMPARE_WITH_OFFLINE
-    cout<<std::setw(36)<<"Balanced Offline Random Forests"<<"     ";
+    std::cout<<std::setw(36)<<"Balanced Offline Random Forests"<<"     ";
 #endif
-    cout<<endl;
+    std::cout<< std::endl;
     for(int i=0;i<trainIndexEachUpdate.size()-1;i++)
     {
 #if COMPARE_WITH_SPB_ORF | COMPARE_WITH_OFFLINE
-        cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< (double)trainIndexEachUpdate.at(i+1)/trainN<<" ";
+        std::cout<< std::setw(4)<< std::fixed<< std::setprecision(2)<< static_cast<double>(trainIndexEachUpdate.at(i+1))/trainN<<" ";
 #endif
 #if COMPARE_WITH_SPB_ORF
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity2Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity2Std[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity2Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity2Std[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean2Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean2Std[i]<<"  ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime2Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime2Std[i]<<"     ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity2Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity2Std[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity2Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity2Std[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean2Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean2Std[i]<<"  ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime2Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime2Std[i]<<"     ";
 #endif
 #if COMPARE_WITH_OFFLINE
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity3Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity3Std[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity3Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity3Std[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean3Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean3Std[i]<<"  ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime3Mean[i]<<" ";
-        cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime3Std[i]<<"     ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity3Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSensitivity3Std[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity3Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareSpecificity3Std[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean3Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareGmean3Std[i]<<"  ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime3Mean[i]<<" ";
+        std::cout<< std::setw(6)<< std::fixed<< std::setprecision(4)<< compareTime3Std[i]<<"     ";
 #endif
-        cout<<endl;
+        std::cout<< std::endl;
     }
 
 }
