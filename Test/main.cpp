@@ -17,7 +17,7 @@
 
 #include <fstream>
 #include <iostream>
-#include "Test/RFTestExample.h"
+#include "RFTestExample.h"
 
 int main(int argc, char ** argv)
 {
