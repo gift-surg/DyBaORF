@@ -1,0 +1,12 @@
+variables:
+  CI_SCRIPTS_DIR: "./ci"
+
+
+build-docs:
+  script:
+    - "$CI_SCRIPTS_DIR/build-docs.sh"
+  tags:
+    - gift-adelie
+  only:
+    - master
+
