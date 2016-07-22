@@ -1,4 +1,4 @@
-DyBa ORF
+DyBa ORF {#mainpage}
 --------
 DyBa ORF is a Dymanically Balanced Online Random Forest, which addresses three problems in learning with Random Forests:  
 * Online learning. It can accept gradually arrived training data and update the model on-the-fly.
