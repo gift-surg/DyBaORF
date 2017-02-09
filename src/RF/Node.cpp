@@ -257,7 +257,7 @@ int RandomForest::Node<T>::UpdateTree(const std::shared_ptr<std::vector<int> >& 
         {
             int tempIndex=i_rmvSampleList->at(i);
             std::vector<int>::iterator it;
-            it = find (sampleIndexList->begin(), sampleIndexList->end(), tempIndex);
+            it = std::find (sampleIndexList->begin(), sampleIndexList->end(), tempIndex);
             if(it!=sampleIndexList->end())
             {
                 sampleIndexList->erase(it);

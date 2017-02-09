@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 PROJECT(DyBaORF)
 
+add_definitions(-std=c++11) 
+
 add_subdirectory(src)
 add_subdirectory(Test)
 
