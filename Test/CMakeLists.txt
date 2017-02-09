@@ -18,4 +18,4 @@ add_library(dybaorf_test
 )
 
 
-
+target_link_libraries(dybaorf_test dybaorf)

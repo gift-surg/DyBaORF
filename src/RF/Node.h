@@ -22,6 +22,7 @@ Distributed under the BSD-3 licence. Please see the file licence.txt
 #include <math.h>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "ODTree.h"
 
 namespace RandomForest {
