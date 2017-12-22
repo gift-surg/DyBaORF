@@ -1,12 +1,39 @@
-variables:
-  CI_SCRIPTS_DIR: "./ci"
+stages:
+  - build
+  - deploy
 
-
-build-docs:
+build docs:
+  stage: build
   script:
-    - "$CI_SCRIPTS_DIR/build-docs.sh"
+    - doxygen Doxyfile
   tags:
     - gift-adelie
+  artifacts:
+    paths:
+    - doc/
+
+deploy docs to staging:
+  stage: deploy
+  script:
+    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* production_docs_rsync:giftsurg/dybaorf 2>&1
+  tags:
+    - gift-adelie
+  environment:
+    name: staging
+  only:
+    - master
+  dependencies:
+    - build docs
+
+deploy docs to production:
+  stage: deploy
+  script:
+    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* staging_docs_rsync:giftsurg/dybaorf 2>&1
+  tags:
+    - gift-adelie
+  environment:
+    name: production
   only:
     - public
-
+  dependencies:
+    - build docs
