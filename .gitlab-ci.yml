@@ -15,7 +15,7 @@ build docs:
 deploy docs to staging:
   stage: deploy
   script:
-    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* production_docs_rsync:giftsurg/dybaorf 2>&1
+    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* staging_docs_rsync:giftsurg/dybaorf 2>&1
   tags:
     - gift-adelie
   environment:
@@ -28,7 +28,7 @@ deploy docs to staging:
 deploy docs to production:
   stage: deploy
   script:
-    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* staging_docs_rsync:giftsurg/dybaorf 2>&1
+    - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* master_docs_rsync:giftsurg/dybaorf 2>&1
   tags:
     - gift-adelie
   environment:
