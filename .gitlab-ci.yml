@@ -17,7 +17,7 @@ deploy docs to staging:
   script:
     - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* staging_docs_rsync:giftsurg/dybaorf 2>&1
   tags:
-    - gift-adelie
+    - docs-staging
   environment:
     name: staging
   only:
@@ -30,7 +30,7 @@ deploy docs to production:
   script:
     - rsync -avz -e'ssh -v' --numeric-ids --delete doc/html/* production_docs_rsync:giftsurg/dybaorf 2>&1
   tags:
-    - gift-adelie
+    - docs-production
   environment:
     name: production
   only:
