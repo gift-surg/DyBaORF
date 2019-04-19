@@ -13,7 +13,7 @@ How to cite
 
 If you use this software, please cite this paper:
 
-Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin. Dynamically Balanced Online Random Forests for Interactive Segmentation, MICCAI 2016. (accepted)
+Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin. [Dynamically Balanced Online Random Forests for Interactive Segmentation][paperlink]]. In International Conference on Medical Image Computing and Computer-Assisted Intervention, pp. 352-360. Springer, Cham, 2016.
 
 Software links
 --------------
@@ -72,3 +72,4 @@ DyBa ORF is a cross-platform C++ library. It supports Windows, Mac and Linux.
 [DyBaORFDocs]: http://cmic.cs.ucl.ac.uk/giftsurg/dybaorf/
 [githubhome]: https://github.com/gift-surg/DyBaORF
 [guotai]: http://cmictig.cs.ucl.ac.uk/people/phd-students/guotai-wang
+[paperlink]:https://link.springer.com/chapter/10.1007/978-3-319-46723-8_41
