@@ -13,7 +13,7 @@ How to cite
 
 If you use this software, please cite this paper:
 
-Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin. [Dynamically Balanced Online Random Forests for Interactive Segmentation][paperlink]]. In International Conference on Medical Image Computing and Computer-Assisted Intervention, pp. 352-360. Springer, Cham, 2016.
+Guotai Wang, Maria A. Zuluaga, Rosalind Pratt, Michael Aertsen, Tom Doel, Maria Klusmann, Anna L. David, Jan Deprest, Tom Vercauteren, Sebastien Ourselin. [Dynamically Balanced Online Random Forests for Interactive Segmentation][paperlink]. In International Conference on Medical Image Computing and Computer-Assisted Intervention, pp. 352-360. Springer, Cham, 2016.
 
 Software links
 --------------
